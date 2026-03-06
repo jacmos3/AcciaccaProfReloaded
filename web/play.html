@@ -1,0 +1,1147 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Acciacca Prof Web - Porting Delphi</title>
+  <link rel="icon" type="image/png" href="resources/favicon.png">
+  <style>
+    :root {
+      --win-bg: #c0c0c0;
+      --win-light: #ffffff;
+      --win-dark: #7a7a7a;
+      --win-darker: #4d4d4d;
+      --text: #000000;
+      --link: #0000cc;
+      --scale: 1;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "MS Sans Serif", Tahoma, Geneva, sans-serif;
+      background:
+        radial-gradient(circle at top, #f5f5f5 0%, #dfdfdf 45%, #bfbfbf 100%);
+      color: var(--text);
+      padding: 16px;
+    }
+
+    .shell {
+      max-width: 980px;
+      margin: 0 auto;
+      display: grid;
+      gap: 12px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 10px;
+      background: linear-gradient(180deg, #f7f7f7, #dbdbdb);
+      border: 1px solid #8f8f8f;
+      box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #9a9a9a;
+      font-size: 13px;
+    }
+
+    .topbar a {
+      color: var(--link);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .viewport {
+      position: relative;
+      width: min(100%, 900px);
+      margin: 0 auto;
+      background: transparent;
+    }
+
+    .form {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 618px;
+      height: 543px;
+      transform-origin: top left;
+      transform: scale(var(--scale));
+      background: var(--win-bg);
+      overflow: hidden;
+      border: 1px solid #9a9a9a;
+      box-shadow: inset 1px 1px 0 #fdfdfd, inset -1px -1px 0 #7a7a7a;
+      user-select: none;
+      cursor: default;
+    }
+
+    .bg {
+      position: absolute;
+      left: 13px;
+      top: 10px;
+      width: 487px;
+      height: 528px;
+      image-rendering: pixelated;
+    }
+
+    .win-label {
+      position: absolute;
+      font-size: 11px;
+      line-height: 13px;
+      color: var(--text);
+    }
+
+    .vote {
+      position: absolute;
+      left: 408px;
+      top: 48px;
+      min-width: 22px;
+      text-align: center;
+      font-size: 28px;
+      line-height: 29px;
+      font-weight: 700;
+    }
+
+    .link-label {
+      position: absolute;
+      left: 259px;
+      top: 116px;
+      font-size: 17px;
+      line-height: 17px;
+      color: var(--link);
+      text-decoration: underline;
+      cursor: pointer;
+      background: transparent;
+      border: 0;
+      padding: 0;
+    }
+
+    .sprite,
+    .student,
+    .fx,
+    .zampillo {
+      position: absolute;
+      pointer-events: auto;
+      image-rendering: pixelated;
+    }
+
+    .sprite {
+      width: 100px;
+      height: 1px;
+      object-fit: fill;
+      transform-origin: bottom left;
+      display: none;
+      z-index: 7;
+      cursor: crosshair;
+    }
+
+    .student {
+      z-index: 8;
+      cursor: crosshair;
+      background: transparent;
+      border: 0;
+      padding: 0;
+      appearance: none;
+      overflow: hidden;
+      font-size: 0;
+      line-height: 0;
+    }
+
+    .student.back {
+      z-index: 6;
+    }
+
+    .student img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+      image-rendering: pixelated;
+      pointer-events: none;
+    }
+
+    .fx {
+      width: 73px;
+      height: 65px;
+      display: none;
+      z-index: 12;
+      pointer-events: none;
+    }
+
+    .zampillo {
+      width: 59px;
+      height: 56px;
+      display: none;
+      z-index: 11;
+      pointer-events: none;
+    }
+
+    .btn {
+      position: absolute;
+      font: 11px "MS Sans Serif", Tahoma, sans-serif;
+      background: linear-gradient(180deg, #fafafa, #d8d8d8);
+      border-top: 1px solid var(--win-light);
+      border-left: 1px solid var(--win-light);
+      border-right: 1px solid var(--win-darker);
+      border-bottom: 1px solid var(--win-darker);
+      color: var(--text);
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .btn:active {
+      border-top-color: var(--win-darker);
+      border-left-color: var(--win-darker);
+      border-right-color: var(--win-light);
+      border-bottom-color: var(--win-light);
+      background: linear-gradient(180deg, #d1d1d1, #efefef);
+    }
+
+    .btn[disabled] {
+      color: #666;
+      cursor: not-allowed;
+    }
+
+    .groupbox {
+      position: absolute;
+      left: 504px;
+      top: 128px;
+      width: 105px;
+      height: 105px;
+      border: 1px solid #7a7a7a;
+      box-shadow: inset 1px 1px 0 #fff;
+      background: transparent;
+    }
+
+    .groupbox-title {
+      position: absolute;
+      top: -7px;
+      left: 8px;
+      padding: 0 3px;
+      background: var(--win-bg);
+      font-size: 11px;
+    }
+
+    .radio,
+    .check {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+    }
+
+    .radio input,
+    .check input {
+      margin: 0;
+      width: 13px;
+      height: 13px;
+    }
+
+    .speed-input {
+      position: absolute;
+      left: 512px;
+      top: 64px;
+      width: 25px;
+      height: 21px;
+      border: 1px solid #7a7a7a;
+      background: #fff;
+      font: 11px "MS Sans Serif", Tahoma, sans-serif;
+      text-align: center;
+      padding: 0;
+    }
+
+    .icon-btn {
+      font-weight: 700;
+      font-size: 11px;
+    }
+
+    .icon {
+      position: absolute;
+      left: 64px;
+      top: 16px;
+      width: 49px;
+      height: 41px;
+      object-fit: contain;
+    }
+
+    .status {
+      position: absolute;
+      left: 504px;
+      top: 360px;
+      width: 105px;
+      min-height: 50px;
+      padding: 4px 6px;
+      border: 1px solid #8e8e8e;
+      background: #efefef;
+      box-shadow: inset 1px 1px 0 #fff;
+      font-size: 11px;
+      line-height: 1.25;
+      overflow-wrap: anywhere;
+    }
+
+    .modal-backdrop {
+      position: absolute;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 40, 0.28);
+      z-index: 30;
+    }
+
+    .modal-backdrop.visible {
+      display: flex;
+    }
+
+    .dialog,
+    .poster {
+      background: var(--win-bg);
+      color: var(--text);
+      border: 1px solid #7d7d7d;
+      box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #7a7a7a, 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .dialog {
+      width: min(356px, calc(100% - 20px));
+      padding: 14px 12px 10px;
+    }
+
+    .dialog h2,
+    .poster h2 {
+      margin: 0 0 8px;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .dialog p,
+    .poster p {
+      margin: 0 0 12px;
+      font-size: 14px;
+      line-height: 1.35;
+    }
+
+    .dialog .choices {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .dialog .actions,
+    .poster .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .poster {
+      width: min(434px, calc(100% - 20px));
+      padding: 18px 16px 14px;
+      background:
+        linear-gradient(180deg, #fffef5 0%, #f5f1d8 100%);
+      border-color: #8d8561;
+    }
+
+    .poster.good h2 { color: #0b6f15; }
+    .poster.bad h2 { color: #8f0f0f; }
+
+    .custom-grid {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .custom-row {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .custom-preview {
+      width: 72px;
+      height: 72px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #8a8a8a;
+      background: #fff;
+      box-shadow: inset 1px 1px 0 #fff;
+    }
+
+    .custom-preview img {
+      max-width: 64px;
+      max-height: 64px;
+      image-rendering: pixelated;
+    }
+
+    .custom-row select {
+      width: 100%;
+      font: 11px "MS Sans Serif", Tahoma, sans-serif;
+      height: 24px;
+    }
+
+    .hidden { display: none; }
+
+    @media (max-width: 640px) {
+      body { padding: 10px; }
+      .topbar { font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="topbar">
+      <div>Acciacca Prof Web · porting da Delphi `Form1`</div>
+      <a href="index.html">Torna alla landing</a>
+    </div>
+
+    <div id="viewport" class="viewport">
+      <div id="form" class="form">
+        <img class="bg" id="background" src="resources/original-bg.png" alt="Classe originale">
+        <img class="icon" src="resources/app-icon.png" alt="">
+
+        <div class="win-label" style="left:520px;top:40px;width:38px;">Velocita</div>
+        <div class="win-label" style="left:237px;top:16px;width:66px;">Prof colpiti:</div>
+        <div class="win-label" style="left:313px;top:16px;width:73px;">Prof sfuggiti:</div>
+        <div class="win-label" style="left:395px;top:16px;width:80px;">Colpi sbagliati</div>
+        <div class="win-label" style="left:264px;top:32px;width:20px;" id="profcolpiti">0</div>
+        <div class="win-label" style="left:344px;top:32px;width:20px;" id="profsfuggiti">0</div>
+        <div class="win-label" style="left:432px;top:32px;width:20px;" id="colpisbagliati">0</div>
+        <div class="win-label" style="left:272px;top:56px;width:117px;font-size:16px;">IL TUO VOTO E':</div>
+        <div class="vote" id="lblvoto">0</div>
+
+        <button type="button" id="label1" class="link-label">The Anonymous is here</button>
+
+        <button type="button" id="btnSettings" class="btn" style="left:512px;top:96px;width:89px;height:25px;">Personalizzazioni</button>
+        <button type="button" id="btnStart" class="btn" style="left:520px;top:248px;width:75px;height:25px;">Start</button>
+        <button type="button" id="btnPause" class="btn hidden" style="left:520px;top:280px;width:75px;height:25px;">Pausa</button>
+
+        <div id="groupbox1" class="groupbox">
+          <div class="groupbox-title">Livelli</div>
+          <label class="radio" style="left:8px;top:16px;">
+            <input type="radio" name="livello" id="ckdlivello1" checked>
+            <span>Livello 1</span>
+          </label>
+          <label class="radio" style="left:8px;top:48px;">
+            <input type="radio" name="livello" id="ckdlivello2">
+            <span>Livello 2</span>
+          </label>
+          <label class="radio" style="left:8px;top:80px;">
+            <input type="radio" name="livello" id="ckdlivello3">
+            <span>Livello 3</span>
+          </label>
+          <button type="button" class="btn icon-btn" id="help1" style="left:80px;top:16px;width:17px;height:17px;">?</button>
+          <button type="button" class="btn icon-btn" id="help2" style="left:80px;top:48px;width:17px;height:17px;">?</button>
+          <button type="button" class="btn icon-btn" id="help3" style="left:80px;top:80px;width:17px;height:17px;">?</button>
+        </div>
+
+        <label class="check" style="left:520px;top:312px;">
+          <input type="checkbox" id="ckdsottofondo">
+          <span>Sottofondo</span>
+        </label>
+        <label class="check" style="left:520px;top:328px;">
+          <input type="checkbox" id="ckdsuoni" checked>
+          <span>Suoni</span>
+        </label>
+
+        <input id="editvelocita" class="speed-input" type="text" inputmode="numeric" value="10" maxlength="2" aria-label="Velocita">
+        <button type="button" id="btnupvelocita" class="btn icon-btn" style="left:541px;top:64px;width:18px;height:11px;">+</button>
+        <button type="button" id="btndownvelocita" class="btn icon-btn" style="left:541px;top:74px;width:18px;height:11px;">-</button>
+
+        <div id="status" class="status">Premi Start per iniziare il porting fedele della `Form1` originale.</div>
+
+        <img id="profcatt" class="sprite" src="resources/rebel.png" alt="Prof cattivo">
+        <img id="profbuon" class="sprite" src="resources/ally.png" alt="Prof buono">
+        <img id="bidella" class="sprite" src="resources/assistant.png" alt="Bidella">
+
+        <button type="button" id="student31" class="student back" aria-label="Studente in basso a destra" style="left:384px;top:467px;width:97px;height:74px;"><img src="resources/student-31.png" alt=""></button>
+        <button type="button" id="student33" class="student back" aria-label="Studente in basso a sinistra" style="left:11px;top:484px;width:105px;height:57px;"><img src="resources/student-33.png" alt=""></button>
+        <button type="button" id="student35" class="student back" aria-label="Studente in alto a sinistra" style="left:12px;top:220px;width:97px;height:89px;"><img src="resources/student-35.png" alt=""></button>
+        <button type="button" id="student30" class="student" aria-label="Testa studente in basso a destra" style="left:410px;top:433px;width:64px;height:35px;"><img src="resources/student-30.png" alt=""></button>
+        <button type="button" id="student32" class="student" aria-label="Testa studente in alto a sinistra" style="left:9px;top:167px;width:72px;height:63px;"><img src="resources/student-32.png" alt=""></button>
+        <button type="button" id="student34" class="student" aria-label="Testa studente in basso a sinistra" style="left:8px;top:441px;width:73px;height:43px;"><img src="resources/student-34.png" alt=""></button>
+
+        <img id="schizzi" class="fx" src="resources/schizzi.png" alt="" style="left:642px;top:249px;width:73px;height:65px;">
+        <img id="zampilli1" class="zampillo" src="resources/zampilli.png" alt="" style="left:415px;top:402px;width:59px;height:56px;">
+        <img id="zampilli2" class="zampillo" src="resources/zampilli.png" alt="" style="left:31px;top:146px;width:42px;height:47px;">
+        <img id="zampilli3" class="zampillo" src="resources/zampilli.png" alt="" style="left:33px;top:413px;width:42px;height:47px;">
+
+        <div id="modalBackdrop" class="modal-backdrop">
+          <div id="dialogCustomization" class="dialog hidden" role="dialog" aria-modal="true" aria-labelledby="custom-title">
+            <h2 id="custom-title">Personalizzazioni</h2>
+            <p>Scegli i personaggi da usare nel porting web. Livello 1 e 2 usano il personaggio corrente; livello 3 continua a usare lo stesso set selezionato.</p>
+            <div class="custom-grid">
+              <div class="custom-row">
+                <div class="custom-preview"><img id="previewCattivo" src="resources/rebel.png" alt=""></div>
+                <label>
+                  Prof cattivo
+                  <select id="selectCattivo">
+                    <option value="1">Variante 1</option>
+                    <option value="2">Variante 2</option>
+                    <option value="3">Variante 3</option>
+                  </select>
+                </label>
+              </div>
+              <div class="custom-row">
+                <div class="custom-preview"><img id="previewBuono" src="resources/ally.png" alt=""></div>
+                <label>
+                  Prof buono
+                  <select id="selectBuono">
+                    <option value="1">Variante 1</option>
+                    <option value="2">Variante 2</option>
+                    <option value="3">Variante 3</option>
+                  </select>
+                </label>
+              </div>
+              <div class="custom-row">
+                <div class="custom-preview"><img id="previewBidella" src="resources/assistant.png" alt=""></div>
+                <label>
+                  Bidella
+                  <select id="selectBidella">
+                    <option value="1">Variante unica</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+            <div class="actions">
+              <button type="button" class="btn" id="closeCustomization" style="position:static;width:72px;height:24px;">Chiudi</button>
+            </div>
+          </div>
+
+          <div id="dialogCircolare" class="dialog hidden" role="dialog" aria-modal="true" aria-labelledby="circ-title">
+            <h2 id="circ-title">Circolare</h2>
+            <p>E' entrata la bidella e ha in mano una circolare. Scegline una e clicca su OK. Se sei fortunato, la comunicazione sara buona e guadagnerai punti, altrimenti ne perderai.</p>
+            <div class="choices">
+              <label><input type="radio" name="circolare" value="1" checked> Circolare 1</label>
+              <label><input type="radio" name="circolare" value="2"> Circolare 2</label>
+            </div>
+            <div class="actions">
+              <button type="button" class="btn" id="confirmCircolare" style="position:static;width:72px;height:24px;">OK</button>
+            </div>
+          </div>
+
+          <div id="dialogResult" class="poster hidden" role="dialog" aria-modal="true" aria-labelledby="result-title">
+            <h2 id="result-title"></h2>
+            <p id="result-body"></p>
+            <div class="actions">
+              <button type="button" class="btn" id="closeResult" style="position:static;width:72px;height:24px;">Chiudi</button>
+            </div>
+          </div>
+        </div>
+
+        <audio id="audioProfmorto" preload="auto" src="resources/profmorto.wav"></audio>
+        <audio id="audioBidella" preload="auto" src="resources/bidella.wav"></audio>
+        <audio id="audioBambino" preload="auto" src="resources/bambinomorto.wav"></audio>
+        <audio id="audioFuori" preload="auto" src="resources/fuori.wav"></audio>
+        <audio id="audioSottofondo" preload="auto" loop src="resources/sottofondo.m4a"></audio>
+        <audio id="audioSiii" preload="auto" src="resources/siii.wav"></audio>
+        <audio id="audioNooo" preload="auto" src="resources/nooo.wav"></audio>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const FORM_WIDTH = 618;
+    const FORM_HEIGHT = 543;
+    const IMAGE1_LEFT = 13;
+    const IMAGE1_TOP = 10;
+    const positions = [
+      [56, 26], [200, 26], [352, 26],
+      [80, 162], [224, 162], [376, 162],
+      [48, 290], [192, 290], [344, 290]
+    ];
+
+    const refs = {
+      viewport: document.getElementById('viewport'),
+      form: document.getElementById('form'),
+      background: document.getElementById('background'),
+      profcatt: document.getElementById('profcatt'),
+      profbuon: document.getElementById('profbuon'),
+      bidella: document.getElementById('bidella'),
+      schizzi: document.getElementById('schizzi'),
+      zampilli1: document.getElementById('zampilli1'),
+      zampilli2: document.getElementById('zampilli2'),
+      zampilli3: document.getElementById('zampilli3'),
+      profcolpiti: document.getElementById('profcolpiti'),
+      profsfuggiti: document.getElementById('profsfuggiti'),
+      colpisbagliati: document.getElementById('colpisbagliati'),
+      lblvoto: document.getElementById('lblvoto'),
+      label1: document.getElementById('label1'),
+      btnSettings: document.getElementById('btnSettings'),
+      btnStart: document.getElementById('btnStart'),
+      btnPause: document.getElementById('btnPause'),
+      help1: document.getElementById('help1'),
+      help2: document.getElementById('help2'),
+      help3: document.getElementById('help3'),
+      ckdlivello1: document.getElementById('ckdlivello1'),
+      ckdlivello2: document.getElementById('ckdlivello2'),
+      ckdlivello3: document.getElementById('ckdlivello3'),
+      ckdsottofondo: document.getElementById('ckdsottofondo'),
+      ckdsuoni: document.getElementById('ckdsuoni'),
+      editvelocita: document.getElementById('editvelocita'),
+      btnupvelocita: document.getElementById('btnupvelocita'),
+      btndownvelocita: document.getElementById('btndownvelocita'),
+      groupbox1: document.getElementById('groupbox1'),
+      status: document.getElementById('status'),
+      modalBackdrop: document.getElementById('modalBackdrop'),
+      dialogCircolare: document.getElementById('dialogCircolare'),
+      dialogCustomization: document.getElementById('dialogCustomization'),
+      dialogResult: document.getElementById('dialogResult'),
+      confirmCircolare: document.getElementById('confirmCircolare'),
+      closeCustomization: document.getElementById('closeCustomization'),
+      resultTitle: document.getElementById('result-title'),
+      resultBody: document.getElementById('result-body'),
+      closeResult: document.getElementById('closeResult'),
+      selectCattivo: document.getElementById('selectCattivo'),
+      selectBuono: document.getElementById('selectBuono'),
+      selectBidella: document.getElementById('selectBidella'),
+      previewCattivo: document.getElementById('previewCattivo'),
+      previewBuono: document.getElementById('previewBuono'),
+      previewBidella: document.getElementById('previewBidella'),
+      student30: document.getElementById('student30'),
+      student31: document.getElementById('student31'),
+      student32: document.getElementById('student32'),
+      student33: document.getElementById('student33'),
+      student34: document.getElementById('student34'),
+      student35: document.getElementById('student35'),
+      audioProfmorto: document.getElementById('audioProfmorto'),
+      audioBidella: document.getElementById('audioBidella'),
+      audioBambino: document.getElementById('audioBambino'),
+      audioFuori: document.getElementById('audioFuori'),
+      audioSottofondo: document.getElementById('audioSottofondo'),
+      audioSiii: document.getElementById('audioSiii'),
+      audioNooo: document.getElementById('audioNooo')
+    };
+
+    const state = {
+      timerId: null,
+      running: false,
+      paused: false,
+      modal: null,
+      attivaBidella: false,
+      speed: 10,
+      customization: {
+        cattivo: 1,
+        buono: 1,
+        bidella: 1
+      },
+      counts: {
+        hit: 0,
+        escaped: 0,
+        wrong: 0
+      },
+      sprites: {
+        cattivo: { el: refs.profcatt, left: 800, top: 0, width: 100, height: 1, alzate: 0, visible: false },
+        buono: { el: refs.profbuon, left: 800, top: 0, width: 100, height: 1, alzate: 0, visible: false },
+        bidella: { el: refs.bidella, left: 800, top: 0, width: 100, height: 1, alzate: 0, visible: false }
+      }
+    };
+
+    function resizeForm() {
+      const available = refs.viewport.clientWidth;
+      const scale = available / FORM_WIDTH;
+      refs.viewport.style.height = `${FORM_HEIGHT * scale}px`;
+      refs.form.style.setProperty('--scale', scale.toString());
+    }
+
+    function playAudio(el) {
+      if (!refs.ckdsuoni.checked && el !== refs.audioSottofondo) return;
+      try {
+        el.currentTime = 0;
+        el.play().catch(() => {});
+      } catch (_) {}
+    }
+
+    function updateStatus(text) {
+      refs.status.textContent = text;
+    }
+
+    function clampSpeed(raw) {
+      const parsed = Number.parseInt(raw, 10);
+      if (Number.isNaN(parsed)) return state.speed;
+      return Math.min(20, Math.max(1, parsed));
+    }
+
+    function selectedLevel() {
+      if (refs.ckdlivello3.checked) return 3;
+      if (refs.ckdlivello2.checked) return 2;
+      return 1;
+    }
+
+    function spriteSource(kind) {
+      const map = {
+        cattivo: {
+          1: 'resources/rebel.png',
+          2: 'resources/rebel-2.png',
+          3: 'resources/rebel-3.png'
+        },
+        buono: {
+          1: 'resources/ally.png',
+          2: 'resources/ally-2.png',
+          3: 'resources/ally-3.png'
+        },
+        bidella: {
+          1: 'resources/assistant.png'
+        }
+      };
+      return map[kind][state.customization[kind]];
+    }
+
+    function refreshCustomizationPreview() {
+      refs.previewCattivo.src = spriteSource('cattivo');
+      refs.previewBuono.src = spriteSource('buono');
+      refs.previewBidella.src = spriteSource('bidella');
+    }
+
+    function applyCustomization() {
+      refs.profcatt.src = spriteSource('cattivo');
+      refs.profbuon.src = spriteSource('buono');
+      refs.bidella.src = spriteSource('bidella');
+      refreshCustomizationPreview();
+    }
+
+    function syncScoreboard() {
+      refs.profcolpiti.textContent = String(state.counts.hit);
+      refs.profsfuggiti.textContent = String(state.counts.escaped);
+      refs.colpisbagliati.textContent = String(state.counts.wrong);
+    }
+
+    function calculateVote() {
+      const colpiti = state.counts.hit;
+      const sfuggiti = state.counts.escaped;
+      const sbagliati = state.counts.wrong;
+      const totali = Math.max(1, colpiti + sfuggiti + sbagliati);
+      const voto = (colpiti - sfuggiti) - (2 * sbagliati);
+      const finalVote = Math.floor((voto * 10) / totali);
+      refs.lblvoto.textContent = String(finalVote <= 0 ? 1 : finalVote);
+    }
+
+    function setFrame(el, left, top, width, height) {
+      el.style.left = `${left}px`;
+      el.style.top = `${top}px`;
+      el.style.width = `${width}px`;
+      el.style.height = `${height}px`;
+    }
+
+    function setSpriteFrame(sprite) {
+      setFrame(sprite.el, sprite.left, sprite.top, sprite.width, sprite.height);
+      sprite.el.style.display = sprite.visible ? 'block' : 'none';
+    }
+
+    function hideSprite(sprite) {
+      sprite.visible = false;
+      sprite.left = 800;
+      setSpriteFrame(sprite);
+    }
+
+    function resetSprite(sprite) {
+      sprite.top = sprite.top + sprite.height;
+      sprite.height = 1;
+      sprite.visible = true;
+      setSpriteFrame(sprite);
+    }
+
+    function randomSlot() {
+      const [left, top] = positions[Math.floor(Math.random() * positions.length)];
+      return { left, top };
+    }
+
+    function prepareSprite(spriteName) {
+      const sprite = state.sprites[spriteName];
+      const slot = randomSlot();
+      sprite.height = 100;
+      sprite.alzate = 0;
+      sprite.left = slot.left;
+      sprite.top = slot.top + 110;
+      resetSprite(sprite);
+    }
+
+    function profcattivo() {
+      prepareSprite('cattivo');
+    }
+
+    function profbuono() {
+      prepareSprite('buono');
+    }
+
+    function bidellaa() {
+      prepareSprite('bidella');
+    }
+
+    function scorriSprite(spriteName, onDone) {
+      const sprite = state.sprites[spriteName];
+      if (!sprite.visible) return;
+      if (sprite.height < 121) sprite.height = Math.min(121, sprite.height + state.speed);
+      if (sprite.alzate < 120 / state.speed) {
+        sprite.top -= state.speed;
+        sprite.alzate += 1;
+      } else {
+        onDone();
+        return;
+      }
+      setSpriteFrame(sprite);
+    }
+
+    function scorribidella() {
+      scorriSprite('bidella', () => {
+        state.attivaBidella = false;
+        bidellaa();
+      });
+    }
+
+    function scorribuono() {
+      scorriSprite('buono', () => {
+        profbuono();
+      });
+    }
+
+    function scorricattivo() {
+      scorriSprite('cattivo', () => {
+        profcattivo();
+        state.counts.escaped += 1;
+        syncScoreboard();
+      });
+    }
+
+    function tick() {
+      if (!state.running || state.paused || state.modal) return;
+      const level = selectedLevel();
+      if (level === 1) {
+        scorricattivo();
+        return;
+      }
+      if (level === 2) {
+        scorricattivo();
+        scorribuono();
+        return;
+      }
+      if (state.attivaBidella) {
+        scorribidella();
+        return;
+      }
+      if ((Math.floor(Math.random() * 100) + 1) === 30) {
+        state.attivaBidella = true;
+        scorribidella();
+      } else {
+        scorricattivo();
+        scorribuono();
+      }
+    }
+
+    function startTimer() {
+      if (state.timerId) return;
+      state.timerId = window.setInterval(tick, 50);
+    }
+
+    function stopTimer() {
+      if (!state.timerId) return;
+      window.clearInterval(state.timerId);
+      state.timerId = null;
+    }
+
+    function showSchizzi(pageX, pageY) {
+      const rect = refs.form.getBoundingClientRect();
+      refs.schizzi.style.left = `${(pageX - rect.left) / Number.parseFloat(getComputedStyle(refs.form).getPropertyValue('--scale')) - 45}px`;
+      refs.schizzi.style.top = `${(pageY - rect.top) / Number.parseFloat(getComputedStyle(refs.form).getPropertyValue('--scale')) - 25}px`;
+      refs.schizzi.style.display = 'block';
+      window.setTimeout(() => {
+        refs.schizzi.style.display = 'none';
+      }, 140);
+    }
+
+    function hideZampilli() {
+      refs.zampilli1.style.display = 'none';
+      refs.zampilli2.style.display = 'none';
+      refs.zampilli3.style.display = 'none';
+    }
+
+    function showZampillo(which) {
+      hideZampilli();
+      which.style.display = 'block';
+      window.setTimeout(hideZampilli, 150);
+    }
+
+    function moveSpritesOffstage() {
+      hideSprite(state.sprites.cattivo);
+      hideSprite(state.sprites.buono);
+      hideSprite(state.sprites.bidella);
+      state.attivaBidella = false;
+    }
+
+    function resetPositions() {
+      if (!state.running) {
+        moveSpritesOffstage();
+        return;
+      }
+      profcattivo();
+      profbuono();
+      bidellaa();
+      state.attivaBidella = false;
+    }
+
+    function backgroundWrongClick() {
+      if (!state.running || state.paused || state.modal) return;
+      state.counts.wrong += 1;
+      syncScoreboard();
+    }
+
+    function setGameControlsPlaying(isPlaying) {
+      refs.btnStart.textContent = isPlaying ? 'Stop' : 'Start';
+      refs.btnPause.classList.toggle('hidden', !isPlaying);
+      refs.btnPause.textContent = 'Pausa';
+      refs.groupbox1.style.pointerEvents = isPlaying ? 'none' : 'auto';
+      refs.groupbox1.style.opacity = isPlaying ? '0.65' : '1';
+      refs.btnupvelocita.disabled = isPlaying;
+      refs.btndownvelocita.disabled = isPlaying;
+      refs.editvelocita.disabled = isPlaying;
+    }
+
+    function startGame() {
+      stopTimer();
+      state.running = true;
+      state.paused = false;
+      state.modal = null;
+      state.attivaBidella = false;
+      state.counts.hit = 0;
+      state.counts.escaped = 0;
+      state.counts.wrong = 0;
+      refs.lblvoto.textContent = '0';
+      syncScoreboard();
+      resetPositions();
+      setGameControlsPlaying(true);
+      startTimer();
+      tick();
+      updateStatus(`Partita avviata. Livello ${selectedLevel()} attivo.`);
+      if (refs.ckdsottofondo.checked) {
+        refs.audioSottofondo.play().catch(() => {});
+      }
+    }
+
+    function stopGame() {
+      if (refs.btnPause.textContent === 'Riprendi') {
+        togglePause();
+      }
+      state.running = false;
+      state.paused = false;
+      stopTimer();
+      calculateVote();
+      setGameControlsPlaying(false);
+      moveSpritesOffstage();
+      refs.audioSottofondo.pause();
+      updateStatus('Partita fermata. Voto calcolato con la formula Delphi originale.');
+    }
+
+    function toggleStart() {
+      if (state.running) {
+        stopGame();
+      } else {
+        startGame();
+      }
+    }
+
+    function togglePause() {
+      if (!state.running) return;
+      state.paused = !state.paused;
+      refs.btnPause.textContent = state.paused ? 'Riprendi' : 'Pausa';
+      resetPositions();
+      updateStatus(state.paused ? 'Partita in pausa.' : 'Partita ripresa.');
+    }
+
+    function clickProfBuono(event) {
+      event.stopPropagation();
+      showSchizzi(event.clientX, event.clientY);
+      state.counts.wrong += 1;
+      syncScoreboard();
+      profcattivo();
+      bidellaa();
+      state.attivaBidella = false;
+      playAudio(refs.audioProfmorto);
+      window.setTimeout(() => {
+        profbuono();
+      }, 120);
+    }
+
+    function clickProfCattivo(event) {
+      event.stopPropagation();
+      showSchizzi(event.clientX, event.clientY);
+      profcattivo();
+      state.counts.hit += 1;
+      syncScoreboard();
+      profbuono();
+      bidellaa();
+      state.attivaBidella = false;
+      playAudio(refs.audioProfmorto);
+    }
+
+    function openModal(name) {
+      state.modal = name;
+      state.paused = true;
+      stopTimer();
+      refs.modalBackdrop.classList.add('visible');
+      refs.dialogCustomization.classList.toggle('hidden', name !== 'customization');
+      refs.dialogCircolare.classList.toggle('hidden', name !== 'circolare');
+      refs.dialogResult.classList.toggle('hidden', name !== 'result');
+    }
+
+    function closeModal(resumeGame) {
+      state.modal = null;
+      refs.modalBackdrop.classList.remove('visible');
+      refs.dialogCustomization.classList.add('hidden');
+      refs.dialogCircolare.classList.add('hidden');
+      refs.dialogResult.classList.add('hidden');
+      if (resumeGame && state.running) {
+        state.paused = false;
+        startTimer();
+      }
+    }
+
+    function clickBidella(event) {
+      event.stopPropagation();
+      profcattivo();
+      state.attivaBidella = false;
+      bidellaa();
+      playAudio(refs.audioBidella);
+      openModal('circolare');
+      updateStatus('La bidella ha interrotto la partita con una circolare.');
+    }
+
+    function backgroundClick(event) {
+      if (!state.running || state.paused || state.modal) return;
+      backgroundWrongClick();
+      playAudio(refs.audioFuori);
+    }
+
+    function clickStudent(which, event) {
+      event.stopPropagation();
+      playAudio(refs.audioBambino);
+      showZampillo(which);
+    }
+
+    function applyStudentFrames() {
+      const frames = [
+        ['zampilli1', 415, 402, 59, 56],
+        ['zampilli2', 31, 146, 42, 47],
+        ['zampilli3', 33, 413, 42, 47],
+        ['schizzi', 642, 249, 73, 65]
+      ];
+      for (const [id, left, top, width, height] of frames) {
+        const el = refs[id];
+        if (!el) continue;
+        setFrame(el, left, top, width, height);
+      }
+    }
+
+    function handleCircolareConfirm() {
+      const selected = Number(document.querySelector('input[name="circolare"]:checked').value);
+      const numero = Math.floor(Math.random() * 2) + 1;
+      const good = numero === selected;
+      state.counts.hit = good ? state.counts.hit + 100 : state.counts.hit - 100;
+      refs.resultTitle.textContent = good ? 'Bella notizia' : 'Cattiva notizia';
+      refs.resultBody.textContent = good
+        ? 'Hai scelto la circolare giusta. Guadagni 100 punti sui prof colpiti.'
+        : 'Hai scelto male. Perdi 100 punti sui prof colpiti.';
+      refs.dialogResult.className = `poster ${good ? 'good' : 'bad'}`;
+      refs.dialogResult.classList.remove('hidden');
+      refs.dialogCircolare.classList.add('hidden');
+      syncScoreboard();
+      playAudio(good ? refs.audioSiii : refs.audioNooo);
+    }
+
+    refs.profcatt.addEventListener('mousedown', clickProfCattivo);
+    refs.profbuon.addEventListener('mousedown', clickProfBuono);
+    refs.bidella.addEventListener('mousedown', clickBidella);
+    refs.background.addEventListener('mousedown', backgroundClick);
+
+    refs.student30.addEventListener('mousedown', (event) => clickStudent(refs.zampilli1, event));
+    refs.student31.addEventListener('mousedown', (event) => clickStudent(refs.zampilli1, event));
+    refs.student32.addEventListener('mousedown', (event) => clickStudent(refs.zampilli2, event));
+    refs.student35.addEventListener('mousedown', (event) => clickStudent(refs.zampilli2, event));
+    refs.student34.addEventListener('mousedown', (event) => clickStudent(refs.zampilli3, event));
+    refs.student33.addEventListener('mousedown', (event) => clickStudent(refs.zampilli3, event));
+
+    refs.btnStart.addEventListener('click', toggleStart);
+    refs.btnPause.addEventListener('click', togglePause);
+    refs.btnSettings.addEventListener('click', () => {
+      openModal('customization');
+      updateStatus('Personalizzazioni aperte.');
+    });
+    refs.help1.addEventListener('click', () => {
+      window.alert("Apparira una sola immagine alla volta, se la colpisci guadagni punti, se non la colpisci, o se sbagli a colpirla perdi punti");
+    });
+    refs.help2.addEventListener('click', () => {
+      window.alert("Appariranno 1 prof 'buono' e 1 prof 'cattivo'. Se colpisci quello 'buono' perdi punti se colpisci quello 'cattivo' li guadagni");
+    });
+    refs.help3.addEventListener('click', () => {
+      window.alert("Come il livello 2 solo che i prof buoni e cattivi sono scelti a caso tra quelli salvati, e ci sara la bidella che ogni tanto porta circolari...");
+    });
+    refs.label1.addEventListener('click', () => {
+      window.open('http://www.moscio88.altervista.org/SAP.php', '_blank', 'noopener');
+    });
+
+    refs.ckdlivello1.addEventListener('change', () => resetPositions());
+    refs.ckdlivello2.addEventListener('change', () => resetPositions());
+    refs.ckdlivello3.addEventListener('change', () => resetPositions());
+
+    refs.btnupvelocita.addEventListener('click', () => {
+      state.speed = Math.min(20, state.speed + 1);
+      refs.editvelocita.value = String(state.speed);
+    });
+    refs.btndownvelocita.addEventListener('click', () => {
+      state.speed = Math.max(1, state.speed - 1);
+      refs.editvelocita.value = String(state.speed);
+    });
+    refs.editvelocita.addEventListener('input', () => {
+      refs.editvelocita.value = refs.editvelocita.value.replace(/[^0-9]/g, '');
+      state.speed = clampSpeed(refs.editvelocita.value || '10');
+      refs.editvelocita.value = String(state.speed);
+    });
+
+    refs.ckdsottofondo.addEventListener('change', () => {
+      if (refs.ckdsottofondo.checked && state.running) {
+        refs.audioSottofondo.play().catch(() => {});
+      } else {
+        refs.audioSottofondo.pause();
+      }
+    });
+
+    refs.selectCattivo.addEventListener('change', () => {
+      state.customization.cattivo = Number(refs.selectCattivo.value);
+      applyCustomization();
+      resetPositions();
+    });
+    refs.selectBuono.addEventListener('change', () => {
+      state.customization.buono = Number(refs.selectBuono.value);
+      applyCustomization();
+      resetPositions();
+    });
+    refs.selectBidella.addEventListener('change', () => {
+      state.customization.bidella = Number(refs.selectBidella.value);
+      applyCustomization();
+      resetPositions();
+    });
+
+    refs.confirmCircolare.addEventListener('click', handleCircolareConfirm);
+    refs.closeCustomization.addEventListener('click', () => {
+      closeModal(true);
+      updateStatus('Personalizzazioni chiuse.');
+    });
+    refs.closeResult.addEventListener('click', () => {
+      closeModal(true);
+      updateStatus('Circolare completata. La partita riprende.');
+    });
+
+    refs.modalBackdrop.addEventListener('mousedown', (event) => {
+      event.stopPropagation();
+    });
+
+    applyStudentFrames();
+    applyCustomization();
+    moveSpritesOffstage();
+    syncScoreboard();
+    resizeForm();
+    window.addEventListener('resize', resizeForm);
+    new ResizeObserver(resizeForm).observe(refs.viewport);
+  </script>
+</body>
+</html>
