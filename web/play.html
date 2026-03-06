@@ -14,6 +14,8 @@
       --text: #000000;
       --link: #0000cc;
       --scale: 1;
+      --cursor-up: url("resources/martsu.cur"), auto;
+      --cursor-down: url("resources/martgiu.cur"), auto;
     }
 
     * { box-sizing: border-box; }
@@ -26,6 +28,7 @@
         radial-gradient(circle at top, #f5f5f5 0%, #dfdfdf 45%, #bfbfbf 100%);
       color: var(--text);
       padding: 16px;
+      cursor: var(--cursor-up);
     }
 
     .shell {
@@ -73,7 +76,7 @@
       border: 1px solid #9a9a9a;
       box-shadow: inset 1px 1px 0 #fdfdfd, inset -1px -1px 0 #7a7a7a;
       user-select: none;
-      cursor: default;
+      cursor: var(--cursor-up);
     }
 
     .bg {
@@ -83,6 +86,7 @@
       width: 487px;
       height: 528px;
       image-rendering: pixelated;
+      cursor: var(--cursor-up);
     }
 
     .win-label {
@@ -133,12 +137,12 @@
       transform-origin: bottom left;
       display: none;
       z-index: 7;
-      cursor: crosshair;
+      cursor: var(--cursor-up);
     }
 
     .student {
       z-index: 8;
-      cursor: crosshair;
+      cursor: var(--cursor-up);
       background: transparent;
       border: 0;
       padding: 0;
@@ -188,6 +192,16 @@
       color: var(--text);
       cursor: pointer;
       padding: 0;
+    }
+
+    .arena-cursor,
+    .arena-cursor * {
+      cursor: var(--cursor-up) !important;
+    }
+
+    .hammer-down,
+    .hammer-down * {
+      cursor: var(--cursor-down) !important;
     }
 
     .btn:active {
@@ -398,7 +412,7 @@
 
     <div id="viewport" class="viewport">
       <div id="form" class="form">
-        <img class="bg" id="background" src="resources/original-bg.png" alt="Classe originale">
+        <img class="bg arena-cursor" id="background" src="resources/original-bg.png" alt="Classe originale">
         <img class="icon" src="resources/app-icon.png" alt="">
 
         <div class="win-label" style="left:520px;top:40px;width:38px;">Velocita</div>
@@ -451,16 +465,16 @@
 
         <div id="status" class="status">Premi Start per iniziare il porting fedele della `Form1` originale.</div>
 
-        <img id="profcatt" class="sprite" src="resources/rebel.png" alt="Prof cattivo">
-        <img id="profbuon" class="sprite" src="resources/ally.png" alt="Prof buono">
-        <img id="bidella" class="sprite" src="resources/assistant.png" alt="Bidella">
+        <img id="profcatt" class="sprite arena-cursor" src="resources/rebel.png" alt="Prof cattivo">
+        <img id="profbuon" class="sprite arena-cursor" src="resources/ally.png" alt="Prof buono">
+        <img id="bidella" class="sprite arena-cursor" src="resources/assistant.png" alt="Bidella">
 
-        <button type="button" id="student31" class="student back" aria-label="Studente in basso a destra" style="left:384px;top:467px;width:97px;height:74px;"><img src="resources/student-31.png" alt=""></button>
-        <button type="button" id="student33" class="student back" aria-label="Studente in basso a sinistra" style="left:11px;top:484px;width:105px;height:57px;"><img src="resources/student-33.png" alt=""></button>
-        <button type="button" id="student35" class="student back" aria-label="Studente in alto a sinistra" style="left:12px;top:220px;width:97px;height:89px;"><img src="resources/student-35.png" alt=""></button>
-        <button type="button" id="student30" class="student" aria-label="Testa studente in basso a destra" style="left:410px;top:433px;width:64px;height:35px;"><img src="resources/student-30.png" alt=""></button>
-        <button type="button" id="student32" class="student" aria-label="Testa studente in alto a sinistra" style="left:9px;top:167px;width:72px;height:63px;"><img src="resources/student-32.png" alt=""></button>
-        <button type="button" id="student34" class="student" aria-label="Testa studente in basso a sinistra" style="left:8px;top:441px;width:73px;height:43px;"><img src="resources/student-34.png" alt=""></button>
+        <button type="button" id="student31" class="student back arena-cursor" aria-label="Studente in basso a destra" style="left:384px;top:467px;width:97px;height:74px;"><img src="resources/student-31.png" alt=""></button>
+        <button type="button" id="student33" class="student back arena-cursor" aria-label="Studente in basso a sinistra" style="left:11px;top:484px;width:105px;height:57px;"><img src="resources/student-33.png" alt=""></button>
+        <button type="button" id="student35" class="student back arena-cursor" aria-label="Studente in alto a sinistra" style="left:12px;top:220px;width:97px;height:89px;"><img src="resources/student-35.png" alt=""></button>
+        <button type="button" id="student30" class="student arena-cursor" aria-label="Testa studente in basso a destra" style="left:410px;top:433px;width:64px;height:35px;"><img src="resources/student-30.png" alt=""></button>
+        <button type="button" id="student32" class="student arena-cursor" aria-label="Testa studente in alto a sinistra" style="left:9px;top:167px;width:72px;height:63px;"><img src="resources/student-32.png" alt=""></button>
+        <button type="button" id="student34" class="student arena-cursor" aria-label="Testa studente in basso a sinistra" style="left:8px;top:441px;width:116px;height:43px;"><img src="resources/student-34.png" alt=""></button>
 
         <img id="schizzi" class="fx" src="resources/schizzi.png" alt="" style="left:642px;top:249px;width:73px;height:65px;">
         <img id="zampilli1" class="zampillo" src="resources/zampilli.png" alt="" style="left:415px;top:402px;width:59px;height:56px;">
@@ -653,6 +667,14 @@
       } catch (_) {}
     }
 
+    function setHammerDown() {
+      document.body.classList.add('hammer-down');
+    }
+
+    function setHammerUp() {
+      document.body.classList.remove('hammer-down');
+    }
+
     function updateStatus(text) {
       refs.status.textContent = text;
     }
@@ -726,7 +748,7 @@
 
     function setSpriteFrame(sprite) {
       setFrame(sprite.el, sprite.left, sprite.top, sprite.width, sprite.height);
-      sprite.el.style.display = sprite.visible ? 'block' : 'none';
+      sprite.el.style.display = sprite.visible && sprite.height > 1 ? 'block' : 'none';
     }
 
     function hideSprite(sprite) {
@@ -1134,6 +1156,11 @@
     refs.modalBackdrop.addEventListener('mousedown', (event) => {
       event.stopPropagation();
     });
+
+    document.addEventListener('mousedown', setHammerDown);
+    document.addEventListener('mouseup', setHammerUp);
+    document.addEventListener('mouseleave', setHammerUp);
+    window.addEventListener('blur', setHammerUp);
 
     applyStudentFrames();
     applyCustomization();
