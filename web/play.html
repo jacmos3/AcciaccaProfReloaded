@@ -31,7 +31,7 @@
       color: var(--text);
       padding: 8px;
       overflow: hidden;
-      cursor: var(--cursor-up);
+      cursor: auto;
     }
     .shell {
       width: 100%;
@@ -214,7 +214,8 @@
       border-right: 1px solid var(--win-darker); border-bottom: 1px solid var(--win-darker); color: var(--text); cursor: pointer; padding: 0;
     }
     .arena-cursor, .arena-cursor * { cursor: var(--cursor-up) !important; }
-    .hammer-down, .hammer-down * { cursor: var(--cursor-down) !important; }
+    .form.hammer-down,
+    .form.hammer-down * { cursor: var(--cursor-down) !important; }
     .btn:active {
       border-top-color: var(--win-darker); border-left-color: var(--win-darker); border-right-color: var(--win-light); border-bottom-color: var(--win-light);
       background: linear-gradient(180deg, #d1d1d1, #efefef);
@@ -327,6 +328,8 @@
         <button type="button" id="btnSettings" class="btn" style="left:512px;top:96px;width:89px;height:25px;">Personalizzazioni</button>
         <button type="button" id="btnStart" class="btn" style="left:520px;top:248px;width:75px;height:25px;">Start</button>
         <button type="button" id="btnPause" class="btn hidden" style="left:520px;top:280px;width:75px;height:25px;">Pausa</button>
+        <input id="debugPentathlonMode" class="speed-input" type="text" inputmode="numeric" value="1" maxlength="1" aria-label="Prova debug pentathlon" style="left:512px;top:312px;width:28px;">
+        <button type="button" id="btnDebugPentathlon" class="btn" style="left:544px;top:312px;width:72px;height:25px;">Pentathlon</button>
 
         <div id="groupbox1" class="groupbox">
           <div class="groupbox-title">Livelli</div>
@@ -338,8 +341,8 @@
           <button type="button" class="btn icon-btn" id="help3" style="left:80px;top:80px;width:17px;height:17px;">?</button>
         </div>
 
-        <label class="check" style="left:520px;top:312px;"><input type="checkbox" id="ckdsottofondo"><span>Sottofondo</span></label>
-        <label class="check" style="left:520px;top:328px;"><input type="checkbox" id="ckdsuoni" checked><span>Suoni</span></label>
+        <label class="check" style="left:520px;top:346px;"><input type="checkbox" id="ckdsottofondo"><span>Sottofondo</span></label>
+        <label class="check" style="left:520px;top:362px;"><input type="checkbox" id="ckdsuoni" checked><span>Suoni</span></label>
         <input id="editvelocita" class="speed-input" type="text" inputmode="numeric" value="10" maxlength="2" aria-label="Velocita">
         <button type="button" id="btnupvelocita" class="btn icon-btn" style="left:541px;top:64px;width:18px;height:11px;">+</button>
         <button type="button" id="btndownvelocita" class="btn icon-btn" style="left:541px;top:74px;width:18px;height:11px;">-</button>
@@ -464,7 +467,7 @@
       profcatt: document.getElementById('profcatt'), profbuon: document.getElementById('profbuon'), bidella: document.getElementById('bidella'),
       schizzi: document.getElementById('schizzi'), zampilli1: document.getElementById('zampilli1'), zampilli2: document.getElementById('zampilli2'), zampilli3: document.getElementById('zampilli3'),
       profcolpiti: document.getElementById('profcolpiti'), profsfuggiti: document.getElementById('profsfuggiti'), colpisbagliati: document.getElementById('colpisbagliati'), lblvoto: document.getElementById('lblvoto'),
-      label1: document.getElementById('label1'), btnSettings: document.getElementById('btnSettings'), btnStart: document.getElementById('btnStart'), btnPause: document.getElementById('btnPause'),
+      label1: document.getElementById('label1'), btnSettings: document.getElementById('btnSettings'), btnStart: document.getElementById('btnStart'), btnPause: document.getElementById('btnPause'), btnDebugPentathlon: document.getElementById('btnDebugPentathlon'), debugPentathlonMode: document.getElementById('debugPentathlonMode'),
       help1: document.getElementById('help1'), help2: document.getElementById('help2'), help3: document.getElementById('help3'),
       ckdlivello1: document.getElementById('ckdlivello1'), ckdlivello2: document.getElementById('ckdlivello2'), ckdlivello3: document.getElementById('ckdlivello3'),
       ckdsottofondo: document.getElementById('ckdsottofondo'), ckdsuoni: document.getElementById('ckdsuoni'), editvelocita: document.getElementById('editvelocita'), btnupvelocita: document.getElementById('btnupvelocita'), btndownvelocita: document.getElementById('btndownvelocita'),
@@ -501,7 +504,7 @@
       },
       pentathlon: {
         memoryMap: {}, memoryFirst: null, memoryMatchedPairs: 0, flipped: new Set(),
-        syncMap: {}, syncTickCount: 0, syncPendingReposition: false, syncActive: false,
+        syncMap: {}, syncEntries: [], syncTickCount: 0, syncPendingReposition: false, syncActive: false,
         swapDeskTextures: {}, swapTargets: [], swapSelection: 0, swapRevealTimers: [], swapActive: false,
         riskMap: {}, riskTargets: new Set(), riskCycleId: null, riskActive: false, riskLastSpeed: -1, riskLastDuration: -1,
         sequence: [], sequenceStep: 0, sequenceLength: 2, sequenceTextures: {}, sequenceActive: false
@@ -515,7 +518,8 @@
         y: 0
       },
       windowClosed: false,
-      startMenuOpen: false
+      startMenuOpen: false,
+      pentathlonAwaitingStart: false
     };
 
     function resizeForm() {
@@ -666,8 +670,8 @@
       positionWindow();
     }
     function playAudio(el) { if (!refs.ckdsuoni.checked && el !== refs.audioSottofondo) return; try { el.currentTime = 0; el.play().catch(() => {}); } catch (_) {} }
-    function setHammerDown() { document.body.classList.add('hammer-down'); }
-    function setHammerUp() { document.body.classList.remove('hammer-down'); }
+    function setHammerDown() { refs.form.classList.add('hammer-down'); }
+    function setHammerUp() { refs.form.classList.remove('hammer-down'); }
     function updateStatus(text) { refs.status.innerHTML = `<strong>L${state.level} · Stage ${state.stageCount}/10 · ${state.points.toFixed(2)} pt</strong>${text}`; }
     function clampSpeed(raw) { const parsed = Number.parseInt(raw, 10); if (Number.isNaN(parsed)) return state.speed; return Math.min(20, Math.max(1, parsed)); }
     function scoreMultiplier() { const clamped = Math.max(0, Math.min(100, state.speed * 5)); const t = clamped / 100; return 0.5 + 2.5 * Math.log10(1 + 9 * t); }
@@ -760,7 +764,7 @@
     function clearPentathlonState() {
       clearPentathlonTimers(); resetPentathlonCells(); refs.pentathlonLabel.style.display = 'none'; refs.pentathlonLabel.textContent = ''; hidePerlaHint();
       state.pentathlon.memoryMap = {}; state.pentathlon.memoryFirst = null; state.pentathlon.memoryMatchedPairs = 0; state.pentathlon.flipped = new Set();
-      state.pentathlon.syncMap = {}; state.pentathlon.syncTickCount = 0; state.pentathlon.syncPendingReposition = false; state.pentathlon.syncActive = false;
+      state.pentathlon.syncMap = {}; state.pentathlon.syncEntries = []; state.pentathlon.syncTickCount = 0; state.pentathlon.syncPendingReposition = false; state.pentathlon.syncActive = false;
       state.pentathlon.swapDeskTextures = {}; state.pentathlon.swapTargets = []; state.pentathlon.swapSelection = 0; state.pentathlon.swapActive = false;
       state.pentathlon.riskMap = {}; state.pentathlon.riskTargets = new Set(); state.pentathlon.riskActive = false; state.pentathlon.riskLastSpeed = -1; state.pentathlon.riskLastDuration = -1;
       state.pentathlon.sequence = []; state.pentathlon.sequenceStep = 0; state.pentathlon.sequenceLength = 2; state.pentathlon.sequenceTextures = {}; state.pentathlon.sequenceActive = false;
@@ -768,7 +772,7 @@
     function pentathlonModeMeta() {
       return {
         1: ['Pentathlon 1/5: Memory', 'Trova 4 coppie di prof sui banchi.'],
-        2: ['Pentathlon 2/5: Riflessi', 'Colpisci solo i prof cattivi che appaiono sui banchi.'],
+        2: ['Pentathlon 2/5: Riflessi', 'Compaiono 3 prof cattivi e 3 buoni a comparsa. Colpisci solo i cattivi: se tocchi un buono, la prova riparte.'],
         3: ['Pentathlon 3/5: Scambio di posto', 'Memorizza l\'ordine dei personaggi e ricostruiscilo cliccando i banchi.'],
         4: ['Pentathlon 4/5: Rischio controllato', 'Colpisci solo i cattivi adiacenti a un buono.'],
         5: ['Pentathlon 5/5: Sequenza', 'Ripeti la sequenza dei banchi nell\'ordine corretto.']
@@ -790,6 +794,45 @@
       cell.querySelector('img').src = faceImage(face); cell.style.display = 'block'; cell.className = 'pent-cell arena-cursor';
       if (options.covered) cell.classList.add('covered'); if (options.targeted) cell.classList.add('targeted'); if (options.correct) cell.classList.add('correct'); if (options.wrong) cell.classList.add('wrong'); if (options.inactive) cell.classList.add('inactive');
       cell.disabled = !!options.disabled;
+    }
+    function placeGrowingPentCell(index, face, height, options = {}) {
+      const cell = refs.pentCells[index];
+      const currentHeight = Math.max(1, height);
+      const fullHeight = options.fullHeight || 121;
+      setFrame(
+        cell,
+        positions[index][0] + PENT_LEFT_OFFSET,
+        positions[index][1] + PENT_TOP_OFFSET + (fullHeight - currentHeight),
+        options.width || 100,
+        currentHeight
+      );
+      cell.querySelector('img').src = faceImage(face);
+      cell.className = 'pent-cell arena-cursor';
+      if (options.covered) cell.classList.add('covered');
+      cell.disabled = !!options.disabled;
+      cell.style.display = currentHeight > 1 ? 'block' : 'none';
+    }
+    function syncRiseStep() { return Math.max(8, Math.floor(Math.max(1, state.speed) / 3)); }
+    function placeSyncEntry(entry) {
+      const cell = refs.pentCells[entry.desk];
+      const currentHeight = Math.max(1, entry.height || 1);
+      const fullHeight = entry.fullHeight || 121;
+      const top = positions[entry.desk][1] + PENT_TOP_OFFSET + (fullHeight - currentHeight);
+      setFrame(
+        cell,
+        positions[entry.desk][0] + PENT_LEFT_OFFSET,
+        top,
+        entry.width || 100,
+        currentHeight
+      );
+      cell.querySelector('img').src = faceImage(entry.face);
+      cell.className = 'pent-cell arena-cursor';
+      cell.disabled = false;
+      cell.style.display = currentHeight > 1 ? 'block' : 'none';
+    }
+    function rebuildSyncMap() {
+      state.pentathlon.syncMap = {};
+      state.pentathlon.syncEntries.forEach((entry) => { state.pentathlon.syncMap[entry.desk] = entry.face; });
     }
     function revealPentCell(index) {
       const cell = refs.pentCells[index];
@@ -824,8 +867,15 @@
       state.pentathlon.flipped = new Set();
       desks.forEach((desk, i) => {
         state.pentathlon.memoryMap[desk] = faces[i];
-        placePentCell(desk, faces[i]);
+        placeGrowingPentCell(desk, faces[i], 1);
       });
+      const riseStep = 12;
+      for (let frame = 1; frame <= Math.ceil(120 / riseStep); frame += 1) {
+        const timer = setTimeout(() => {
+          desks.forEach((desk) => placeGrowingPentCell(desk, state.pentathlon.memoryMap[desk], Math.min(121, 1 + frame * riseStep)));
+        }, frame * 25);
+        state.pentathlon.swapRevealTimers.push(timer);
+      }
       const timer = setTimeout(() => {
         desks.forEach((desk) => coverPentCell(desk));
       }, 500);
@@ -835,13 +885,25 @@
       const desks = sample([...Array(9).keys()], 6);
       const cattivi = sample(['rebels_1','rebels_2','rebels_3'], 3);
       const buoni = sample(['allies_1','allies_2','allies_3'], 3);
-      state.pentathlon.syncMap = {};
-      desks.slice(0, 3).forEach((desk, i) => { state.pentathlon.syncMap[desk] = cattivi[i]; });
-      desks.slice(3, 6).forEach((desk, i) => { state.pentathlon.syncMap[desk] = buoni[i]; });
-      Object.entries(state.pentathlon.syncMap).forEach(([desk, face]) => placePentCell(Number(desk), face));
+      state.pentathlon.syncEntries = [];
+      desks.slice(0, 3).forEach((desk, i) => { state.pentathlon.syncEntries.push({ desk, face: cattivi[i], type: 'cattivo', width: 100, fullHeight: 121, height: 1 }); });
+      desks.slice(3, 6).forEach((desk, i) => { state.pentathlon.syncEntries.push({ desk, face: buoni[i], type: 'buono', width: 100, fullHeight: 121, height: 1 }); });
+      rebuildSyncMap();
+      state.pentathlon.syncEntries.forEach((entry) => placeSyncEntry(entry));
       state.pentathlon.syncTickCount = 0;
       state.pentathlon.syncPendingReposition = false;
       state.pentathlon.syncActive = true;
+    }
+    function repositionSyncMode() {
+      const entries = state.pentathlon.syncEntries;
+      if (!entries.length) return;
+      const desks = sample([...Array(9).keys()], entries.length);
+      entries.forEach((entry, index) => {
+        entry.desk = desks[index];
+        entry.height = 1;
+      });
+      rebuildSyncMap();
+      entries.forEach((entry) => placeSyncEntry(entry));
     }
     function startSwapMode() {
       const lateral = sample([0, 1, 2, 3, 5, 6, 7, 8], 8);
@@ -860,7 +922,15 @@
       let delay = 0;
       for (const desk of revealOrder) {
         const timer = setTimeout(() => {
-          placePentCell(desk, state.pentathlon.swapDeskTextures[desk], { inactive: true });
+          placeGrowingPentCell(desk, state.pentathlon.swapDeskTextures[desk], 1, { inactive: true });
+          const riseStep = 12;
+          for (let frame = 1; frame <= Math.ceil(120 / riseStep); frame += 1) {
+            const riseTimer = setTimeout(() => {
+              if (!state.pentathlon.swapDeskTextures[desk]) return;
+              placeGrowingPentCell(desk, state.pentathlon.swapDeskTextures[desk], Math.min(121, 1 + frame * riseStep), { inactive: true });
+            }, frame * 25);
+            state.pentathlon.swapRevealTimers.push(riseTimer);
+          }
         }, delay);
         state.pentathlon.swapRevealTimers.push(timer);
         delay += revealDuration + pause;
@@ -910,31 +980,59 @@
       if (!count) return;
       const desks = sample([...Array(9).keys()], count);
       const newMap = {};
-      entries.forEach(([_, value], offset) => {
+      const moveDuration = riskCycleDuration() * 0.6;
+      entries.forEach(([oldDesk, value], offset) => {
         const desk = desks[offset];
         const face = value.face.startsWith('allies_') ? 'allies_1' : 'rebels_1';
         newMap[desk] = { face, target: false };
+        const cell = refs.pentCells[Number(oldDesk)];
+        const nextLeft = positions[desk][0] + PENT_LEFT_OFFSET;
+        const nextTop = positions[desk][1] + PENT_TOP_OFFSET;
+        cell.className = 'pent-cell arena-cursor';
+        cell.disabled = false;
+        cell.style.display = 'block';
+        cell.querySelector('img').src = faceImage(face);
+        cell.style.transition = `left ${moveDuration}ms ease, top ${moveDuration}ms ease`;
+        cell.style.left = `${nextLeft}px`;
+        cell.style.top = `${nextTop}px`;
       });
       const newTargets = targetCattiviWithAdjacentBuono(Object.fromEntries(Object.entries(newMap).map(([desk, value]) => [desk, value.face])));
+      const finalTargets = newTargets.size ? newTargets : targetCattiviWithAdjacentBuono(Object.fromEntries(Object.entries(newMap).map(([desk, value]) => [desk, value.face])));
+      const timer = setTimeout(() => {
+        resetPentathlonCells();
+        Object.entries(newMap).forEach(([desk, value]) => {
+          value.target = finalTargets.has(Number(desk));
+          placePentCell(Number(desk), value.face);
+        });
+        state.pentathlon.riskMap = newMap;
+        state.pentathlon.riskTargets = finalTargets;
+      }, moveDuration);
+      state.pentathlon.swapRevealTimers.push(timer);
+    }
+    function orderedSequenceTextures() {
+      return ['allies_1','allies_2','allies_3','rebels_1','rebels_2','rebels_3','assistant_1','assistant_1','assistant_1'];
+    }
+    function resetSequenceCovers() {
       resetPentathlonCells();
-      Object.entries(newMap).forEach(([desk, value]) => {
-        value.target = newTargets.has(Number(desk));
-        placePentCell(Number(desk), value.face);
+      [...Array(9).keys()].forEach((desk) => {
+        const face = state.pentathlon.sequenceTextures[desk] || 'rebels_1';
+        placePentCell(desk, face, { covered: true });
       });
-      state.pentathlon.riskMap = newMap;
-      state.pentathlon.riskTargets = newTargets;
+    }
+    function revealSequenceCover(index) {
+      const face = state.pentathlon.sequenceTextures[index] || 'rebels_1';
+      placePentCell(index, face);
     }
     function showSequenceStep(index) {
       if (index >= state.pentathlon.sequence.length) {
-        resetPentathlonCells();
-        state.pentathlon.sequence.forEach((desk) => placePentCell(desk, state.pentathlon.sequenceTextures[desk], { covered: true }));
+        resetSequenceCovers();
         state.pentathlon.sequenceActive = true;
         return;
       }
       const desk = state.pentathlon.sequence[index];
-      revealPentCell(desk);
+      revealSequenceCover(desk);
       const timer1 = setTimeout(() => {
-        coverPentCell(desk);
+        resetSequenceCovers();
         const timer2 = setTimeout(() => showSequenceStep(index + 1), 50);
         state.pentathlon.swapRevealTimers.push(timer2);
       }, 400);
@@ -946,18 +1044,31 @@
       state.pentathlon.sequenceActive = false;
       state.pentathlon.sequence = sample([...Array(9).keys()], state.pentathlon.sequenceLength);
       state.pentathlon.sequenceTextures = {};
-      const textures = ['allies_1','allies_2','allies_3','rebels_1','rebels_2','rebels_3','assistant_1','assistant_1','assistant_1'];
+      const textures = orderedSequenceTextures();
       state.pentathlon.sequence.forEach((desk, i) => { state.pentathlon.sequenceTextures[desk] = textures[i]; placePentCell(desk, state.pentathlon.sequenceTextures[desk], { covered: true }); });
+      resetSequenceCovers();
       showSequenceStep(0);
     }
     function startPentathlonMode() {
       clearPentathlonState(); setPentathlonLabel(); showPerlaHint(); if (state.pentathlonMode === 1) startMemoryMode(); if (state.pentathlonMode === 2) startSyncMode(); if (state.pentathlonMode === 3) startSwapMode(); if (state.pentathlonMode === 4) startRiskMode(); if (state.pentathlonMode === 5) startSequenceMode();
     }
-    function startPentathlon() { stopTimer(); moveSpritesOffstage(); state.pentathlonMode = 1; state.paused = false; startPentathlonMode(); showPentathlonRule(); updateStatus('Pentathlon avviato sulla griglia di gioco.'); }
+    function startPentathlon() {
+      stopTimer();
+      moveSpritesOffstage();
+      state.pentathlonMode = 1;
+      state.paused = false;
+      state.pentathlonAwaitingStart = true;
+      showPerlaHint();
+      setPentathlonLabel();
+      showPentathlonRule();
+      updateStatus('Pentathlon avviato sulla griglia di gioco.');
+    }
     function finishPentathlonMode() {
       if (state.pentathlonMode >= 5) { clearPentathlonState(); state.inPentathlon = false; state.running = false; state.paused = false; setGameControlsPlaying(false); updateStatus('Pentathlon completato. Partita conclusa come su iOS.'); return; }
       state.pentathlonMode += 1;
-      startPentathlonMode();
+      state.pentathlonAwaitingStart = true;
+      showPerlaHint();
+      setPentathlonLabel();
       showPentathlonRule();
     }
     function failPentathlonMode() {
@@ -971,12 +1082,20 @@
 
     function tickPentathlon() {
       if (state.pentathlonMode === 2 && state.pentathlon.syncActive) {
-        if (state.pentathlon.syncPendingReposition) { state.pentathlon.syncPendingReposition = false; startSyncMode(); return; }
+        if (state.pentathlon.syncPendingReposition) { state.pentathlon.syncPendingReposition = false; repositionSyncMode(); return; }
+        const rise = syncRiseStep();
+        state.pentathlon.syncEntries.forEach((entry) => {
+          entry.height = Math.min(entry.fullHeight || 121, Math.max(1, entry.height || 1) + rise);
+          placeSyncEntry(entry);
+        });
         state.pentathlon.syncTickCount += 1;
-        const maxSteps = Math.max(1, Math.ceil(120 / Math.max(1, state.speed)));
+        const maxSteps = Math.max(1, Math.ceil(120 / rise));
         if (state.pentathlon.syncTickCount >= maxSteps) {
           state.pentathlon.syncTickCount = 0;
-          refs.pentCells.forEach((cell) => { if (cell.style.display === 'block') cell.style.display = 'none'; });
+          state.pentathlon.syncEntries.forEach((entry) => {
+            entry.height = 1;
+            refs.pentCells[entry.desk].style.display = 'none';
+          });
           state.pentathlon.syncPendingReposition = true;
         }
       }
@@ -1010,6 +1129,13 @@
     function moveSpritesOffstage() { hideSprite(state.sprites.cattivo); hideSprite(state.sprites.buono); hideSprite(state.sprites.bidella); state.attivaBidella = false; }
     function resetPositions() { if (!state.running || state.inPentathlon) { moveSpritesOffstage(); return; } profcattivo(); if (state.level >= 2) profbuono(); else hideSprite(state.sprites.buono); if (state.level >= 3) bidellaa(); else hideSprite(state.sprites.bidella); state.attivaBidella = false; }
     function backgroundWrongClick() { if (!state.running || state.paused || state.modal || state.inPentathlon) return; state.counts.wrong += 1; syncScoreboard(); }
+    function selectedDebugPentathlonMode() {
+      const raw = Number.parseInt(refs.debugPentathlonMode.value, 10);
+      const mode = Number.isFinite(raw) ? raw : 1;
+      const clamped = Math.max(1, Math.min(5, mode));
+      refs.debugPentathlonMode.value = String(clamped);
+      return clamped;
+    }
     function setGameControlsPlaying(isPlaying) {
       refs.btnStart.textContent = isPlaying ? 'Stop' : 'Start'; refs.btnPause.classList.toggle('hidden', !isPlaying); refs.btnPause.textContent = 'Pausa'; refs.groupbox1.style.pointerEvents = isPlaying ? 'none' : 'auto'; refs.groupbox1.style.opacity = isPlaying ? '0.65' : '1'; refs.btnupvelocita.disabled = isPlaying; refs.btndownvelocita.disabled = isPlaying; refs.editvelocita.disabled = isPlaying;
     }
@@ -1019,8 +1145,40 @@
     function stopGame() {
       state.running = false; state.paused = false; state.inPentathlon = false; state.pentathlonMode = 0; state.retryCurrentPentathlon = false; clearPentathlonState(); stopTimer(); calculateVote(); setGameControlsPlaying(false); moveSpritesOffstage(); refs.audioSottofondo.pause(); updateStatus('Partita fermata. Voto calcolato con la formula Delphi originale.');
     }
+    function debugStartPentathlon() {
+      if (!state.running) {
+        startGame();
+      }
+      const targetMode = selectedDebugPentathlonMode();
+      state.level = 4;
+      state.stageCount = 0;
+      state.inPentathlon = true;
+      state.pentathlonMode = targetMode;
+      state.retryCurrentPentathlon = false;
+      syncLevelRadios();
+      stopTimer();
+      moveSpritesOffstage();
+      state.paused = false;
+      state.pentathlonAwaitingStart = true;
+      showPerlaHint();
+      setPentathlonLabel();
+      showPentathlonRule();
+      updateStatus(`Debug: pentathlon avviato direttamente alla prova ${targetMode}.`);
+    }
     function toggleStart() { if (state.running) stopGame(); else startGame(); }
     function togglePause() { if (!state.running || state.inPentathlon) return; state.paused = !state.paused; refs.btnPause.textContent = state.paused ? 'Riprendi' : 'Pausa'; resetPositions(); updateStatus(state.paused ? 'Partita in pausa.' : 'Partita ripresa.'); }
+    function restartPentathlonAfterRetry() {
+      if (state.pentathlonMode === 4) {
+        startRiskMode();
+        return;
+      }
+      if (state.pentathlonMode === 5) {
+        resetSequenceCovers();
+        showSequenceStep(0);
+        return;
+      }
+      startPentathlonMode();
+    }
 
     function openModal(name) {
       state.modal = name; state.paused = true; stopTimer(); refs.modalBackdrop.classList.add('visible'); refs.dialogCustomization.classList.toggle('hidden', name !== 'customization'); refs.dialogCircolare.classList.toggle('hidden', name !== 'circolare'); refs.dialogResult.classList.toggle('hidden', name !== 'result');
@@ -1058,7 +1216,7 @@
         } else {
           addPoints(-1);
           playPentathlonAudio('fail');
-          showZampillo([refs.zampilli1, refs.zampilli2, refs.zampilli3][Math.floor(Math.random() * 3)]);
+          showSchizzi(event.clientX, event.clientY);
           const timer = setTimeout(() => {
             coverPentCell(first);
             coverPentCell(index);
@@ -1074,16 +1232,17 @@
         if (face.startsWith('allies_')) {
           addPoints(-2);
           playPentathlonAudio('miss');
-          showZampillo([refs.zampilli1, refs.zampilli2, refs.zampilli3][Math.floor(Math.random() * 3)]);
+          showSchizzi(event.clientX, event.clientY);
           state.pentathlon.syncActive = false;
           failPentathlonMode();
           return;
         }
         addPoints(1);
         playPentathlonAudio('robot');
-        delete state.pentathlon.syncMap[index];
+        state.pentathlon.syncEntries = state.pentathlon.syncEntries.filter((entry) => entry.desk !== index);
+        rebuildSyncMap();
         refs.pentCells[index].style.display = 'none';
-        if (!Object.values(state.pentathlon.syncMap).some((name) => name.startsWith('rebels_'))) finishPentathlonMode();
+        if (!state.pentathlon.syncEntries.some((entry) => entry.type === 'cattivo')) finishPentathlonMode();
         return;
       }
       if (state.pentathlonMode === 3) {
@@ -1097,7 +1256,7 @@
         } else {
           addPoints(-2);
           playPentathlonAudio('fail');
-          showZampillo([refs.zampilli1, refs.zampilli2, refs.zampilli3][Math.floor(Math.random() * 3)]);
+          showSchizzi(event.clientX, event.clientY);
           state.pentathlon.swapActive = false;
           failPentathlonMode();
         }
@@ -1108,7 +1267,7 @@
         if (item.face.startsWith('allies_')) {
           addPoints(-2);
           playPentathlonAudio('fail');
-          showZampillo([refs.zampilli1, refs.zampilli2, refs.zampilli3][Math.floor(Math.random() * 3)]);
+          showSchizzi(event.clientX, event.clientY);
           state.pentathlon.riskActive = false;
           failPentathlonMode();
           return;
@@ -1116,7 +1275,7 @@
         if (!item.target) {
           addPoints(-2);
           playPentathlonAudio('fail');
-          showZampillo([refs.zampilli1, refs.zampilli2, refs.zampilli3][Math.floor(Math.random() * 3)]);
+          showSchizzi(event.clientX, event.clientY);
           state.pentathlon.riskActive = false;
           failPentathlonMode();
           return;
@@ -1133,7 +1292,7 @@
       if (state.pentathlonMode === 5) {
         if (!state.pentathlon.sequenceActive) return;
         if (index === state.pentathlon.sequence[state.pentathlon.sequenceStep]) {
-          revealPentCell(index);
+          revealSequenceCover(index);
           playPentathlonAudio('robot');
           state.pentathlon.sequenceStep += 1;
           if (state.pentathlon.sequenceStep >= state.pentathlon.sequence.length) {
@@ -1144,22 +1303,31 @@
               state.pentathlon.sequence = sample([...Array(9).keys()], state.pentathlon.sequenceLength);
               state.pentathlon.sequenceStep = 0;
               state.pentathlon.sequenceTextures = {};
-              const textures = ['allies_1','allies_2','allies_3','rebels_1','rebels_2','rebels_3','assistant_1','assistant_1','assistant_1'];
+              const textures = orderedSequenceTextures();
               state.pentathlon.sequence.forEach((desk, i) => { state.pentathlon.sequenceTextures[desk] = textures[i]; });
               state.pentathlon.sequenceActive = false;
               state.paused = true;
-              const timer = setTimeout(() => { state.paused = false; showSequenceStep(0); }, 1000);
+              const timer = setTimeout(() => { resetSequenceCovers(); state.paused = false; showSequenceStep(0); }, 1000);
               state.pentathlon.swapRevealTimers.push(timer);
             }
           }
         } else {
           addPoints(-1);
           playPentathlonAudio('miss');
-          revealPentCell(index);
           state.pentathlon.sequenceLength = 2;
+          state.pentathlon.sequence = sample([...Array(9).keys()], state.pentathlon.sequenceLength);
+          state.pentathlon.sequenceStep = 0;
+          state.pentathlon.sequenceTextures = {};
+          orderedSequenceTextures().forEach((texture, idx) => {
+            const desk = state.pentathlon.sequence[idx];
+            if (desk !== undefined) state.pentathlon.sequenceTextures[desk] = texture;
+          });
+          revealSequenceCover(index);
+          showSchizzi(event.clientX, event.clientY);
           state.pentathlon.sequenceActive = false;
           state.paused = true;
           const timer = setTimeout(() => {
+            resetSequenceCovers();
             failPentathlonMode();
           }, 1000);
           state.pentathlon.swapRevealTimers.push(timer);
@@ -1186,6 +1354,9 @@
 
     refs.btnStart.addEventListener('click', toggleStart);
     refs.btnPause.addEventListener('click', togglePause);
+    refs.btnDebugPentathlon.addEventListener('click', debugStartPentathlon);
+    refs.debugPentathlonMode.addEventListener('input', () => { refs.debugPentathlonMode.value = refs.debugPentathlonMode.value.replace(/[^1-5]/g, '').slice(0, 1) || '1'; });
+    refs.debugPentathlonMode.addEventListener('change', selectedDebugPentathlonMode);
     refs.btnSettings.addEventListener('click', () => { openModal('customization'); updateStatus('Personalizzazioni aperte.'); });
     refs.perlaHint.addEventListener('mousedown', (event) => { event.stopPropagation(); showPentathlonRule(); });
     refs.windowTitlebar.addEventListener('mousedown', startWindowDrag);
@@ -1214,13 +1385,15 @@
     refs.closeResult.addEventListener('click', () => {
       const fromPentathlon = state.inPentathlon; const retry = state.retryCurrentPentathlon; state.retryCurrentPentathlon = false; closeModal(true);
       if (fromPentathlon) {
-        if (retry) { state.paused = false; startPentathlonMode(); updateStatus('Pentathlon ripreso dalla stessa prova.'); }
+        if (retry) { state.paused = false; restartPentathlonAfterRetry(); updateStatus('Pentathlon ripreso dalla stessa prova.'); }
+        else if (state.pentathlonAwaitingStart) { state.pentathlonAwaitingStart = false; state.paused = false; startPentathlonMode(); updateStatus('Pentathlon in corso.'); }
         else updateStatus('Pentathlon in corso.');
       } else updateStatus('Circolare completata. La partita riprende.');
     });
     refs.modalBackdrop.addEventListener('mousedown', (event) => { event.stopPropagation(); });
 
-    document.addEventListener('mousedown', setHammerDown);
+    refs.form.addEventListener('mousedown', setHammerDown);
+    refs.form.addEventListener('mouseleave', setHammerUp);
     document.addEventListener('mousedown', (event) => {
       if (!state.startMenuOpen) return;
       if (event.target.closest('#startMenu') || event.target.closest('#startHotspot')) return;
@@ -1229,7 +1402,6 @@
     document.addEventListener('mousemove', moveWindowDrag);
     document.addEventListener('mouseup', setHammerUp);
     document.addEventListener('mouseup', stopWindowDrag);
-    document.addEventListener('mouseleave', setHammerUp);
     window.addEventListener('blur', setHammerUp);
     window.addEventListener('blur', stopWindowDrag);
 
