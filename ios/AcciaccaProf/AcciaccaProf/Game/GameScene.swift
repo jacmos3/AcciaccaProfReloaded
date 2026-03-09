@@ -1629,16 +1629,19 @@ final class GameScene: SKScene {
     private func resettabidella() {
         bidellaHeight = 1
         applyFrame(node: bidella, left: bidellaLeft, top: bidellaTop + bidellaFullHeight, width: bidellaWidth, height: bidellaHeight)
+        bidella.isHidden = true
     }
 
     private func resettabuono() {
         buonHeight = 1
         applyFrame(node: profBuon, left: buonLeft, top: buonTop + buonFullHeight, width: buonWidth, height: buonHeight)
+        profBuon.isHidden = true
     }
 
     private func resettacattivo() {
         cattHeight = 1
         applyFrame(node: profCatt, left: cattLeft, top: cattTop + cattFullHeight, width: cattWidth, height: cattHeight)
+        profCatt.isHidden = true
     }
 
     private func scorriBidella() {
@@ -1647,6 +1650,7 @@ final class GameScene: SKScene {
         if bidellaHeight < bidellaFullHeight {
             bidellaHeight += CGFloat(speed)
         }
+        bidella.isHidden = bidellaHeight <= 1
         if alzateBidella < 120 / speed {
             bidellaTop -= CGFloat(speed)
             applyFrame(node: bidella, left: bidellaLeft, top: bidellaTop, width: bidellaWidth, height: bidellaHeight)
@@ -1664,6 +1668,7 @@ final class GameScene: SKScene {
         if buonHeight < buonFullHeight {
             buonHeight += CGFloat(speed)
         }
+        profBuon.isHidden = buonHeight <= 1
         if alzateBuon < 120 / speed {
             buonTop -= CGFloat(speed)
             applyFrame(node: profBuon, left: buonLeft, top: buonTop, width: buonWidth, height: buonHeight)
@@ -1680,6 +1685,7 @@ final class GameScene: SKScene {
         if cattHeight < cattFullHeight {
             cattHeight += CGFloat(speed)
         }
+        profCatt.isHidden = cattHeight <= 1
         if alzateCatt < 120 / speed {
             cattTop -= CGFloat(speed)
             applyFrame(node: profCatt, left: cattLeft, top: cattTop, width: cattWidth, height: cattHeight)
