@@ -72,17 +72,18 @@ Nel repository trovi quindi sia il porting moderno, sia la parte "museale": asse
 
 ### Web
 
-Dalla cartella `web/` puoi avviare un server statico minimale:
+La versione web con classifica richiede PHP, perche' usa un endpoint locale che salva i punteggi in JSON.
+
+Avvio consigliato dalla root del repository:
 
 ```bash
-cd web
-python3 -m http.server 4183
+php -S 127.0.0.1:4183 -t web
 ```
 
 Poi apri:
 
 ```text
-http://localhost:4183/play.html
+http://127.0.0.1:4183/play.html
 ```
 
 ### iOS

@@ -23,6 +23,45 @@
     }
 
     * { box-sizing: border-box; }
+    body,
+    .shell,
+    .window,
+    .window-titlebar,
+    .window-body,
+    .poster,
+    .dialog,
+    .start-menu,
+    .desktop-icon,
+    .taskbar,
+    .taskbar-app,
+    .start-item,
+    .win-label,
+    .vote,
+    .link-label,
+    button,
+    label,
+    span,
+    div,
+    p,
+    h1,
+    h2,
+    h3 {
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      caret-color: transparent;
+    }
+    input,
+    textarea {
+      -webkit-user-select: text;
+      user-select: text;
+      -webkit-touch-callout: default;
+      -webkit-tap-highlight-color: initial;
+      touch-action: auto;
+      caret-color: auto;
+    }
     body {
       margin: 0;
       min-height: 100vh;
@@ -197,6 +236,7 @@
       border-radius: 6px 6px 0 0;
       overflow: hidden;
       position: absolute;
+      z-index: 10;
       left: 0;
       top: 0;
       transition: transform 180ms ease, opacity 180ms ease;
@@ -327,6 +367,7 @@
       display: grid;
       justify-items: center;
       gap: 6px;
+      z-index: 1;
       background: transparent;
       border: 0;
       padding: 4px;
@@ -566,6 +607,64 @@
     }
     .start-item.story-item .scroll-glyph::before { top: -3px; }
     .start-item.story-item .scroll-glyph::after { bottom: -3px; }
+    .start-item.leaderboard-item .leaderboard-glyph {
+      width: 24px;
+      height: 24px;
+      position: relative;
+      flex: 0 0 24px;
+      border: 1px solid #7f7f7f;
+      border-right-color: #5d5d5d;
+      border-bottom-color: #5d5d5d;
+      background: linear-gradient(180deg, #ffffff 0%, #e8f0ff 100%);
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.85);
+      pointer-events: none;
+    }
+    .start-item.leaderboard-item .leaderboard-glyph::before {
+      content: "";
+      position: absolute;
+      left: 4px;
+      right: 4px;
+      bottom: 4px;
+      top: 6px;
+      background:
+        linear-gradient(180deg, transparent 0 100%),
+        linear-gradient(90deg, #3f7cd8 0 4px, transparent 4px 7px, #cf3c2d 7px 11px, transparent 11px 14px, #31a54a 14px 18px, transparent 18px 100%);
+      border-left: 1px solid #7f7f7f;
+      border-bottom: 1px solid #7f7f7f;
+    }
+    .start-item.leaderboard-item .leaderboard-glyph::after {
+      content: "";
+      position: absolute;
+      left: 4px;
+      right: 4px;
+      top: 3px;
+      height: 2px;
+      background: #7aa8ef;
+    }
+    .start-item.logout-item .logout-glyph {
+      width: 24px;
+      height: 24px;
+      position: relative;
+      flex: 0 0 24px;
+      pointer-events: none;
+    }
+    .start-item.logout-item .logout-glyph::before {
+      content: "";
+      position: absolute;
+      inset: 4px;
+      border: 2px solid #b82222;
+      border-radius: 999px;
+    }
+    .start-item.logout-item .logout-glyph::after {
+      content: "";
+      position: absolute;
+      left: 11px;
+      top: 2px;
+      width: 2px;
+      height: 10px;
+      background: #b82222;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.25);
+    }
     .viewport { position: relative; width: 0; margin: 0 auto; background: transparent; }
     .form {
       position: absolute; left: 0; top: 0; width: 618px; height: 543px; transform-origin: top left;
@@ -696,6 +795,42 @@
       justify-content: center;
       margin-top: 32px;
     }
+    .poster.story-scroll.story-page-0 .actions {
+      margin-top: -48px;
+    }
+    .poster.story-scroll.story-page-1 .actions {
+      margin-top: -18px;
+    }
+    .poster.story-scroll.story-page-2 .actions {
+      margin-top: 2px;
+    }
+    .poster.story-scroll.story-page-3 .actions,
+    .poster.story-scroll.story-page-4 .actions,
+    .poster.story-scroll.story-page-5 .actions,
+    .poster.story-scroll.story-page-6 .actions {
+      margin-top: -38px;
+    }
+    .poster.story-scroll .btn {
+      position: static;
+      min-width: 62px;
+      height: 30px;
+      padding: 0 8px;
+      border: 1px solid #8a6a2b;
+      border-right-color: #5d4516;
+      border-bottom-color: #5d4516;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #faedbe 0%, #e0c67f 100%);
+      color: #4a3510;
+      font: 700 12px Tahoma, "MS Sans Serif", sans-serif;
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.55);
+    }
+    .poster.story-scroll .btn:active {
+      border-top-color: #5d4516;
+      border-left-color: #5d4516;
+      border-right-color: #d8c08a;
+      border-bottom-color: #d8c08a;
+      background: linear-gradient(180deg, #d8c08a 0%, #f0ddb0 100%);
+    }
     #result-body { white-space: pre-line; }
     .circolare-sheet {
       width: min(419px, calc(100% - 20px));
@@ -793,10 +928,10 @@
           <img src="resources/app-icon.png" alt="">
         </div>
         <div class="login-copy">
-          <h1 id="loginTitle">Acciacca Prof</h1>
-          <p>Immetti il nome utente per accedere alla sessione e comparire nella classifica.</p>
+          <h1 id="loginTitle">VA 2008 Galileo Galilei</h1>
+          <p>Immetti nome alunno.</p>
           <div class="login-form">
-            <input id="loginNameInput" class="login-input" type="text" maxlength="24" autocomplete="name" placeholder="Nome utente">
+            <input id="loginNameInput" class="login-input" type="text" maxlength="24" autocomplete="name" placeholder="Nome alunno">
             <button id="loginSubmit" class="login-submit" type="button">Accedi</button>
           </div>
           <div id="loginError" class="login-error" aria-live="polite"></div>
@@ -814,9 +949,13 @@
       <img src="resources/app-icon.png" alt="">
       <span>Acciacca prof</span>
     </button>
-    <button type="button" id="desktopReportIcon" class="desktop-icon file-doc file-sheet hidden" aria-label="Apri report sessione">
+    <button type="button" id="desktopReportIcon" class="desktop-icon file-doc file-sheet hidden" aria-label="Template report sessione">
       <span class="file-glyph" aria-hidden="true"></span>
       <span>report-sessione.xls</span>
+    </button>
+    <button type="button" id="desktopLeaderboardIcon" class="desktop-icon file-doc file-sheet" aria-label="Apri classifica">
+      <span class="file-glyph" aria-hidden="true"></span>
+      <span>classifica.xls</span>
     </button>
     <button type="button" id="startHotspot" class="start-hotspot" aria-label="Start">start</button>
     <button type="button" id="taskbarApp" class="taskbar-app" aria-label="Acciacca prof in esecuzione">
@@ -827,11 +966,12 @@
       <span class="file-glyph" aria-hidden="true" style="width:16px;height:18px;transform:scale(0.75);transform-origin:center center;"></span>
       <span>report-sessione.xls</span>
     </button>
-    <button type="button" id="taskbarLogout" class="taskbar-app" aria-label="Logout utente">
-      <span>Logout</span>
+    <button type="button" id="taskbarLeaderboard" class="taskbar-app" aria-label="Classifica aperta">
+      <span class="file-glyph" aria-hidden="true" style="width:16px;height:18px;transform:scale(0.75);transform-origin:center center;"></span>
+      <span>classifica.xls</span>
     </button>
     <div id="startMenu" class="start-menu" aria-hidden="true">
-      <div class="start-menu-header">Acciacca prof</div>
+      <div id="startMenuHeader" class="start-menu-header">Acciacca prof</div>
       <div class="start-menu-items">
         <button type="button" id="startMenuFolder" class="start-item folder-item">
           <span class="start-item-main">
@@ -840,10 +980,18 @@
           </span>
           <span class="start-item-arrow">▶</span>
         </button>
+        <button type="button" id="startMenuLogout" class="start-item logout-item hidden">
+          <span class="logout-glyph" aria-hidden="true"></span>
+          <span>Slogga sessione</span>
+        </button>
         <div id="startSubmenu" class="start-submenu" aria-hidden="true">
           <button type="button" id="startMenuOpen" class="start-item">
             <img src="resources/app-icon.png" alt="">
             <span>Apri Acciacca Prof</span>
+          </button>
+          <button type="button" id="startMenuLeaderboard" class="start-item leaderboard-item">
+            <span class="leaderboard-glyph" aria-hidden="true"></span>
+            <span>Classifica</span>
           </button>
           <button type="button" id="startMenuStory" class="start-item story-item">
             <span class="scroll-glyph" aria-hidden="true"></span>
@@ -937,7 +1085,7 @@
         <button type="button" id="student30" class="student arena-cursor" aria-label="Testa studente in basso a destra" style="left:410px;top:433px;width:64px;height:35px;"><img src="resources/student-30.png" alt=""></button>
         <button type="button" id="student32" class="student arena-cursor" aria-label="Testa studente in alto a sinistra" style="left:9px;top:167px;width:72px;height:63px;"><img src="resources/student-32.png" alt=""></button>
         <button type="button" id="student34" class="student arena-cursor" aria-label="Testa studente in basso a sinistra" style="left:8px;top:441px;width:76px;height:43px;overflow:visible;"><img src="resources/student-34.png" alt="" style="width:116px;"></button>
-        <button type="button" id="student36" class="student arena-cursor" aria-label="Studente vicino alla cattedra" style="left:92px;top:63px;width:114px;height:116px;"></button>
+        <button type="button" id="student36" class="student arena-cursor" aria-label="Studente vicino alla cattedra" style="left:92px;top:63px;width:114px;height:116px;z-index:3;"></button>
         <button type="button" id="student37" class="student arena-cursor" aria-label="Prof a sinistra della cattedra" style="left:138px;top:0px;width:74px;height:84px;"></button>
 
         <img id="schizzi" class="fx" src="resources/schizzi.png" alt="" style="left:642px;top:249px;width:73px;height:65px;">
@@ -959,6 +1107,8 @@
         <audio id="audioMiss" preload="auto" src="resources/miss.wav"></audio>
         <audio id="audioRobotHit" preload="auto" src="resources/robot_hit.wav"></audio>
         <audio id="audioCampanella" preload="auto" src="resources/campanella.m4a"></audio>
+        <audio id="audioLoginXp" preload="auto" src="resources/oxp.wav"></audio>
+        <audio id="audioLogoutXp" preload="auto" src="resources/winxpshutdown.wav"></audio>
           </div>
         </div>
       </div>
@@ -984,6 +1134,32 @@
               </tr>
             </thead>
             <tbody id="notepadEditor"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="window notepad-window" id="leaderboardWindow" style="display:none;">
+      <div class="window-titlebar" id="leaderboardTitlebar">
+        <div class="window-title">classifica.xls - Microsoft Excel</div>
+        <div class="window-controls">
+          <button type="button" id="leaderboardClose" class="win-btn" aria-label="Close">x</button>
+        </div>
+      </div>
+      <div class="window-body notepad-body">
+        <div class="notepad-menu"><span>File</span><span>Modifica</span><span>Visualizza</span><span>Inserisci</span><span>Formato</span><span>Dati</span><span>?</span></div>
+        <div class="sheet-wrap">
+          <table class="sheet-table">
+            <thead>
+              <tr>
+                <th style="width:60px;">Pos</th>
+                <th style="width:170px;">Alunno</th>
+                <th style="width:90px;">Punti</th>
+                <th style="width:70px;">Voto</th>
+                <th style="width:110px;">Esito</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboardBody"></tbody>
           </table>
         </div>
       </div>
@@ -1030,7 +1206,7 @@
         <div class="actions">
           <button type="button" class="btn hidden" id="storyPrev" style="position:static;width:72px;height:24px;">Indietro</button>
           <button type="button" class="btn hidden" id="storyNext" style="position:static;width:72px;height:24px;">Avanti</button>
-          <button type="button" class="btn" id="closeResult" style="position:static;width:72px;height:24px;">Chiudi</button>
+          <button type="button" class="btn hidden" id="closeResult" style="position:static;width:72px;height:24px;">Apri</button>
         </div>
       </div>
 
@@ -1062,6 +1238,7 @@
     const BOTTOM_SAFE_GAP = 50;
     const CUSTOM_UPLOADS_STORAGE_KEY = 'acciaccaProfCustomUploads';
     const USER_PROFILE_STORAGE_KEY = 'acciaccaProfUserProfile';
+    const REPORT_FILES_STORAGE_KEY = 'acciaccaProfReportFiles';
     const DEFAULT_CUSTOMIZATION_ASSETS = {
       cattivo: { 1: 'resources/author1.jpg', 2: 'resources/author2.jpg', 3: 'resources/author3.jpg' },
       buono: { 1: 'resources/author4.jpg', 2: 'resources/author5.JPG', 3: 'resources/author6.jpg' },
@@ -1114,7 +1291,7 @@
 
     const refs = {
       loginScreen: document.getElementById('loginScreen'), loginNameInput: document.getElementById('loginNameInput'), loginSubmit: document.getElementById('loginSubmit'), loginError: document.getElementById('loginError'),
-      shell: document.querySelector('.shell'), taskbar: document.getElementById('taskbar'), taskbarClock: document.getElementById('taskbarClock'), window: document.getElementById('window'), windowTitlebar: document.getElementById('windowTitlebar'), windowClose: document.getElementById('windowClose'), notepadWindow: document.getElementById('notepadWindow'), notepadTitlebar: document.getElementById('notepadTitlebar'), notepadClose: document.getElementById('notepadClose'), notepadEditor: document.getElementById('notepadEditor'), desktopAppIcon: document.getElementById('desktopAppIcon'), desktopReportIcon: document.getElementById('desktopReportIcon'), startHotspot: document.getElementById('startHotspot'), taskbarApp: document.getElementById('taskbarApp'), taskbarExcel: document.getElementById('taskbarExcel'), taskbarLogout: document.getElementById('taskbarLogout'), startMenu: document.getElementById('startMenu'), startMenuFolder: document.getElementById('startMenuFolder'), startSubmenu: document.getElementById('startSubmenu'), startMenuOpen: document.getElementById('startMenuOpen'), startMenuStory: document.getElementById('startMenuStory'),
+      shell: document.querySelector('.shell'), taskbar: document.getElementById('taskbar'), taskbarClock: document.getElementById('taskbarClock'), window: document.getElementById('window'), windowTitlebar: document.getElementById('windowTitlebar'), windowClose: document.getElementById('windowClose'), notepadWindow: document.getElementById('notepadWindow'), notepadTitlebar: document.getElementById('notepadTitlebar'), notepadClose: document.getElementById('notepadClose'), notepadEditor: document.getElementById('notepadEditor'), leaderboardWindow: document.getElementById('leaderboardWindow'), leaderboardTitlebar: document.getElementById('leaderboardTitlebar'), leaderboardClose: document.getElementById('leaderboardClose'), leaderboardBody: document.getElementById('leaderboardBody'), desktopAppIcon: document.getElementById('desktopAppIcon'), desktopReportTemplate: document.getElementById('desktopReportIcon'), desktopLeaderboardIcon: document.getElementById('desktopLeaderboardIcon'), startHotspot: document.getElementById('startHotspot'), taskbarApp: document.getElementById('taskbarApp'), taskbarExcel: document.getElementById('taskbarExcel'), taskbarLeaderboard: document.getElementById('taskbarLeaderboard'), startMenu: document.getElementById('startMenu'), startMenuHeader: document.getElementById('startMenuHeader'), startMenuFolder: document.getElementById('startMenuFolder'), startSubmenu: document.getElementById('startSubmenu'), startMenuOpen: document.getElementById('startMenuOpen'), startMenuLeaderboard: document.getElementById('startMenuLeaderboard'), startMenuStory: document.getElementById('startMenuStory'), startMenuLogout: document.getElementById('startMenuLogout'),
       viewport: document.getElementById('viewport'), form: document.getElementById('form'), background: document.getElementById('background'),
       profcatt: document.getElementById('profcatt'), profbuon: document.getElementById('profbuon'), bidella: document.getElementById('bidella'),
       schizzi: document.getElementById('schizzi'), zampilli1: document.getElementById('zampilli1'), zampilli2: document.getElementById('zampilli2'), zampilli3: document.getElementById('zampilli3'), zampilli4: document.getElementById('zampilli4'), zampilli5: document.getElementById('zampilli5'),
@@ -1134,7 +1311,7 @@
       student30: document.getElementById('student30'), student31: document.getElementById('student31'), student32: document.getElementById('student32'), student33: document.getElementById('student33'), student34: document.getElementById('student34'), student35: document.getElementById('student35'), student36: document.getElementById('student36'), student37: document.getElementById('student37'),
       pentCells: Array.from({ length: 9 }, (_, i) => document.getElementById(`pentCell${i}`)),
       audioProfmorto: document.getElementById('audioProfmorto'), audioBidella: document.getElementById('audioBidella'), audioBambino: document.getElementById('audioBambino'), audioFuori: document.getElementById('audioFuori'), audioSottofondo: document.getElementById('audioSottofondo'), audioSiii: document.getElementById('audioSiii'), audioNooo: document.getElementById('audioNooo'),
-      audioSuccess: document.getElementById('audioSuccess'), audioFail: document.getElementById('audioFail'), audioMiss: document.getElementById('audioMiss'), audioRobotHit: document.getElementById('audioRobotHit'), audioCampanella: document.getElementById('audioCampanella')
+      audioSuccess: document.getElementById('audioSuccess'), audioFail: document.getElementById('audioFail'), audioMiss: document.getElementById('audioMiss'), audioRobotHit: document.getElementById('audioRobotHit'), audioCampanella: document.getElementById('audioCampanella'), audioLoginXp: document.getElementById('audioLoginXp'), audioLogoutXp: document.getElementById('audioLogoutXp')
     };
 
     const state = {
@@ -1217,6 +1394,14 @@
         x: 18,
         y: 18
       },
+      reportIconDrag: {
+        active: false,
+        moved: false,
+        suppressClick: false,
+        reportId: '',
+        offsetX: 0,
+        offsetY: 0
+      },
       windowClosed: false,
       windowMinimized: false,
       startMenuOpen: false,
@@ -1226,11 +1411,15 @@
       storyMode: false,
       clockTimerId: null,
       audioUnlocked: false,
-      reportFileContent: '',
-      reportFileVisible: false,
-      notepad: { open: false, moved: false, minimized: false, x: 0, y: 0, active: false, offsetX: 0, offsetY: 0 },
+      reportFiles: [],
+      nextReportNumber: 1,
+      selectedReportId: '',
+      notepad: { open: false, moved: false, minimized: false, x: 0, y: 0, active: false, offsetX: 0, offsetY: 0, report: null },
+      leaderboard: { open: false, moved: false, minimized: false, x: 0, y: 0, active: false, offsetX: 0, offsetY: 0, entries: [] },
       userName: '',
-      loggedIn: false
+      loggedIn: false,
+      sessionId: '',
+      sessionSubmitted: false
     };
 
     function resizeForm() {
@@ -1247,6 +1436,7 @@
       positionDesktopIcon();
       positionStartUI();
       positionWindow();
+      positionLeaderboardWindow();
     }
     function desktopBounds() {
       const shellRect = refs.shell.getBoundingClientRect();
@@ -1275,13 +1465,80 @@
         window.localStorage.setItem(USER_PROFILE_STORAGE_KEY, JSON.stringify({ name }));
       } catch (_) {}
     }
+    function reportFilesStorageKeyFor(name = state.userName) {
+      return `${REPORT_FILES_STORAGE_KEY}:${String(name || '').trim().toLowerCase()}`;
+    }
+    function clearReportFilesState() {
+      state.reportFiles.forEach((report) => {
+        if (report.el && report.el.parentNode) report.el.parentNode.removeChild(report.el);
+      });
+      state.reportFiles = [];
+      state.nextReportNumber = 1;
+      state.selectedReportId = '';
+      state.notepad.report = null;
+      refs.desktopReportTemplate.classList.add('hidden');
+    }
+    function saveReportFiles() {
+      if (!state.userName) return;
+      try {
+        const payload = {
+          nextReportNumber: state.nextReportNumber,
+          selectedReportId: state.selectedReportId,
+          reportFiles: state.reportFiles.map((report) => ({
+            id: report.id,
+            name: report.name,
+            title: report.title,
+            rows: report.rows,
+            content: report.content,
+            x: report.x,
+            y: report.y
+          }))
+        };
+        window.localStorage.setItem(reportFilesStorageKeyFor(), JSON.stringify(payload));
+      } catch (_) {}
+    }
+    function loadReportFiles(name = state.userName) {
+      clearReportFilesState();
+      if (!name) return;
+      try {
+        const raw = window.localStorage.getItem(reportFilesStorageKeyFor(name));
+        if (!raw) return;
+        const parsed = JSON.parse(raw);
+        const files = Array.isArray(parsed?.reportFiles) ? parsed.reportFiles : [];
+        state.reportFiles = files.map((report) => ({
+          id: String(report.id || `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`),
+          name: String(report.name || 'report-sessione.xls'),
+          title: String(report.title || 'Report sessione'),
+          rows: Array.isArray(report.rows) ? report.rows : [],
+          content: String(report.content || ''),
+          x: typeof report.x === 'number' ? report.x : undefined,
+          y: typeof report.y === 'number' ? report.y : undefined,
+          el: null
+        }));
+        state.nextReportNumber = Number.isFinite(Number(parsed?.nextReportNumber)) ? Math.max(1, Number(parsed.nextReportNumber)) : (state.reportFiles.length + 1);
+        state.selectedReportId = String(parsed?.selectedReportId || '');
+      } catch (_) {
+        clearReportFilesState();
+      }
+    }
     function applyUserProfile(name) {
       state.userName = name;
       document.title = `Acciacca Prof Web - ${name}`;
     }
+    function generateSessionId() {
+      return `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+    }
+    function playSystemAudio(el) {
+      if (!el) return;
+      try {
+        el.currentTime = 0;
+        el.play().catch(() => {});
+      } catch (_) {}
+    }
     function completeLogin(name) {
       applyUserProfile(name);
       saveUserProfile(name);
+      loadReportFiles(name);
       state.loggedIn = true;
       refs.loginError.textContent = '';
       refs.loginScreen.classList.add('hidden');
@@ -1293,6 +1550,7 @@
       resizeForm();
       syncTaskbarApp();
       syncBackgroundAudio();
+      playSystemAudio(refs.audioLoginXp);
       updateStatus(`Sessione avviata per ${name}.`);
       showStartStory();
     }
@@ -1306,13 +1564,18 @@
       completeLogin(name);
     }
     function logoutUser() {
+      playSystemAudio(refs.audioLogoutXp);
       if (state.running) stopGame(false);
       closeNotepad();
+      closeLeaderboard();
       closeStartMenu();
       closeStoryOverlay();
       closeModal(false);
       state.loggedIn = false;
       state.userName = '';
+      state.sessionId = '';
+      state.sessionSubmitted = false;
+      clearReportFilesState();
       refs.shell.classList.add('hidden');
       refs.loginScreen.classList.remove('hidden');
       refs.loginNameInput.focus();
@@ -1329,15 +1592,107 @@
         state.desktopIconDrag.initialized = true;
       }
       applyDesktopIconPosition(state.desktopIconDrag.x, state.desktopIconDrag.y, iconWidth, iconHeight);
-      positionReportIcon();
+      positionDesktopLeaderboardIcon();
+      renderReportIcons();
     }
-    function positionReportIcon() {
+    function positionDesktopLeaderboardIcon() {
       const desktop = desktopBounds();
-      const iconWidth = refs.desktopReportIcon.offsetWidth || 84;
-      const iconHeight = refs.desktopReportIcon.offsetHeight || 64;
-      refs.desktopReportIcon.style.left = `${desktop.left + 18}px`;
-      refs.desktopReportIcon.style.top = `${desktop.top + 96}px`;
-      refs.desktopReportIcon.classList.toggle('hidden', !state.reportFileVisible);
+      refs.desktopLeaderboardIcon.style.left = `${desktop.left + 118}px`;
+      refs.desktopLeaderboardIcon.style.top = `${desktop.top + 18}px`;
+    }
+    function reportIconBase(index) {
+      const desktop = desktopBounds();
+      const iconWidth = refs.desktopReportTemplate.offsetWidth || 84;
+      const iconHeight = refs.desktopReportTemplate.offsetHeight || 64;
+      const startX = desktop.left + 18;
+      const startY = desktop.top + 96;
+      const verticalStep = iconHeight + 14;
+      const horizontalStep = iconWidth + 22;
+      const availableHeight = Math.max(verticalStep, desktop.height - 108);
+      const rowsPerColumn = Math.max(1, Math.floor(availableHeight / verticalStep));
+      const column = Math.floor(index / rowsPerColumn);
+      const row = index % rowsPerColumn;
+      return { x: startX + (column * horizontalStep), y: startY + (row * verticalStep) };
+    }
+    function reportIconBounds(iconWidth, iconHeight) {
+      const desktop = desktopBounds();
+      return {
+        minX: desktop.left,
+        minY: desktop.top,
+        maxX: Math.max(desktop.left, desktop.left + desktop.width - iconWidth),
+        maxY: Math.max(desktop.top, desktop.top + desktop.height - iconHeight)
+      };
+    }
+    function clampReportIconPosition(x, y, iconWidth, iconHeight) {
+      const bounds = reportIconBounds(iconWidth, iconHeight);
+      return {
+        x: Math.min(Math.max(bounds.minX, x), bounds.maxX),
+        y: Math.min(Math.max(bounds.minY, y), bounds.maxY)
+      };
+    }
+    function applyReportIconPosition(report, x, y, iconWidth = refs.desktopReportTemplate.offsetWidth || 84, iconHeight = refs.desktopReportTemplate.offsetHeight || 64) {
+      const pos = clampReportIconPosition(x, y, iconWidth, iconHeight);
+      report.x = pos.x;
+      report.y = pos.y;
+      if (report.el) {
+        report.el.style.left = `${pos.x}px`;
+        report.el.style.top = `${pos.y}px`;
+      }
+    }
+    function renderReportIcons() {
+      state.reportFiles.forEach((report, index) => {
+        if (!report.el) {
+          const button = refs.desktopReportTemplate.cloneNode(true);
+          button.id = '';
+          button.dataset.reportId = report.id;
+          button.classList.remove('hidden');
+          button.setAttribute('aria-label', `Apri ${report.name}`);
+          button.querySelector('span:last-child').textContent = report.name;
+          refs.shell.appendChild(button);
+          report.el = button;
+          button.addEventListener('mousedown', (event) => startReportIconDrag(report.id, event));
+          button.addEventListener('click', (event) => {
+            event.stopPropagation();
+            if (state.reportIconDrag.suppressClick && state.reportIconDrag.reportId === report.id) {
+              state.reportIconDrag.suppressClick = false;
+              state.reportIconDrag.reportId = '';
+              event.preventDefault();
+              return;
+            }
+            openNotepad(report.id);
+          });
+        }
+        report.el.classList.remove('hidden');
+        report.el.querySelector('span:last-child').textContent = report.name;
+        if (typeof report.x !== 'number' || typeof report.y !== 'number') {
+          const base = reportIconBase(index);
+          applyReportIconPosition(report, base.x, base.y);
+        } else {
+          applyReportIconPosition(report, report.x, report.y);
+        }
+      });
+      refs.desktopReportTemplate.classList.add('hidden');
+    }
+    function selectedReportFile() {
+      return state.reportFiles.find((report) => report.id === state.selectedReportId) || state.reportFiles[state.reportFiles.length - 1] || null;
+    }
+    function createSessionReportFile(title) {
+      const report = {
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        name: `report-sessione-${state.nextReportNumber}.xls`,
+        title,
+        rows: buildSessionReportRows(),
+        content: buildSessionReportText(),
+        x: undefined,
+        y: undefined,
+        el: null
+      };
+      state.nextReportNumber += 1;
+      state.reportFiles.push(report);
+      state.selectedReportId = report.id;
+      renderReportIcons();
+      saveReportFiles();
+      return report;
     }
     function desktopIconBounds(iconWidth, iconHeight) {
       const desktop = desktopBounds();
@@ -1372,6 +1727,7 @@
     }
     function openStartMenu() {
       state.startMenuOpen = true;
+      refs.startMenuHeader.textContent = state.loggedIn && state.userName ? `Ciao ${state.userName}` : 'Acciacca prof';
       refs.startMenu.classList.add('visible');
       refs.startMenu.setAttribute('aria-hidden', 'false');
       refs.startSubmenu.classList.remove('visible');
@@ -1415,9 +1771,9 @@
       refs.taskbarExcel.style.left = `${startX + startWidth + 18 + Math.min(180, Math.max(142, desktop.width * 0.16))}px`;
       refs.taskbarExcel.style.top = `${startY + Math.max(0, (startHeight - 24) / 2)}px`;
       refs.taskbarExcel.style.width = `${Math.min(180, Math.max(154, desktop.width * 0.18))}px`;
-      refs.taskbarLogout.style.left = `${desktop.left + Math.max(12, desktop.width - 198)}px`;
-      refs.taskbarLogout.style.top = `${startY + Math.max(0, (startHeight - 24) / 2)}px`;
-      refs.taskbarLogout.style.width = `84px`;
+      refs.taskbarLeaderboard.style.left = `${startX + startWidth + 26 + Math.min(180, Math.max(142, desktop.width * 0.16)) + Math.min(180, Math.max(154, desktop.width * 0.18))}px`;
+      refs.taskbarLeaderboard.style.top = `${startY + Math.max(0, (startHeight - 24) / 2)}px`;
+      refs.taskbarLeaderboard.style.width = `${Math.min(170, Math.max(132, desktop.width * 0.16))}px`;
     }
     function windowBounds() {
       const shellRect = refs.shell.getBoundingClientRect();
@@ -1456,6 +1812,7 @@
       if (state.windowDrag.moved) applyWindowPosition(state.windowDrag.x, state.windowDrag.y);
       else centerWindow();
       positionNotepadWindow();
+      positionLeaderboardWindow();
     }
     function notepadWindowBounds() {
       const desktop = desktopBounds();
@@ -1493,12 +1850,14 @@
       refs.taskbarApp.setAttribute('aria-hidden', visible ? 'false' : 'true');
       const taskbarLabel = refs.taskbarApp.querySelector('span:last-child');
       if (taskbarLabel) taskbarLabel.textContent = state.running && state.userName ? `Ciao ${state.userName}` : 'Acciacca prof';
+      refs.startMenuHeader.textContent = state.loggedIn && state.userName ? `Ciao ${state.userName}` : 'Acciacca prof';
       refs.taskbarExcel.classList.toggle('visible', state.notepad.open);
       refs.taskbarExcel.classList.toggle('minimized', state.notepad.open && state.notepad.minimized);
       refs.taskbarExcel.setAttribute('aria-hidden', state.notepad.open ? 'false' : 'true');
-      refs.taskbarLogout.classList.toggle('visible', state.running && state.loggedIn);
-      refs.taskbarLogout.classList.remove('minimized');
-      refs.taskbarLogout.setAttribute('aria-hidden', state.running && state.loggedIn ? 'false' : 'true');
+      refs.taskbarLeaderboard.classList.toggle('visible', state.leaderboard.open);
+      refs.taskbarLeaderboard.classList.toggle('minimized', state.leaderboard.open && state.leaderboard.minimized);
+      refs.taskbarLeaderboard.setAttribute('aria-hidden', state.leaderboard.open ? 'false' : 'true');
+      refs.startMenuLogout.classList.toggle('hidden', !state.loggedIn);
     }
     function startWindowDrag(event) {
       if (state.windowClosed || state.windowMinimized) return;
@@ -1544,6 +1903,39 @@
       state.desktopIconDrag.suppressClick = state.desktopIconDrag.moved;
       state.desktopIconDrag.moved = false;
     }
+    function startReportIconDrag(reportId, event) {
+      const report = state.reportFiles.find((entry) => entry.id === reportId);
+      if (!report || !report.el) return;
+      const rect = report.el.getBoundingClientRect();
+      state.reportIconDrag.active = true;
+      state.reportIconDrag.moved = false;
+      state.reportIconDrag.suppressClick = false;
+      state.reportIconDrag.reportId = reportId;
+      state.reportIconDrag.offsetX = event.clientX - rect.left;
+      state.reportIconDrag.offsetY = event.clientY - rect.top;
+      event.preventDefault();
+    }
+    function moveReportIconDrag(event) {
+      if (!state.reportIconDrag.active) return;
+      const report = state.reportFiles.find((entry) => entry.id === state.reportIconDrag.reportId);
+      if (!report) return;
+      const shellRect = refs.shell.getBoundingClientRect();
+      const nextX = event.clientX - shellRect.left - state.reportIconDrag.offsetX;
+      const nextY = event.clientY - shellRect.top - state.reportIconDrag.offsetY;
+      if (typeof report.x === 'number' && typeof report.y === 'number') {
+        if (Math.abs(nextX - report.x) > 2 || Math.abs(nextY - report.y) > 2) state.reportIconDrag.moved = true;
+      } else {
+        state.reportIconDrag.moved = true;
+      }
+      applyReportIconPosition(report, nextX, nextY);
+    }
+    function stopReportIconDrag() {
+      if (!state.reportIconDrag.active) return;
+      state.reportIconDrag.active = false;
+      state.reportIconDrag.suppressClick = state.reportIconDrag.moved;
+      if (state.reportIconDrag.suppressClick) saveReportFiles();
+      state.reportIconDrag.moved = false;
+    }
     function closeWindow() {
       stopWindowDrag();
       if (state.running) stopGame(false);
@@ -1569,8 +1961,11 @@
       syncTaskbarApp();
       syncBackgroundAudio();
     }
-    function openNotepad() {
-      if (!state.reportFileVisible) return;
+    function openNotepad(reportId = state.selectedReportId, reportOverride = null) {
+      state.notepad.report = reportOverride;
+      if (reportId) state.selectedReportId = reportId;
+      const report = reportOverride || selectedReportFile();
+      if (!report) return;
       state.notepad.open = true;
       state.notepad.minimized = false;
       refs.notepadWindow.style.display = 'inline-block';
@@ -1582,8 +1977,158 @@
       state.notepad.open = false;
       state.notepad.active = false;
       state.notepad.minimized = false;
+      state.notepad.report = null;
       refs.notepadWindow.style.display = 'none';
       syncTaskbarApp();
+    }
+    function renderLeaderboardSheet() {
+      const entries = state.leaderboard.entries || [];
+      if (!entries.length) {
+        refs.leaderboardBody.innerHTML = '<tr><td colspan="6">Nessun punteggio registrato.</td></tr>';
+        return;
+      }
+      refs.leaderboardBody.innerHTML = entries.map((entry, index) => {
+        const date = new Date(entry.endedAt);
+        const when = Number.isNaN(date.getTime()) ? entry.endedAt : date.toLocaleString('it-IT');
+        return `<tr data-entry-id="${entry.id}" style="cursor:pointer;"><td>${index + 1}</td><td>${entry.userName}</td><td>${Number(entry.points || 0).toFixed(2)}</td><td>${entry.vote ?? ''}</td><td>${entry.status || entry.reportTitle || ''}</td><td>${when}</td></tr>`;
+      }).join('');
+    }
+    function currentSessionStatus(reportTitle) {
+      if (reportTitle === 'Report finale') return 'Completata';
+      if (state.inPentathlon) return `Interrotta al Pentathlon ${state.pentathlonMode}/5`;
+      return `Interrotta alla Lezione ${state.level}`;
+    }
+    function leaderboardEntryReport(entry) {
+      return {
+        id: `leaderboard:${entry.id}`,
+        name: `${String(entry.userName || 'alunno').replace(/[^\w.-]+/g, '_')}-dettaglio.xls`,
+        title: entry.reportTitle || 'Dettaglio classifica',
+        rows: Array.isArray(entry.rows) ? entry.rows : [],
+        content: String(entry.reportText || ''),
+        x: undefined,
+        y: undefined,
+        el: null
+      };
+    }
+    function openLeaderboardEntryDetail(entryId) {
+      const entry = state.leaderboard.entries.find((item) => item.id === entryId);
+      if (!entry) return;
+      openNotepad('', leaderboardEntryReport(entry));
+    }
+    async function fetchLeaderboard() {
+      const response = await fetch('api/leaderboard.php', { cache: 'no-store' });
+      if (!response.ok) throw new Error('Leaderboard non disponibile');
+      const payload = await response.json();
+      state.leaderboard.entries = Array.isArray(payload.entries) ? payload.entries : [];
+      renderLeaderboardSheet();
+    }
+    function positionLeaderboardWindow() {
+      if (!state.leaderboard.open) return;
+      const desktop = desktopBounds();
+      const rect = refs.leaderboardWindow.getBoundingClientRect();
+      if (state.leaderboard.moved) {
+        applyLeaderboardPosition(state.leaderboard.x, state.leaderboard.y);
+        return;
+      }
+      applyLeaderboardPosition(desktop.left + Math.max(80, (desktop.width - rect.width) / 2), desktop.top + Math.max(24, (desktop.height - rect.height) / 2));
+    }
+    function leaderboardWindowBounds() {
+      const desktop = desktopBounds();
+      const rect = refs.leaderboardWindow.getBoundingClientRect();
+      return {
+        minX: desktop.left,
+        minY: desktop.top,
+        maxX: Math.max(desktop.left, desktop.left + desktop.width - rect.width),
+        maxY: Math.max(desktop.top, desktop.top + desktop.height - rect.height)
+      };
+    }
+    function applyLeaderboardPosition(x, y) {
+      const bounds = leaderboardWindowBounds();
+      const px = Math.min(Math.max(bounds.minX, x), bounds.maxX);
+      const py = Math.min(Math.max(bounds.minY, y), bounds.maxY);
+      state.leaderboard.x = px;
+      state.leaderboard.y = py;
+      refs.leaderboardWindow.style.left = `${px}px`;
+      refs.leaderboardWindow.style.top = `${py}px`;
+    }
+    function startLeaderboardDrag(event) {
+      if (!state.leaderboard.open) return;
+      if (event.target.closest('.win-btn')) return;
+      const rect = refs.leaderboardWindow.getBoundingClientRect();
+      state.leaderboard.active = true;
+      state.leaderboard.offsetX = event.clientX - rect.left;
+      state.leaderboard.offsetY = event.clientY - rect.top;
+      event.preventDefault();
+    }
+    function moveLeaderboardDrag(event) {
+      if (!state.leaderboard.active) return;
+      const shellRect = refs.shell.getBoundingClientRect();
+      state.leaderboard.moved = true;
+      applyLeaderboardPosition(event.clientX - shellRect.left - state.leaderboard.offsetX, event.clientY - shellRect.top - state.leaderboard.offsetY);
+    }
+    function stopLeaderboardDrag() {
+      state.leaderboard.active = false;
+    }
+    async function openLeaderboard(refresh = true) {
+      state.leaderboard.open = true;
+      state.leaderboard.minimized = false;
+      refs.leaderboardWindow.style.display = 'inline-block';
+      if (refresh) {
+        try {
+          await fetchLeaderboard();
+        } catch (error) {
+          refs.leaderboardBody.innerHTML = `<tr><td colspan="6">${error.message}</td></tr>`;
+        }
+      } else {
+        renderLeaderboardSheet();
+      }
+      positionLeaderboardWindow();
+      syncTaskbarApp();
+    }
+    function closeLeaderboard() {
+      state.leaderboard.open = false;
+      state.leaderboard.active = false;
+      state.leaderboard.minimized = false;
+      refs.leaderboardWindow.style.display = 'none';
+      syncTaskbarApp();
+    }
+    function toggleTaskbarLeaderboard() {
+      if (!state.leaderboard.open) {
+        openLeaderboard(true);
+        return;
+      }
+      state.leaderboard.minimized = !state.leaderboard.minimized;
+      refs.leaderboardWindow.style.display = state.leaderboard.minimized ? 'none' : 'inline-block';
+      if (!state.leaderboard.minimized) positionLeaderboardWindow();
+      syncTaskbarApp();
+    }
+    async function submitLeaderboardEntry(reportTitle) {
+      if (!state.loggedIn || !state.userName || state.sessionSubmitted) return;
+      const report = selectedReportFile();
+      const payload = {
+        sessionId: state.sessionId,
+        userName: state.userName,
+        reportTitle,
+        status: currentSessionStatus(reportTitle),
+        endedAt: new Date().toISOString(),
+        points: state.points,
+        vote: Number(refs.lblvoto.textContent || '1'),
+        reportText: report ? report.content : buildSessionReportText(),
+        rows: buildSessionReportRows()
+      };
+      try {
+        const response = await fetch('api/leaderboard.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (!response.ok) throw new Error('Invio classifica fallito');
+        const result = await response.json();
+        state.sessionSubmitted = true;
+        if (Array.isArray(result.entries)) state.leaderboard.entries = result.entries;
+      } catch (_) {
+        updateStatus('Report salvato localmente, ma classifica non raggiungibile.');
+      }
     }
     function startNotepadDrag(event) {
       if (!state.notepad.open) return;
@@ -1885,7 +2430,16 @@
       ];
     }
     function renderReportSheet() {
-      const rows = buildSessionReportRows();
+      const report = state.notepad.report || selectedReportFile();
+      if (!report) {
+        refs.notepadEditor.innerHTML = '<tr><td colspan="5">Nessun report disponibile.</td></tr>';
+        return;
+      }
+      const titleNode = refs.notepadWindow.querySelector('.window-title');
+      if (titleNode) titleNode.textContent = `${report.name} - Microsoft Excel`;
+      const taskbarLabel = refs.taskbarExcel.querySelector('span:last-child');
+      if (taskbarLabel) taskbarLabel.textContent = report.name;
+      const rows = report.rows || [];
       refs.notepadEditor.innerHTML = rows.map((row, index) => {
         const prev = rows[index - 1];
         const next = rows[index + 1];
@@ -1896,18 +2450,13 @@
         return `<tr class="${classes}"><td>${row.section}</td><td>${row.label}</td><td>${row.value}</td><td>${row.points}</td><td>${row.detail}</td></tr>`;
       }).join('');
     }
-    function syncSessionReportFile() {
-      state.reportFileContent = buildSessionReportText();
-      state.reportFileVisible = true;
-      renderReportSheet();
-      positionReportIcon();
-    }
     function showSessionReport(title) {
       state.storyMode = false;
       state.sessionReportVisible = false;
-      syncSessionReportFile();
+      const report = createSessionReportFile(title);
+      submitLeaderboardEntry(title);
       closeModal(false);
-      openNotepad();
+      openNotepad(report.id);
       updateStatus(`${title} aperto in Excel.`);
     }
     function showCircolareSheet(esitoBuono) {
@@ -2080,7 +2629,7 @@
       const [title, body] = pentathlonModeMeta();
       refs.resultTitle.textContent = title;
       refs.resultSubtitle.textContent = 'Coach Perla';
-      refs.resultBody.textContent = `Ciao, sono la Perla e ti aiutero in questa disciplina del Pentathlon.\nLe regole sono queste:\n\n${body}`;
+      refs.resultBody.textContent = `Ciao, sono la Coach Perla e ti aiutero in questa disciplina del Pentathlon.\nLe regole sono queste:\n\n${body}`;
       refs.storyPrev.classList.add('hidden');
       refs.storyNext.classList.add('hidden');
       refs.dialogResult.className = 'poster good';
@@ -2418,12 +2967,16 @@
     }
     function renderStoryPage() {
       const page = START_MENU_STORY_PAGES[state.storyPage];
+      const isLastPage = state.storyPage === START_MENU_STORY_PAGES.length - 1;
       refs.resultTitle.textContent = page.title;
       refs.resultSubtitle.textContent = page.subtitle;
       refs.resultBody.textContent = page.body;
+      refs.dialogResult.className = `poster story-scroll story-page-${state.storyPage}`;
       refs.storyPrev.classList.toggle('hidden', state.storyPage === 0);
-      refs.storyNext.classList.remove('hidden');
-      refs.storyNext.textContent = state.storyPage === START_MENU_STORY_PAGES.length - 1 ? 'Fine' : 'Avanti';
+      refs.storyNext.classList.toggle('hidden', isLastPage);
+      refs.storyNext.textContent = 'Avanti';
+      refs.closeResult.classList.toggle('hidden', !isLastPage);
+      refs.closeResult.textContent = 'Apri';
     }
     function showStartStory() {
       closeStartMenu();
@@ -2498,7 +3051,7 @@
       refs.btnStart.textContent = isPlaying ? 'Stop' : 'Start'; refs.btnPause.classList.toggle('hidden', !isPlaying); refs.btnPause.textContent = 'Pausa'; refs.groupbox1.style.pointerEvents = 'auto'; refs.groupbox1.style.opacity = '1'; refs.btnupvelocita.disabled = isPlaying; refs.btndownvelocita.disabled = isPlaying; refs.editvelocita.disabled = isPlaying;
     }
     function startGame() {
-      stopTimer(); clearPentathlonState(); resetSessionReport(); state.running = true; state.paused = false; state.modal = null; state.attivaBidella = false; state.points = 0; state.level = selectedLevel(); state.stageCount = 0; state.inPentathlon = false; state.pentathlonMode = 0; state.retryCurrentPentathlon = false; state.pendingLevelIntro = null; state.counts.hit = 0; state.counts.escaped = 0; state.counts.wrong = 0; refs.lblvoto.textContent = '0'; syncLevelRadios(); syncScoreboard(); moveSpritesOffstage(); setGameControlsPlaying(true); syncBackgroundAudio(); showLevelRule(state.level); updateStatus('Leggi le regole del livello per iniziare.');
+      stopTimer(); clearPentathlonState(); resetSessionReport(); state.running = true; state.paused = false; state.modal = null; state.attivaBidella = false; state.points = 0; state.level = selectedLevel(); state.stageCount = 0; state.inPentathlon = false; state.pentathlonMode = 0; state.retryCurrentPentathlon = false; state.pendingLevelIntro = null; state.counts.hit = 0; state.counts.escaped = 0; state.counts.wrong = 0; state.sessionId = generateSessionId(); state.sessionSubmitted = false; refs.lblvoto.textContent = '0'; syncLevelRadios(); syncScoreboard(); moveSpritesOffstage(); setGameControlsPlaying(true); syncBackgroundAudio(); showLevelRule(state.level); updateStatus('Leggi le regole del livello per iniziare.');
     }
     function stopGame(showReport = true) {
       state.running = false; state.paused = false; state.inPentathlon = false; state.pentathlonMode = 0; state.retryCurrentPentathlon = false; clearPentathlonState(); stopTimer(); calculateVote(); setGameControlsPlaying(false); moveSpritesOffstage(); syncBackgroundAudio(); updateStatus('Partita fermata. Voto calcolato con la formula Delphi originale.');
@@ -2759,6 +3312,14 @@
     refs.notepadTitlebar.addEventListener('mousedown', startNotepadDrag);
     refs.notepadClose.addEventListener('mousedown', (event) => { event.stopPropagation(); });
     refs.notepadClose.addEventListener('click', (event) => { event.stopPropagation(); closeNotepad(); });
+    refs.leaderboardTitlebar.addEventListener('mousedown', startLeaderboardDrag);
+    refs.leaderboardClose.addEventListener('mousedown', (event) => { event.stopPropagation(); });
+    refs.leaderboardClose.addEventListener('click', (event) => { event.stopPropagation(); closeLeaderboard(); });
+    refs.leaderboardBody.addEventListener('click', (event) => {
+      const row = event.target.closest('tr[data-entry-id]');
+      if (!row) return;
+      openLeaderboardEntryDetail(row.dataset.entryId);
+    });
     refs.desktopAppIcon.addEventListener('mousedown', startDesktopIconDrag);
     refs.desktopAppIcon.addEventListener('click', (event) => {
       if (state.desktopIconDrag.suppressClick) {
@@ -2768,17 +3329,19 @@
       }
       openWindow();
     });
-    refs.desktopReportIcon.addEventListener('click', (event) => {
+    refs.desktopLeaderboardIcon.addEventListener('click', (event) => {
       event.stopPropagation();
-      openNotepad();
+      openLeaderboard(true);
     });
     refs.taskbarApp.addEventListener('click', (event) => { event.stopPropagation(); toggleTaskbarWindow(); });
     refs.taskbarExcel.addEventListener('click', (event) => { event.stopPropagation(); toggleTaskbarExcel(); });
-    refs.taskbarLogout.addEventListener('click', (event) => { event.stopPropagation(); logoutUser(); });
+    refs.taskbarLeaderboard.addEventListener('click', (event) => { event.stopPropagation(); toggleTaskbarLeaderboard(); });
     refs.startHotspot.addEventListener('click', (event) => { event.stopPropagation(); toggleStartMenu(); });
     refs.startMenuFolder.addEventListener('click', (event) => { event.stopPropagation(); toggleStartSubmenu(); });
     refs.startMenuOpen.addEventListener('click', (event) => { event.stopPropagation(); closeStartMenu(); openWindow(); });
+    refs.startMenuLeaderboard.addEventListener('click', (event) => { event.stopPropagation(); closeStartMenu(); openLeaderboard(true); });
     refs.startMenuStory.addEventListener('click', (event) => { event.stopPropagation(); showStartStory(); });
+    refs.startMenuLogout.addEventListener('click', (event) => { event.stopPropagation(); closeStartMenu(); logoutUser(); });
     refs.help1.addEventListener('click', () => { window.alert("Apparira un solo prof cattivo alla volta: se lo schiacci guadagni punti, se lo lasci andare o se sbagli perdi punti."); });
     refs.help2.addEventListener('click', () => { window.alert("Appariranno 1 prof buono e 1 prof cattivo. Devi schiacciare solo il cattivo."); });
     refs.help3.addEventListener('click', () => { window.alert("Come la lezione 2, ma i prof buoni e cattivi vengono scelti a caso tra quelli salvati. Inoltre puo entrare la bidella con una circolare e interrompere la partita."); });
@@ -2821,10 +3384,6 @@
     });
     refs.storyNext.addEventListener('click', () => {
       if (!state.storyMode) return;
-      if (state.storyPage >= START_MENU_STORY_PAGES.length - 1) {
-        closeStoryOverlay();
-        return;
-      }
       state.storyPage += 1;
       renderStoryPage();
     });
@@ -2832,6 +3391,7 @@
       const wasStoryMode = state.storyMode;
       if (wasStoryMode) {
         closeStoryOverlay();
+        openWindow();
         return;
       }
       state.storyMode = false;
@@ -2861,17 +3421,23 @@
     });
     document.addEventListener('mousemove', moveWindowDrag);
     document.addEventListener('mousemove', moveDesktopIconDrag);
+    document.addEventListener('mousemove', moveReportIconDrag);
     document.addEventListener('mousemove', moveNotepadDrag);
+    document.addEventListener('mousemove', moveLeaderboardDrag);
     document.addEventListener('mouseup', setHammerUp);
     document.addEventListener('mouseup', stopWindowDrag);
     document.addEventListener('mouseup', stopDesktopIconDrag);
+    document.addEventListener('mouseup', stopReportIconDrag);
     document.addEventListener('mouseup', stopNotepadDrag);
+    document.addEventListener('mouseup', stopLeaderboardDrag);
     window.addEventListener('blur', setHammerUp);
     window.addEventListener('blur', stopWindowDrag);
     window.addEventListener('blur', stopDesktopIconDrag);
+    window.addEventListener('blur', stopReportIconDrag);
     window.addEventListener('blur', stopNotepadDrag);
+    window.addEventListener('blur', stopLeaderboardDrag);
 
-    loadUserProfile(); loadCustomUploads(); applyCustomization(); moveSpritesOffstage(); clearPentathlonState(); syncLevelRadios(); syncScoreboard(); syncTaskbarApp(); startTaskbarClock(); syncBackgroundAudio(); resizeForm(); refs.loginNameInput.focus(); window.addEventListener('resize', resizeForm); new ResizeObserver(resizeForm).observe(refs.viewport);
+    loadUserProfile(); loadCustomUploads(); applyCustomization(); moveSpritesOffstage(); clearPentathlonState(); syncLevelRadios(); syncScoreboard(); syncTaskbarApp(); startTaskbarClock(); syncBackgroundAudio(); resizeForm(); refs.loginNameInput.focus(); fetchLeaderboard().catch(() => {}); window.addEventListener('resize', resizeForm); new ResizeObserver(resizeForm).observe(refs.viewport);
   </script>
 </body>
 </html>

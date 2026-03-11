@@ -3,3 +3,4 @@
 **/*.xcuserdatad/
 **/*.xcuserstate
 delphi/
+data/*.json
