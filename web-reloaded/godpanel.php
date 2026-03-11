@@ -404,7 +404,7 @@
 
     async function api(action, payload = {}, method = 'POST') {
       const options = { method, headers: { 'Content-Type': 'application/json' } };
-      let url = `api/godpanel.php?action=${encodeURIComponent(action)}`;
+      let url = `api/godpanelhelper.php?action=${encodeURIComponent(action)}`;
       if (method === 'POST') {
         options.body = JSON.stringify({ action, ...payload });
       }
