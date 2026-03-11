@@ -17,6 +17,10 @@
       --cursor-up: url("resources/martsu.cur"), auto;
       --cursor-down: url("resources/martgiu.cur"), auto;
     }
+    .shell.hidden {
+      visibility: hidden;
+      pointer-events: none;
+    }
 
     * { box-sizing: border-box; }
     body {
@@ -37,6 +41,115 @@
       margin: 0 auto;
       position: relative;
       overflow: hidden;
+    }
+    .login-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background:
+        radial-gradient(circle at center, rgba(121, 170, 255, 0.18) 0%, rgba(32, 89, 179, 0.08) 34%, transparent 54%),
+        linear-gradient(180deg, #0d3d8f 0%, #124da9 38%, #0c3f92 100%);
+      color: #fff;
+    }
+    .login-screen.hidden {
+      display: none;
+    }
+    .login-header,
+    .login-footer {
+      height: 74px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02));
+      box-shadow: inset 0 -1px 0 rgba(255,255,255,0.18);
+    }
+    .login-footer {
+      height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0 24px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.18);
+    }
+    .login-panel-wrap {
+      flex: 1;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+    }
+    .login-panel {
+      width: min(560px, calc(100vw - 32px));
+      min-height: 230px;
+      display: grid;
+      grid-template-columns: 116px minmax(0, 1fr);
+      gap: 22px;
+      align-items: center;
+      padding: 26px 30px;
+      border-radius: 10px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.06));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.24), 0 20px 40px rgba(0,0,0,0.28);
+      backdrop-filter: blur(1px);
+    }
+    .login-avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 14px;
+      border: 2px solid rgba(255,255,255,0.55);
+      background: linear-gradient(180deg, #f1f6ff 0%, #a3c0f0 100%);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.24);
+    }
+    .login-avatar img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+    }
+    .login-copy h1 {
+      margin: 0 0 8px;
+      font: 700 30px Tahoma, "MS Sans Serif", sans-serif;
+    }
+    .login-copy p {
+      margin: 0 0 16px;
+      font: 400 15px Tahoma, "MS Sans Serif", sans-serif;
+      color: rgba(255,255,255,0.92);
+    }
+    .login-form {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .login-input {
+      width: min(280px, 100%);
+      height: 32px;
+      padding: 0 10px;
+      border: 1px solid #2f4f88;
+      border-radius: 4px;
+      background: #fff;
+      color: #000;
+      font: 14px Tahoma, "MS Sans Serif", sans-serif;
+    }
+    .login-submit {
+      min-width: 88px;
+      height: 32px;
+      border: 1px solid rgba(255,255,255,0.46);
+      border-right-color: rgba(0,0,0,0.32);
+      border-bottom-color: rgba(0,0,0,0.32);
+      border-radius: 4px;
+      background: linear-gradient(180deg, #fafafa 0%, #dcdcdc 100%);
+      color: #000;
+      font: 700 13px Tahoma, "MS Sans Serif", sans-serif;
+      cursor: pointer;
+    }
+    .login-error {
+      min-height: 18px;
+      margin-top: 10px;
+      font: 700 12px Tahoma, "MS Sans Serif", sans-serif;
+      color: #ffd5d5;
+    }
+    .login-footer-copy {
+      font: 400 12px Tahoma, "MS Sans Serif", sans-serif;
+      color: rgba(255,255,255,0.86);
     }
     .taskbar {
       position: absolute;
@@ -383,6 +496,31 @@
       gap: 8px;
       min-width: 0;
     }
+    .start-item.folder-item .folder-glyph {
+      width: 24px;
+      height: 18px;
+      position: relative;
+      flex: 0 0 24px;
+      border: 1px solid #9c7a1a;
+      border-right-color: #74570e;
+      border-bottom-color: #74570e;
+      border-radius: 2px;
+      background: linear-gradient(180deg, #ffd767 0%, #d9a62d 100%);
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.5);
+      pointer-events: none;
+    }
+    .start-item.folder-item .folder-glyph::before {
+      content: "";
+      position: absolute;
+      left: 2px;
+      top: -4px;
+      width: 11px;
+      height: 6px;
+      border: 1px solid #9c7a1a;
+      border-bottom: 0;
+      border-radius: 2px 2px 0 0;
+      background: linear-gradient(180deg, #ffe08d 0%, #e7bb4d 100%);
+    }
     .start-item-arrow {
       font: 700 12px "Tahoma", "MS Sans Serif", sans-serif;
       pointer-events: none;
@@ -435,6 +573,7 @@
       box-shadow: inset 1px 1px 0 #fdfdfd, inset -1px -1px 0 #7a7a7a; user-select: none; cursor: var(--cursor-up);
     }
     .bg { position: absolute; left: 13px; top: 10px; width: 487px; height: 528px; image-rendering: pixelated; cursor: var(--cursor-up); }
+    img { -webkit-user-drag: none; user-select: none; }
     .win-label { position: absolute; font-size: 11px; line-height: 13px; color: var(--text); }
     .vote { position: absolute; left: 469px; top: 48px; min-width: 40px; text-align: left; font-size: 13px; line-height: 16px; font-weight: 700; color: #fff; }
     .link-label {
@@ -509,6 +648,13 @@
       position: absolute; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(0, 0, 40, 0.28); z-index: 30;
     }
     .modal-backdrop.visible { display: flex; }
+    .modal-backdrop.story-floating {
+      background: transparent;
+      pointer-events: none;
+    }
+    .modal-backdrop.story-floating #dialogResult {
+      pointer-events: auto;
+    }
     .dialog, .poster {
       background: var(--win-bg); color: var(--text); border: 1px solid #7d7d7d; box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #7a7a7a, 0 10px 30px rgba(0, 0, 0, 0.2);
     }
@@ -520,46 +666,80 @@
     .poster { width: min(434px, calc(100% - 20px)); padding: 18px 16px 14px; background: linear-gradient(180deg, #fffef5 0%, #f5f1d8 100%); border-color: #8d8561; }
     .poster.good h2 { color: #0b6f15; }
     .poster.bad h2 { color: #8f0f0f; }
+    .poster.story-scroll {
+      width: min(419px, calc(100% - 20px));
+      min-height: 560px;
+      padding: 106px 78px 40px;
+      background: url("resources/Unit4_Image1.png") center center / 100% 100% no-repeat;
+      border: 0;
+      box-shadow: none;
+      color: #2f220b;
+    }
+    .poster.story-scroll h2 {
+      text-align: center;
+      font-size: 20px;
+      color: #2f220b;
+      margin-bottom: 8px;
+    }
+    .poster.story-scroll #result-subtitle {
+      text-align: center;
+      color: #4f3a14 !important;
+      margin-bottom: 14px !important;
+      font-size: 15px !important;
+    }
+    .poster.story-scroll #result-body {
+      font-size: 16px;
+      min-height: 250px;
+      line-height: 1.5;
+    }
+    .poster.story-scroll .actions {
+      justify-content: center;
+      margin-top: 32px;
+    }
     #result-body { white-space: pre-line; }
     .circolare-sheet {
       width: min(419px, calc(100% - 20px));
-      min-height: 560px;
-      padding: 26px 34px 30px;
-      background:
-        radial-gradient(circle at 20% 18%, rgba(255,255,255,0.45), transparent 26%),
-        radial-gradient(circle at 80% 12%, rgba(255,255,255,0.28), transparent 20%),
-        linear-gradient(180deg, #f5e7ba 0%, #e4d09a 45%, #d4bc82 100%);
-      border: 1px solid #8f7745;
-      box-shadow: inset 0 0 40px rgba(120, 83, 28, 0.18), 0 12px 28px rgba(0,0,0,0.28);
+      height: 560px;
+      padding: 0;
+      background: url("resources/Unit4_Image1.png") center center / 100% 100% no-repeat;
+      border: 0;
+      box-shadow: none;
       color: #2f220b;
       position: relative;
       cursor: pointer;
     }
-    .circolare-sheet::before,
-    .circolare-sheet::after {
-      content: "";
+    .circolare-sheet-inner {
       position: absolute;
-      left: 10px;
-      right: 10px;
-      height: 14px;
-      border-radius: 50%;
-      background: rgba(111, 79, 22, 0.12);
-      filter: blur(4px);
+      inset: 0;
+      padding: 108px 66px 40px;
     }
-    .circolare-sheet::before { top: 8px; }
-    .circolare-sheet::after { bottom: 8px; }
     .circolare-sheet h2,
     .circolare-sheet p { margin: 0; }
     .circolare-head { text-align: center; margin-bottom: 14px; }
-    .circolare-school { font-size: 20px; font-weight: 700; }
-    .circolare-line { font-size: 14px; margin-top: 4px; }
+    .circolare-school { font-size: 19px; font-weight: 700; }
+    .circolare-line { font-size: 13px; margin-top: 3px; }
     .circolare-meta { text-align: center; margin: 10px 0 18px; }
     .circolare-number { font-size: 18px; font-weight: 700; }
-    .circolare-audience { text-align: center; font-size: 15px; font-weight: 700; margin-bottom: 18px; }
-    .circolare-subject { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
-    .circolare-body { font-size: 14px; line-height: 1.45; min-height: 170px; }
-    .circolare-signoff { margin-top: 20px; font-size: 14px; }
-    .circolare-signature { margin-top: 4px; font-size: 15px; font-weight: 700; }
+    .circolare-audience { text-align: center; font-size: 14px; font-weight: 700; margin-bottom: 20px; }
+    .circolare-subject { font-size: 14px; font-weight: 700; margin-bottom: 12px; }
+    .circolare-body { font-size: 14px; line-height: 1.42; min-height: 168px; }
+    .circolare-signoff {
+      position: absolute;
+      left: 66px;
+      right: 66px;
+      bottom: 110px;
+      margin-top: 0;
+      font-size: 14px;
+    }
+    .circolare-signature {
+      position: absolute;
+      left: 66px;
+      right: 66px;
+      bottom: 90px;
+      margin-top: 0;
+      font-size: 15px;
+      font-weight: 700;
+    }
     .custom-grid { display: grid; gap: 10px; margin-bottom: 12px; }
     .custom-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; align-items: start; }
     .custom-slot { display: grid; gap: 4px; justify-items: center; align-content: start; }
@@ -605,7 +785,29 @@
   </style>
 </head>
 <body>
-  <main class="shell">
+  <div id="loginScreen" class="login-screen">
+    <div class="login-header"></div>
+    <div class="login-panel-wrap">
+      <div class="login-panel" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+        <div class="login-avatar">
+          <img src="resources/app-icon.png" alt="">
+        </div>
+        <div class="login-copy">
+          <h1 id="loginTitle">Acciacca Prof</h1>
+          <p>Immetti il nome utente per accedere alla sessione e comparire nella classifica.</p>
+          <div class="login-form">
+            <input id="loginNameInput" class="login-input" type="text" maxlength="24" autocomplete="name" placeholder="Nome utente">
+            <button id="loginSubmit" class="login-submit" type="button">Accedi</button>
+          </div>
+          <div id="loginError" class="login-error" aria-live="polite"></div>
+        </div>
+      </div>
+    </div>
+    <div class="login-footer">
+      <div class="login-footer-copy">Acciacca Prof Reloaded · Windows XP Login Simulation</div>
+    </div>
+  </div>
+  <main class="shell hidden">
     <div id="taskbar" class="taskbar"></div>
     <div id="taskbarClock" class="taskbar-clock" aria-hidden="true">19:45</div>
     <button type="button" id="desktopAppIcon" class="desktop-icon" aria-label="Apri Acciacca prof">
@@ -625,12 +827,15 @@
       <span class="file-glyph" aria-hidden="true" style="width:16px;height:18px;transform:scale(0.75);transform-origin:center center;"></span>
       <span>report-sessione.xls</span>
     </button>
+    <button type="button" id="taskbarLogout" class="taskbar-app" aria-label="Logout utente">
+      <span>Logout</span>
+    </button>
     <div id="startMenu" class="start-menu" aria-hidden="true">
       <div class="start-menu-header">Acciacca prof</div>
       <div class="start-menu-items">
         <button type="button" id="startMenuFolder" class="start-item folder-item">
           <span class="start-item-main">
-            <img src="resources/app-icon.png" alt="">
+            <span class="folder-glyph" aria-hidden="true"></span>
             <span>Acciacca Prof</span>
           </span>
           <span class="start-item-arrow">▶</span>
@@ -742,69 +947,6 @@
         <img id="zampilli4" class="zampillo" src="resources/zampilli.png" alt="" style="left:120px;top:74px;width:38px;height:42px;">
         <img id="zampilli5" class="zampillo" src="resources/zampilli.png" alt="" style="left:154px;top:4px;width:40px;height:44px;">
 
-        <div id="modalBackdrop" class="modal-backdrop">
-          <div id="dialogCustomization" class="dialog hidden" role="dialog" aria-modal="true" aria-labelledby="custom-title">
-            <h2 id="custom-title">Personalizzazioni</h2>
-            <p>Scegli i personaggi da usare nel porting web. Lezione 1 e 2 usano il personaggio corrente; lezione 3 continua a usare lo stesso set selezionato.</p>
-            <div class="custom-grid">
-              <div class="custom-row">
-                <div class="custom-slot"><button type="button" class="custom-choice" data-kind="buono" data-value="1"><img src="resources/author4.jpg" alt=""></button><button type="button" class="custom-upload" data-kind="buono" data-value="1">Carica</button><span class="custom-caption">Prof buono 1</span></div>
-                <div class="custom-slot"><button type="button" class="custom-choice" data-kind="buono" data-value="2"><img src="resources/author5.JPG" alt=""></button><button type="button" class="custom-upload" data-kind="buono" data-value="2">Carica</button><span class="custom-caption">Prof buono 2</span></div>
-                <div class="custom-slot"><button type="button" class="custom-choice" data-kind="buono" data-value="3"><img src="resources/author6.jpg" alt=""></button><button type="button" class="custom-upload" data-kind="buono" data-value="3">Carica</button><span class="custom-caption">Prof buono 3</span></div>
-              </div>
-              <div class="custom-row">
-                <div class="custom-slot"><button type="button" class="custom-choice" data-kind="cattivo" data-value="1"><img src="resources/author1.jpg" alt=""></button><button type="button" class="custom-upload" data-kind="cattivo" data-value="1">Carica</button><span class="custom-caption">Prof cattivo 1</span></div>
-                <div class="custom-slot"><button type="button" class="custom-choice" data-kind="cattivo" data-value="2"><img src="resources/author2.jpg" alt=""></button><button type="button" class="custom-upload" data-kind="cattivo" data-value="2">Carica</button><span class="custom-caption">Prof cattivo 2</span></div>
-                <div class="custom-slot"><button type="button" class="custom-choice" data-kind="cattivo" data-value="3"><img src="resources/author3.jpg" alt=""></button><button type="button" class="custom-upload" data-kind="cattivo" data-value="3">Carica</button><span class="custom-caption">Prof cattivo 3</span></div>
-              </div>
-              <div class="custom-row">
-                <div class="custom-slot"><button type="button" class="custom-choice" data-kind="bidella" data-value="1"><img src="resources/author7.JPG" alt=""></button><button type="button" class="custom-upload" data-kind="bidella" data-value="1">Carica</button><span class="custom-caption">Bidella</span></div>
-                <div class="custom-slot custom-slot-empty"><span>.</span></div>
-                <div class="custom-slot"><button type="button" class="custom-choice" data-kind="coach" data-value="1"><img src="resources/author8.png" alt=""></button><button type="button" class="custom-upload" data-kind="coach" data-value="1">Carica</button><span class="custom-caption">Coach Perla</span></div>
-              </div>
-            </div>
-            <input id="customUploadInput" type="file" accept="image/*" class="hidden">
-            <div class="actions"><button type="button" class="btn" id="closeCustomization" style="position:static;width:72px;height:24px;">Chiudi</button></div>
-          </div>
-
-          <div id="dialogCircolare" class="dialog hidden" role="dialog" aria-modal="true" aria-labelledby="circ-title">
-            <h2 id="circ-title">Circolare</h2>
-            <p>E' entrata la bidella e ha in mano una circolare. Scegline una e clicca su OK. Se sei fortunato, la comunicazione sara buona e guadagnerai punti, altrimenti ne perderai.</p>
-            <div class="choices">
-              <label><input type="radio" name="circolare" value="1" checked> Circolare 1</label>
-              <label><input type="radio" name="circolare" value="2"> Circolare 2</label>
-            </div>
-            <div class="actions"><button type="button" class="btn" id="confirmCircolare" style="position:static;width:72px;height:24px;">OK</button></div>
-          </div>
-
-          <div id="dialogResult" class="poster hidden" role="dialog" aria-modal="true" aria-labelledby="result-title">
-            <h2 id="result-title"></h2>
-            <div id="result-subtitle" style="margin:0 0 8px;font-size:13px;font-weight:700;color:#5a4f2f;"></div>
-            <p id="result-body"></p>
-            <div class="actions">
-              <button type="button" class="btn hidden" id="storyPrev" style="position:static;width:72px;height:24px;">Indietro</button>
-              <button type="button" class="btn hidden" id="storyNext" style="position:static;width:72px;height:24px;">Avanti</button>
-              <button type="button" class="btn" id="closeResult" style="position:static;width:72px;height:24px;">Chiudi</button>
-            </div>
-          </div>
-
-          <div id="dialogShowCircolare" class="circolare-sheet hidden" role="dialog" aria-modal="true" aria-labelledby="show-circ-school">
-            <div class="circolare-head">
-              <div id="show-circ-school" class="circolare-school">Scuola Statale dell'OZIO</div>
-              <div id="show-circ-line1" class="circolare-line">via (del)lo studio n° 4</div>
-              <div id="show-circ-line2" class="circolare-line">Oziolandia, 32 Dicembre 1666</div>
-            </div>
-            <div class="circolare-meta">
-              <div id="show-circ-number" class="circolare-number">Circolare n° 666</div>
-            </div>
-            <div id="show-circ-audience" class="circolare-audience">A TUTTI GLI STUDENTI</div>
-            <div id="show-circ-subject" class="circolare-subject"></div>
-            <div id="show-circ-body" class="circolare-body"></div>
-            <div id="show-circ-signoff" class="circolare-signoff">Il dirigente scolastico:</div>
-            <div id="show-circ-signature" class="circolare-signature">Armando le Vacche</div>
-          </div>
-        </div>
-
         <audio id="audioProfmorto" preload="auto" src="resources/profmorto.wav"></audio>
         <audio id="audioBidella" preload="auto" src="resources/bidella.wav"></audio>
         <audio id="audioBambino" preload="auto" src="resources/bambinomorto.wav"></audio>
@@ -846,6 +988,70 @@
         </div>
       </div>
     </div>
+    <div id="modalBackdrop" class="modal-backdrop">
+      <div id="dialogCustomization" class="dialog hidden" role="dialog" aria-modal="true" aria-labelledby="custom-title">
+        <h2 id="custom-title">Personalizzazioni</h2>
+        <p>Scegli i personaggi da usare nel porting web. Lezione 1 e 2 usano il personaggio corrente; lezione 3 continua a usare lo stesso set selezionato.</p>
+        <div class="custom-grid">
+          <div class="custom-row">
+            <div class="custom-slot"><button type="button" class="custom-choice" data-kind="buono" data-value="1"><img src="resources/author4.jpg" alt=""></button><button type="button" class="custom-upload" data-kind="buono" data-value="1">Carica</button><span class="custom-caption">Prof buono 1</span></div>
+            <div class="custom-slot"><button type="button" class="custom-choice" data-kind="buono" data-value="2"><img src="resources/author5.JPG" alt=""></button><button type="button" class="custom-upload" data-kind="buono" data-value="2">Carica</button><span class="custom-caption">Prof buono 2</span></div>
+            <div class="custom-slot"><button type="button" class="custom-choice" data-kind="buono" data-value="3"><img src="resources/author6.jpg" alt=""></button><button type="button" class="custom-upload" data-kind="buono" data-value="3">Carica</button><span class="custom-caption">Prof buono 3</span></div>
+          </div>
+          <div class="custom-row">
+            <div class="custom-slot"><button type="button" class="custom-choice" data-kind="cattivo" data-value="1"><img src="resources/author1.jpg" alt=""></button><button type="button" class="custom-upload" data-kind="cattivo" data-value="1">Carica</button><span class="custom-caption">Prof cattivo 1</span></div>
+            <div class="custom-slot"><button type="button" class="custom-choice" data-kind="cattivo" data-value="2"><img src="resources/author2.jpg" alt=""></button><button type="button" class="custom-upload" data-kind="cattivo" data-value="2">Carica</button><span class="custom-caption">Prof cattivo 2</span></div>
+            <div class="custom-slot"><button type="button" class="custom-choice" data-kind="cattivo" data-value="3"><img src="resources/author3.jpg" alt=""></button><button type="button" class="custom-upload" data-kind="cattivo" data-value="3">Carica</button><span class="custom-caption">Prof cattivo 3</span></div>
+          </div>
+          <div class="custom-row">
+            <div class="custom-slot"><button type="button" class="custom-choice" data-kind="bidella" data-value="1"><img src="resources/author7.JPG" alt=""></button><button type="button" class="custom-upload" data-kind="bidella" data-value="1">Carica</button><span class="custom-caption">Bidella</span></div>
+            <div class="custom-slot custom-slot-empty"><span>.</span></div>
+            <div class="custom-slot"><button type="button" class="custom-choice" data-kind="coach" data-value="1"><img src="resources/author8.png" alt=""></button><button type="button" class="custom-upload" data-kind="coach" data-value="1">Carica</button><span class="custom-caption">Coach Perla</span></div>
+          </div>
+        </div>
+        <input id="customUploadInput" type="file" accept="image/*" class="hidden">
+        <div class="actions"><button type="button" class="btn" id="closeCustomization" style="position:static;width:72px;height:24px;">Chiudi</button></div>
+      </div>
+
+      <div id="dialogCircolare" class="dialog hidden" role="dialog" aria-modal="true" aria-labelledby="circ-title">
+        <h2 id="circ-title">Circolare</h2>
+        <p>E' entrata la bidella e ha in mano una circolare. Scegline una e clicca su OK. Se sei fortunato, la comunicazione sara buona e guadagnerai punti, altrimenti ne perderai.</p>
+        <div class="choices">
+          <label><input type="radio" name="circolare" value="1" checked> Circolare 1</label>
+          <label><input type="radio" name="circolare" value="2"> Circolare 2</label>
+        </div>
+        <div class="actions"><button type="button" class="btn" id="confirmCircolare" style="position:static;width:72px;height:24px;">OK</button></div>
+      </div>
+
+      <div id="dialogResult" class="poster hidden" role="dialog" aria-modal="true" aria-labelledby="result-title">
+        <h2 id="result-title"></h2>
+        <div id="result-subtitle" style="margin:0 0 8px;font-size:13px;font-weight:700;color:#5a4f2f;"></div>
+        <p id="result-body"></p>
+        <div class="actions">
+          <button type="button" class="btn hidden" id="storyPrev" style="position:static;width:72px;height:24px;">Indietro</button>
+          <button type="button" class="btn hidden" id="storyNext" style="position:static;width:72px;height:24px;">Avanti</button>
+          <button type="button" class="btn" id="closeResult" style="position:static;width:72px;height:24px;">Chiudi</button>
+        </div>
+      </div>
+
+      <div id="dialogShowCircolare" class="circolare-sheet hidden" role="dialog" aria-modal="true" aria-labelledby="show-circ-school">
+        <div class="circolare-sheet-inner">
+          <div class="circolare-head">
+            <div id="show-circ-school" class="circolare-school">Scuola Statale dell'OZIO</div>
+            <div id="show-circ-line1" class="circolare-line">via (del)lo studio n° 4</div>
+            <div id="show-circ-line2" class="circolare-line">Oziolandia, 32 Dicembre 1666</div>
+          </div>
+          <div class="circolare-meta">
+            <div id="show-circ-number" class="circolare-number">Circolare n° 666</div>
+          </div>
+          <div id="show-circ-audience" class="circolare-audience">A TUTTI GLI STUDENTI</div>
+          <div id="show-circ-subject" class="circolare-subject"></div>
+          <div id="show-circ-body" class="circolare-body"></div>
+          <div id="show-circ-signoff" class="circolare-signoff">Il dirigente scolastico:</div>
+          <div id="show-circ-signature" class="circolare-signature">Armando le Vacche</div>
+        </div>
+      </div>
+    </div>
   </main>
 
   <script>
@@ -855,6 +1061,7 @@
     const WINDOW_CHROME_HEIGHT = 24 + 16 + 4;
     const BOTTOM_SAFE_GAP = 50;
     const CUSTOM_UPLOADS_STORAGE_KEY = 'acciaccaProfCustomUploads';
+    const USER_PROFILE_STORAGE_KEY = 'acciaccaProfUserProfile';
     const DEFAULT_CUSTOMIZATION_ASSETS = {
       cattivo: { 1: 'resources/author1.jpg', 2: 'resources/author2.jpg', 3: 'resources/author3.jpg' },
       buono: { 1: 'resources/author4.jpg', 2: 'resources/author5.JPG', 3: 'resources/author6.jpg' },
@@ -906,7 +1113,8 @@
     ];
 
     const refs = {
-      shell: document.querySelector('.shell'), taskbar: document.getElementById('taskbar'), taskbarClock: document.getElementById('taskbarClock'), window: document.getElementById('window'), windowTitlebar: document.getElementById('windowTitlebar'), windowClose: document.getElementById('windowClose'), notepadWindow: document.getElementById('notepadWindow'), notepadTitlebar: document.getElementById('notepadTitlebar'), notepadClose: document.getElementById('notepadClose'), notepadEditor: document.getElementById('notepadEditor'), desktopAppIcon: document.getElementById('desktopAppIcon'), desktopReportIcon: document.getElementById('desktopReportIcon'), startHotspot: document.getElementById('startHotspot'), taskbarApp: document.getElementById('taskbarApp'), taskbarExcel: document.getElementById('taskbarExcel'), startMenu: document.getElementById('startMenu'), startMenuFolder: document.getElementById('startMenuFolder'), startSubmenu: document.getElementById('startSubmenu'), startMenuOpen: document.getElementById('startMenuOpen'), startMenuStory: document.getElementById('startMenuStory'),
+      loginScreen: document.getElementById('loginScreen'), loginNameInput: document.getElementById('loginNameInput'), loginSubmit: document.getElementById('loginSubmit'), loginError: document.getElementById('loginError'),
+      shell: document.querySelector('.shell'), taskbar: document.getElementById('taskbar'), taskbarClock: document.getElementById('taskbarClock'), window: document.getElementById('window'), windowTitlebar: document.getElementById('windowTitlebar'), windowClose: document.getElementById('windowClose'), notepadWindow: document.getElementById('notepadWindow'), notepadTitlebar: document.getElementById('notepadTitlebar'), notepadClose: document.getElementById('notepadClose'), notepadEditor: document.getElementById('notepadEditor'), desktopAppIcon: document.getElementById('desktopAppIcon'), desktopReportIcon: document.getElementById('desktopReportIcon'), startHotspot: document.getElementById('startHotspot'), taskbarApp: document.getElementById('taskbarApp'), taskbarExcel: document.getElementById('taskbarExcel'), taskbarLogout: document.getElementById('taskbarLogout'), startMenu: document.getElementById('startMenu'), startMenuFolder: document.getElementById('startMenuFolder'), startSubmenu: document.getElementById('startSubmenu'), startMenuOpen: document.getElementById('startMenuOpen'), startMenuStory: document.getElementById('startMenuStory'),
       viewport: document.getElementById('viewport'), form: document.getElementById('form'), background: document.getElementById('background'),
       profcatt: document.getElementById('profcatt'), profbuon: document.getElementById('profbuon'), bidella: document.getElementById('bidella'),
       schizzi: document.getElementById('schizzi'), zampilli1: document.getElementById('zampilli1'), zampilli2: document.getElementById('zampilli2'), zampilli3: document.getElementById('zampilli3'), zampilli4: document.getElementById('zampilli4'), zampilli5: document.getElementById('zampilli5'),
@@ -1020,7 +1228,9 @@
       audioUnlocked: false,
       reportFileContent: '',
       reportFileVisible: false,
-      notepad: { open: false, moved: false, minimized: false, x: 0, y: 0, active: false, offsetX: 0, offsetY: 0 }
+      notepad: { open: false, moved: false, minimized: false, x: 0, y: 0, active: false, offsetX: 0, offsetY: 0 },
+      userName: '',
+      loggedIn: false
     };
 
     function resizeForm() {
@@ -1051,6 +1261,63 @@
         width: Math.max(0, localRight - localLeft),
         height: Math.max(0, localBottom - localTop)
       };
+    }
+    function loadUserProfile() {
+      try {
+        const raw = window.localStorage.getItem(USER_PROFILE_STORAGE_KEY);
+        if (!raw) return;
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed.name === 'string') refs.loginNameInput.value = parsed.name.slice(0, 24);
+      } catch (_) {}
+    }
+    function saveUserProfile(name) {
+      try {
+        window.localStorage.setItem(USER_PROFILE_STORAGE_KEY, JSON.stringify({ name }));
+      } catch (_) {}
+    }
+    function applyUserProfile(name) {
+      state.userName = name;
+      document.title = `Acciacca Prof Web - ${name}`;
+    }
+    function completeLogin(name) {
+      applyUserProfile(name);
+      saveUserProfile(name);
+      state.loggedIn = true;
+      refs.loginError.textContent = '';
+      refs.loginScreen.classList.add('hidden');
+      refs.shell.classList.remove('hidden');
+      state.windowClosed = true;
+      state.windowMinimized = false;
+      refs.window.style.display = 'none';
+      refs.window.classList.remove('minimized');
+      resizeForm();
+      syncTaskbarApp();
+      syncBackgroundAudio();
+      updateStatus(`Sessione avviata per ${name}.`);
+      showStartStory();
+    }
+    function submitLogin() {
+      const name = refs.loginNameInput.value.trim().replace(/\s+/g, ' ').slice(0, 24);
+      if (!name) {
+        refs.loginError.textContent = 'Inserisci un nome utente prima di accedere.';
+        refs.loginNameInput.focus();
+        return;
+      }
+      completeLogin(name);
+    }
+    function logoutUser() {
+      if (state.running) stopGame(false);
+      closeNotepad();
+      closeStartMenu();
+      closeStoryOverlay();
+      closeModal(false);
+      state.loggedIn = false;
+      state.userName = '';
+      refs.shell.classList.add('hidden');
+      refs.loginScreen.classList.remove('hidden');
+      refs.loginNameInput.focus();
+      syncTaskbarApp();
+      syncBackgroundAudio();
     }
     function positionDesktopIcon() {
       const desktop = desktopBounds();
@@ -1148,6 +1415,9 @@
       refs.taskbarExcel.style.left = `${startX + startWidth + 18 + Math.min(180, Math.max(142, desktop.width * 0.16))}px`;
       refs.taskbarExcel.style.top = `${startY + Math.max(0, (startHeight - 24) / 2)}px`;
       refs.taskbarExcel.style.width = `${Math.min(180, Math.max(154, desktop.width * 0.18))}px`;
+      refs.taskbarLogout.style.left = `${desktop.left + Math.max(12, desktop.width - 198)}px`;
+      refs.taskbarLogout.style.top = `${startY + Math.max(0, (startHeight - 24) / 2)}px`;
+      refs.taskbarLogout.style.width = `84px`;
     }
     function windowBounds() {
       const shellRect = refs.shell.getBoundingClientRect();
@@ -1221,9 +1491,14 @@
       refs.taskbarApp.classList.toggle('visible', visible);
       refs.taskbarApp.classList.toggle('minimized', visible && state.windowMinimized);
       refs.taskbarApp.setAttribute('aria-hidden', visible ? 'false' : 'true');
+      const taskbarLabel = refs.taskbarApp.querySelector('span:last-child');
+      if (taskbarLabel) taskbarLabel.textContent = state.running && state.userName ? `Ciao ${state.userName}` : 'Acciacca prof';
       refs.taskbarExcel.classList.toggle('visible', state.notepad.open);
       refs.taskbarExcel.classList.toggle('minimized', state.notepad.open && state.notepad.minimized);
       refs.taskbarExcel.setAttribute('aria-hidden', state.notepad.open ? 'false' : 'true');
+      refs.taskbarLogout.classList.toggle('visible', state.running && state.loggedIn);
+      refs.taskbarLogout.classList.remove('minimized');
+      refs.taskbarLogout.setAttribute('aria-hidden', state.running && state.loggedIn ? 'false' : 'true');
     }
     function startWindowDrag(event) {
       if (state.windowClosed || state.windowMinimized) return;
@@ -1273,7 +1548,7 @@
       stopWindowDrag();
       if (state.running) stopGame(false);
       closeNotepad();
-      closeModal(false);
+      if (!state.storyMode) closeModal(false);
       closeStartMenu();
       state.windowClosed = true;
       state.windowMinimized = false;
@@ -1376,7 +1651,11 @@
     }
     function syncBackgroundAudio() {
       refs.audioSottofondo.volume = 0.6;
-      if (!state.audioUnlocked) return;
+      if (!state.audioUnlocked || !state.loggedIn) {
+        refs.audioSottofondo.pause();
+        refs.audioSottofondo.currentTime = 0;
+        return;
+      }
       if (refs.ckdsottofondo.checked && !state.windowClosed) {
         refs.audioSottofondo.play().catch(() => {});
       } else {
@@ -1602,7 +1881,7 @@
         { group: 'pentathlon', section: 'Pentathlon 4', label: 'Colpi a vuoto', value: String(p4.wrong), points: '', detail: 'Gia inclusi nei punti del gioco' },
         { group: 'pentathlon', section: 'Pentathlon 5', label: 'Sequenza', value: `${p5.successes}/${p5.attempts}`, points: pts.pentathlon5.toFixed(2), detail: `Tocchi corretti: ${p5.correct}` },
         { group: 'pentathlon', section: 'Pentathlon 5', label: 'Colpi a vuoto', value: String(p5.wrong), points: '', detail: 'Gia inclusi nei punti del gioco' },
-        { group: 'finale', section: 'Finale', label: 'Punti totali', value: state.points.toFixed(2), points: '', detail: `Voto: ${refs.lblvoto.textContent}/10` }
+        { group: 'finale', section: 'Finale', label: 'Punti totali', value: '', points: state.points.toFixed(2), detail: `Voto: ${refs.lblvoto.textContent}/10` }
       ];
     }
     function renderReportSheet() {
@@ -2032,7 +2311,7 @@
       const moveDuration = riskCycleDuration() * 0.6;
       entries.forEach(([oldDesk, value], offset) => {
         const desk = desks[offset];
-        const face = value.face.startsWith('allies_') ? 'allies_1' : 'rebels_1';
+        const face = value.face;
         newMap[desk] = { face, target: false };
         const cell = refs.pentCells[Number(oldDesk)];
         const nextLeft = positions[desk][0] + PENT_LEFT_OFFSET;
@@ -2151,9 +2430,12 @@
       state.storyMode = true;
       state.storyPage = 0;
       renderStoryPage();
-      refs.dialogResult.className = 'poster good';
+      refs.dialogResult.className = 'poster story-scroll';
       refs.dialogResult.classList.remove('hidden');
-      openModal('result');
+      refs.dialogCustomization.classList.add('hidden');
+      refs.dialogCircolare.classList.add('hidden');
+      refs.dialogShowCircolare.classList.add('hidden');
+      refs.modalBackdrop.classList.add('visible', 'story-floating');
     }
 
     function tickPentathlon() {
@@ -2258,11 +2540,16 @@
     }
 
     function openModal(name) {
-      state.modal = name; state.paused = true; stopTimer(); refs.modalBackdrop.classList.add('visible'); refs.dialogCustomization.classList.toggle('hidden', name !== 'customization'); refs.dialogCircolare.classList.toggle('hidden', name !== 'circolare'); refs.dialogResult.classList.toggle('hidden', name !== 'result'); refs.dialogShowCircolare.classList.toggle('hidden', name !== 'showcircolare');
+      state.modal = name; state.paused = true; stopTimer(); refs.modalBackdrop.classList.remove('story-floating'); refs.modalBackdrop.classList.add('visible'); refs.dialogCustomization.classList.toggle('hidden', name !== 'customization'); refs.dialogCircolare.classList.toggle('hidden', name !== 'circolare'); refs.dialogResult.classList.toggle('hidden', name !== 'result'); refs.dialogShowCircolare.classList.toggle('hidden', name !== 'showcircolare');
     }
     function closeModal(resumeGame) {
-      state.modal = null; refs.modalBackdrop.classList.remove('visible'); refs.dialogCustomization.classList.add('hidden'); refs.dialogCircolare.classList.add('hidden'); refs.dialogResult.classList.add('hidden'); refs.dialogShowCircolare.classList.add('hidden');
+      state.modal = null; refs.modalBackdrop.classList.remove('visible', 'story-floating'); refs.dialogCustomization.classList.add('hidden'); refs.dialogCircolare.classList.add('hidden'); refs.dialogResult.classList.add('hidden'); refs.dialogShowCircolare.classList.add('hidden');
       if (resumeGame && state.running) { state.paused = false; startTimer(); }
+    }
+    function closeStoryOverlay() {
+      state.storyMode = false;
+      refs.modalBackdrop.classList.remove('visible', 'story-floating');
+      refs.dialogResult.classList.add('hidden');
     }
 
     function clickProfBuono(event) {
@@ -2275,7 +2562,7 @@
     }
     function clickBidella(event) { if (state.level <= 3) lessonReport(state.level).bidellaHit += 1; event.stopPropagation(); profcattivo(); state.attivaBidella = false; bidellaa(); addPoints(5, 'lesson3_bidella'); playAudio(refs.audioBidella); openModal('circolare'); updateStatus('La bidella ha interrotto la partita con una circolare.'); }
     function backgroundClick(event) { if (!state.running || state.paused || state.modal || state.inPentathlon) return; backgroundWrongClick(); addPoints(-1, state.level >= 3 ? 'lesson3_errori' : state.level === 2 ? 'lesson2_errori' : 'lesson1_errori'); playAudio(refs.audioFuori); }
-    function clickStudent(which, event) { event.stopPropagation(); if (state.level <= 3 && state.running && !state.inPentathlon) lessonReport(state.level).miscWrong += 1; playAudio(refs.audioBambino); addPoints(-1, state.level >= 3 ? 'lesson3_errori' : state.level === 2 ? 'lesson2_errori' : 'lesson1_errori'); showZampillo(which); }
+    function clickStudent(which, event) { setHammerDown(); event.stopPropagation(); if (state.level <= 3 && state.running && !state.inPentathlon) lessonReport(state.level).miscWrong += 1; playAudio(refs.audioBambino); addPoints(-1, state.level >= 3 ? 'lesson3_errori' : state.level === 2 ? 'lesson2_errori' : 'lesson1_errori'); showZampillo(which); }
 
     function handlePentathlonCell(index, event) {
       if (!state.inPentathlon || state.paused || state.modal) return; event.stopPropagation();
@@ -2487,6 +2774,7 @@
     });
     refs.taskbarApp.addEventListener('click', (event) => { event.stopPropagation(); toggleTaskbarWindow(); });
     refs.taskbarExcel.addEventListener('click', (event) => { event.stopPropagation(); toggleTaskbarExcel(); });
+    refs.taskbarLogout.addEventListener('click', (event) => { event.stopPropagation(); logoutUser(); });
     refs.startHotspot.addEventListener('click', (event) => { event.stopPropagation(); toggleStartMenu(); });
     refs.startMenuFolder.addEventListener('click', (event) => { event.stopPropagation(); toggleStartSubmenu(); });
     refs.startMenuOpen.addEventListener('click', (event) => { event.stopPropagation(); closeStartMenu(); openWindow(); });
@@ -2513,6 +2801,12 @@
       refs.customUploadInput.click();
     }));
     refs.customUploadInput.addEventListener('change', handleCustomUploadSelection);
+    refs.loginSubmit.addEventListener('click', submitLogin);
+    refs.loginNameInput.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter') return;
+      event.preventDefault();
+      submitLogin();
+    });
     refs.confirmCircolare.addEventListener('click', handleCircolareConfirm);
     refs.dialogShowCircolare.addEventListener('click', () => {
       if (state.modal !== 'showcircolare') return;
@@ -2528,8 +2822,7 @@
     refs.storyNext.addEventListener('click', () => {
       if (!state.storyMode) return;
       if (state.storyPage >= START_MENU_STORY_PAGES.length - 1) {
-        state.storyMode = false;
-        closeModal(false);
+        closeStoryOverlay();
         return;
       }
       state.storyPage += 1;
@@ -2537,10 +2830,13 @@
     });
     refs.closeResult.addEventListener('click', () => {
       const wasStoryMode = state.storyMode;
+      if (wasStoryMode) {
+        closeStoryOverlay();
+        return;
+      }
       state.storyMode = false;
       const pendingLevelIntro = state.pendingLevelIntro;
       const fromPentathlon = state.inPentathlon; const retry = state.retryCurrentPentathlon; const reportVisible = state.sessionReportVisible; state.retryCurrentPentathlon = false; state.sessionReportVisible = false; closeModal(true);
-      if (wasStoryMode) return;
       if (reportVisible) return;
       if (pendingLevelIntro !== null) {
         resumeGameplayAfterLevelRule();
@@ -2555,6 +2851,7 @@
     refs.modalBackdrop.addEventListener('mousedown', (event) => { event.stopPropagation(); });
 
     refs.form.addEventListener('mousedown', setHammerDown);
+    refs.form.addEventListener('dragstart', (event) => { event.preventDefault(); });
     document.addEventListener('pointerdown', unlockAudio, { once: true });
     refs.form.addEventListener('mouseleave', setHammerUp);
     document.addEventListener('mousedown', (event) => {
@@ -2574,7 +2871,7 @@
     window.addEventListener('blur', stopDesktopIconDrag);
     window.addEventListener('blur', stopNotepadDrag);
 
-    loadCustomUploads(); applyCustomization(); moveSpritesOffstage(); clearPentathlonState(); syncLevelRadios(); syncScoreboard(); syncTaskbarApp(); startTaskbarClock(); syncBackgroundAudio(); resizeForm(); window.addEventListener('resize', resizeForm); new ResizeObserver(resizeForm).observe(refs.viewport);
+    loadUserProfile(); loadCustomUploads(); applyCustomization(); moveSpritesOffstage(); clearPentathlonState(); syncLevelRadios(); syncScoreboard(); syncTaskbarApp(); startTaskbarClock(); syncBackgroundAudio(); resizeForm(); refs.loginNameInput.focus(); window.addEventListener('resize', resizeForm); new ResizeObserver(resizeForm).observe(refs.viewport);
   </script>
 </body>
 </html>
