@@ -3,4 +3,5 @@ declare(strict_types=1);
 
 return [
     'va_password' => 'cambiami',
+    'godpanel_password' => 'cambiami-anche-qui',
 ];

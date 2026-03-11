@@ -6,9 +6,9 @@ return [
     'va_password' => getenv('ACCIACCA_VA_PASSWORD') ?: 'va2008',
     'godpanel_password' => getenv('ACCIACCA_GODPANEL_PASSWORD') ?: 'godpanel2008',
     'media' => [
-        'public' => dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . 'media' . DIRECTORY_SEPARATOR . 'public',
-        'va' => dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . 'media' . DIRECTORY_SEPARATOR . 'va',
-        'shared' => dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . 'media',
+        'public' => dirname(__DIR__) . DIRECTORY_SEPARATOR . 'media' . DIRECTORY_SEPARATOR . 'public',
+        'va' => dirname(__DIR__) . DIRECTORY_SEPARATOR . 'media' . DIRECTORY_SEPARATOR . 'va',
+        'shared' => dirname(__DIR__) . DIRECTORY_SEPARATOR . 'media',
     ],
     'media_map' => [
         'cena1' => ['scope' => 'public', 'file' => 'cena_prima_parte.mp4', 'mime' => 'video/mp4'],

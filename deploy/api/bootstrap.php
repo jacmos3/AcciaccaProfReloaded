@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 function app_root(): string
 {
-    return dirname(__DIR__, 2);
+    return dirname(__DIR__);
 }
 
 function app_config(): array
