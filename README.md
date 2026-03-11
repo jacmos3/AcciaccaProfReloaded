@@ -6,6 +6,7 @@ Questo repository contiene:
 - il porting iOS in SwiftUI/SpriteKit
 - la versione web giocabile ispirata alla `Form1` originale Delphi
 - asset, note e materiali di supporto usati per ricostruire grafica, coordinate, layering e gameplay
+- API PHP locali per sessioni protette, classifica e streaming video
 
 ## Cos'e'
 
@@ -61,18 +62,21 @@ Nel repository trovi quindi sia il porting moderno, sia la parte "museale": asse
 │   │   └── Resources/             # asset e risorse Xcode
 │   ├── PENTATHLON_NOTES.md        # note sulle prove del Pentathlon
 │   └── README.md                  # note specifiche sul porting iOS
-└── web/
+├── web/
     ├── index.html                 # landing / pagina pubblica
     ├── play.html                  # gioco web
+    ├── api/                       # login/session/logout, leaderboard, streaming media
     ├── resources/                 # asset grafici, audio, cursori, wallpaper
     └── app/                       # privacy policy / supporto
+├── data/                         # classifica JSON locale
+└── media/                        # video locali pubblici e riservati (fuori Git)
 ```
 
 ## Avvio rapido
 
 ### Web
 
-La versione web con classifica richiede PHP, perche' usa un endpoint locale che salva i punteggi in JSON.
+La versione web richiede PHP, perche' usa endpoint locali per sessioni, classifica e streaming video.
 
 Avvio consigliato dalla root del repository:
 
@@ -85,6 +89,33 @@ Poi apri:
 ```text
 http://127.0.0.1:4183/play.html
 ```
+
+Configurazione della sessione `VA`:
+
+```text
+web/api/config.local.php
+```
+
+Parti da:
+
+```text
+web/api/config.local.php.example
+```
+
+I video non sono versionati in Git. Vanno messi qui:
+
+```text
+media/public/
+media/va/
+```
+
+e vengono serviti tramite:
+
+```text
+web/api/media.php?id=...
+```
+
+In questo modo il video riservato `VA` resta protetto dalla sessione PHP e non e' esposto come file statico sotto `web/`.
 
 ### iOS
 
@@ -105,6 +136,9 @@ La versione web include:
 - gameplay classico
 - Pentathlon integrato sulla griglia di gioco
 - menu Start, icona desktop e onboarding narrativo a pagine
+- login a sessioni `Generica` / `VA`
+- classifica persistente lato PHP
+- archivio video locale con controllo accessi sulla sessione `VA`
 
 ### iOS
 

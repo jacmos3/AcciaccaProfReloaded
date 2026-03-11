@@ -154,9 +154,19 @@
       color: rgba(255,255,255,0.92);
     }
     .login-form {
-      display: flex;
+      display: grid;
       gap: 10px;
       align-items: center;
+    }
+    .login-select {
+      width: min(280px, 100%);
+      height: 32px;
+      padding: 0 10px;
+      border: 1px solid #2f4f88;
+      border-radius: 4px;
+      background: #fff;
+      color: #000;
+      font: 14px Tahoma, "MS Sans Serif", sans-serif;
     }
     .login-input {
       width: min(280px, 100%);
@@ -167,6 +177,15 @@
       background: #fff;
       color: #000;
       font: 14px Tahoma, "MS Sans Serif", sans-serif;
+    }
+    .login-field-label {
+      font: 700 12px Tahoma, "MS Sans Serif", sans-serif;
+      color: rgba(255,255,255,0.9);
+      margin-top: 4px;
+    }
+    .login-field.hidden,
+    .login-field-label.hidden {
+      display: none;
     }
     .login-submit {
       min-width: 88px;
@@ -296,6 +315,14 @@
       width: 760px;
       max-width: calc(100vw - 24px);
     }
+    .window.media-window {
+      width: min(860px, calc(100vw - 24px));
+      min-height: 520px;
+    }
+    .window.comments-window {
+      width: min(520px, calc(100vw - 24px));
+      min-height: 430px;
+    }
     .notepad-body {
       padding: 0;
       background: #d4d0c8;
@@ -330,6 +357,218 @@
       overflow: auto;
       background: #fff;
       border-top: 1px solid #b8b3a2;
+    }
+    .media-layout {
+      display: grid;
+      grid-template-columns: 240px minmax(0, 1fr);
+      min-height: 446px;
+      background: #ece9d8;
+    }
+    .media-sidebar {
+      border-right: 1px solid #8e8e8e;
+      background: linear-gradient(180deg, #f4f0df 0%, #e6e0c8 100%);
+      padding: 8px;
+      overflow: auto;
+    }
+    .media-sidebar h3 {
+      margin: 0 0 8px;
+      font: 700 12px Tahoma, "MS Sans Serif", sans-serif;
+      color: #2a2a2a;
+    }
+    .media-list {
+      display: grid;
+      gap: 6px;
+    }
+    .media-item-button {
+      width: 100%;
+      text-align: left;
+      border: 1px solid #9f9f9f;
+      border-right-color: #5e5e5e;
+      border-bottom-color: #5e5e5e;
+      background: linear-gradient(180deg, #fffef8 0%, #ddd6bb 100%);
+      padding: 6px 8px;
+      cursor: pointer;
+      font: 400 11px Tahoma, "MS Sans Serif", sans-serif;
+      color: #1d1d1d;
+    }
+    .media-item-button.active {
+      background: linear-gradient(180deg, #dcecff 0%, #b8d0fb 100%);
+      border-color: #4f7fd1;
+      color: #0f2f68;
+    }
+    .media-item-button strong {
+      display: block;
+      margin-bottom: 2px;
+      font-weight: 700;
+    }
+    .media-item-button span {
+      display: block;
+      color: #544d3c;
+      font-size: 10px;
+      line-height: 1.25;
+    }
+    .media-main {
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr) auto;
+      gap: 10px;
+      padding: 10px 12px 12px;
+      min-width: 0;
+    }
+    .media-main h3 {
+      margin: 0;
+      font: 700 16px Tahoma, "MS Sans Serif", sans-serif;
+      color: #202020;
+    }
+    .media-meta {
+      font: 400 11px Tahoma, "MS Sans Serif", sans-serif;
+      color: #4f4f4f;
+    }
+    .media-player-wrap {
+      border: 1px solid #7f7f7f;
+      background: #101010;
+      display: grid;
+      place-items: center;
+      min-height: 320px;
+      overflow: hidden;
+    }
+    .media-player-wrap video {
+      width: 100%;
+      height: 100%;
+      background: #000;
+    }
+    .media-placeholder {
+      padding: 18px;
+      color: #f2f2f2;
+      text-align: center;
+      font: 400 13px Tahoma, "MS Sans Serif", sans-serif;
+      line-height: 1.45;
+      max-width: 520px;
+    }
+    .media-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .media-action-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 110px;
+      height: 26px;
+      padding: 0 10px;
+      border-top: 1px solid #fff;
+      border-left: 1px solid #fff;
+      border-right: 1px solid #5d5d5d;
+      border-bottom: 1px solid #5d5d5d;
+      background: linear-gradient(180deg, #fafafa, #d8d8d8);
+      color: #000;
+      text-decoration: none;
+      font: 400 11px Tahoma, "MS Sans Serif", sans-serif;
+    }
+    .media-action-button {
+      min-width: 110px;
+      height: 26px;
+      padding: 0 10px;
+      border-top: 1px solid #fff;
+      border-left: 1px solid #fff;
+      border-right: 1px solid #5d5d5d;
+      border-bottom: 1px solid #5d5d5d;
+      background: linear-gradient(180deg, #fafafa, #d8d8d8);
+      color: #000;
+      font: 400 11px Tahoma, "MS Sans Serif", sans-serif;
+      cursor: pointer;
+    }
+    .comments-body {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: 0;
+      background: #ece9d8;
+    }
+    .comments-header {
+      padding: 8px 10px 7px;
+      border-top: 1px solid #f8f4ea;
+      border-bottom: 1px solid #b8b3a2;
+      background: #ece9d8;
+    }
+    .comments-header strong {
+      display: block;
+      font: 700 12px Tahoma, "MS Sans Serif", sans-serif;
+      color: #1f1f1f;
+    }
+    .comments-header span {
+      display: block;
+      margin-top: 3px;
+      font: 11px Tahoma, "MS Sans Serif", sans-serif;
+      color: #5a5a5a;
+    }
+    .comments-list {
+      min-height: 240px;
+      max-height: 280px;
+      overflow: auto;
+      background: #fff;
+      border-top: 1px solid #b8b3a2;
+      border-bottom: 1px solid #b8b3a2;
+      padding: 8px;
+      display: grid;
+      gap: 8px;
+    }
+    .comment-entry {
+      border: 1px solid #b8b8b8;
+      background: linear-gradient(180deg, #fffdf5 0%, #f0ebd9 100%);
+      padding: 7px 8px;
+      font: 11px Tahoma, "MS Sans Serif", sans-serif;
+      color: #1e1e1e;
+    }
+    .comment-entry-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 4px;
+      font-size: 10px;
+      color: #5f4d26;
+    }
+    .comment-entry-head strong {
+      color: #2a2a2a;
+      font-size: 11px;
+    }
+    .comment-entry-body {
+      white-space: pre-wrap;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+    .comments-empty {
+      color: #666;
+      font: 11px Tahoma, "MS Sans Serif", sans-serif;
+      text-align: center;
+      padding: 20px 10px;
+    }
+    .comments-form {
+      display: grid;
+      gap: 6px;
+      padding: 8px;
+      background: #d4d0c8;
+    }
+    .comments-input {
+      width: 100%;
+      min-height: 72px;
+      resize: vertical;
+      border: 1px solid #7f7f7f;
+      background: #fff;
+      padding: 6px 7px;
+      font: 11px Tahoma, "MS Sans Serif", sans-serif;
+      color: #111;
+      box-sizing: border-box;
+    }
+    .comments-form-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+    .comments-help {
+      font: 10px Tahoma, "MS Sans Serif", sans-serif;
+      color: #5f5f5f;
     }
     .sheet-table {
       width: 100%;
@@ -381,6 +620,22 @@
       height: 32px;
       image-rendering: auto;
       pointer-events: none;
+    }
+    #desktopAppIcon img {
+      width: 38px;
+      height: 38px;
+      object-fit: contain;
+    }
+    .desktop-icon.media-icon .media-glyph {
+      width: 32px;
+      height: 32px;
+    }
+    .desktop-icon.media-icon .media-glyph::before {
+      left: 10px;
+      top: 7px;
+      border-top-width: 8px;
+      border-bottom-width: 8px;
+      border-left-width: 12px;
     }
     .desktop-icon.file-doc .file-glyph {
       width: 32px;
@@ -495,6 +750,12 @@
       height: 16px;
       pointer-events: none;
     }
+    .taskbar-app .media-glyph {
+      width: 16px;
+      height: 16px;
+      transform: scale(0.75);
+      transform-origin: center center;
+    }
     .start-menu-header {
       padding: 8px 10px;
       background: linear-gradient(180deg, #2f72dd 0%, #1c49a8 100%);
@@ -581,7 +842,8 @@
     .start-submenu.visible {
       display: block;
     }
-    .start-item.story-item .scroll-glyph {
+    .scroll-glyph {
+      display: inline-block;
       width: 24px;
       height: 24px;
       border: 1px solid #9f8648;
@@ -594,8 +856,8 @@
       box-shadow: inset 1px 1px 0 rgba(255,255,255,0.7);
       pointer-events: none;
     }
-    .start-item.story-item .scroll-glyph::before,
-    .start-item.story-item .scroll-glyph::after {
+    .scroll-glyph::before,
+    .scroll-glyph::after {
       content: "";
       position: absolute;
       width: 6px;
@@ -605,8 +867,8 @@
       background: #f2dfae;
       left: 8px;
     }
-    .start-item.story-item .scroll-glyph::before { top: -3px; }
-    .start-item.story-item .scroll-glyph::after { bottom: -3px; }
+    .scroll-glyph::before { top: -3px; }
+    .scroll-glyph::after { bottom: -3px; }
     .start-item.leaderboard-item .leaderboard-glyph {
       width: 24px;
       height: 24px;
@@ -640,6 +902,38 @@
       top: 3px;
       height: 2px;
       background: #7aa8ef;
+    }
+    .start-item.media-item .media-glyph,
+    .desktop-icon.media-icon .media-glyph {
+      width: 24px;
+      height: 24px;
+      position: relative;
+      flex: 0 0 24px;
+      border: 1px solid #6f6f6f;
+      border-right-color: #4f4f4f;
+      border-bottom-color: #4f4f4f;
+      background: linear-gradient(180deg, #1f1f1f 0%, #444 100%);
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.18);
+      pointer-events: none;
+    }
+    .start-item.media-item .media-glyph::before,
+    .desktop-icon.media-icon .media-glyph::before {
+      content: "";
+      position: absolute;
+      left: 7px;
+      top: 5px;
+      width: 0;
+      height: 0;
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+      border-left: 10px solid #f1f1f1;
+    }
+    .start-item.media-item .media-glyph::after,
+    .desktop-icon.media-icon .media-glyph::after {
+      content: "";
+      position: absolute;
+      inset: 3px;
+      border: 1px solid rgba(255,255,255,0.12);
     }
     .start-item.logout-item .logout-glyph {
       width: 24px;
@@ -676,8 +970,9 @@
     .win-label { position: absolute; font-size: 11px; line-height: 13px; color: var(--text); }
     .vote { position: absolute; left: 469px; top: 48px; min-width: 40px; text-align: left; font-size: 13px; line-height: 16px; font-weight: 700; color: #fff; }
     .link-label {
-      position: absolute; left: 259px; top: 116px; font-size: 17px; line-height: 17px; color: var(--link);
-      text-decoration: underline; cursor: pointer; background: transparent; border: 0; padding: 0;
+      position: absolute; left: 266px; top: 124px; width: 170px; font-size: 10px; line-height: 11px; color: var(--link);
+      text-decoration: underline; cursor: pointer; background: transparent; border: 0; padding: 0; text-align: center;
+      white-space: nowrap; overflow: hidden;
     }
     .sprite, .student, .fx, .zampillo, .pent-cell, .perla-hint, .pentathlon-label, .desk-front {
       position: absolute; image-rendering: pixelated; pointer-events: auto;
@@ -928,10 +1223,17 @@
           <img src="resources/app-icon.png" alt="">
         </div>
         <div class="login-copy">
-          <h1 id="loginTitle">VA 2008 Galileo Galilei</h1>
-          <p>Immetti nome alunno.</p>
+          <h1 id="loginTitle">Liceo Scientifico G. Galilei - Piggi</h1>
+          <p id="loginPrompt">Seleziona la sessione da aprire.</p>
           <div class="login-form">
-            <input id="loginNameInput" class="login-input" type="text" maxlength="24" autocomplete="name" placeholder="Nome alunno">
+            <select id="loginSessionSelect" class="login-select" aria-label="Sessione">
+              <option value="generic">OKKUPAZIONE</option>
+              <option value="va">Classe VA 2008</option>
+            </select>
+            <div id="loginNameLabel" class="login-field-label">Nome alunno</div>
+            <input id="loginNameInput" class="login-input login-field" type="text" maxlength="24" autocomplete="name" placeholder="Nome alunno">
+            <div id="loginPasswordLabel" class="login-field-label hidden">Password VA</div>
+            <input id="loginPasswordInput" class="login-input login-field hidden" type="password" maxlength="64" autocomplete="current-password" placeholder="Password">
             <button id="loginSubmit" class="login-submit" type="button">Accedi</button>
           </div>
           <div id="loginError" class="login-error" aria-live="polite"></div>
@@ -957,6 +1259,10 @@
       <span class="file-glyph" aria-hidden="true"></span>
       <span>classifica.xls</span>
     </button>
+    <button type="button" id="desktopMediaIcon" class="desktop-icon media-icon" aria-label="Apri archivio video">
+      <span class="media-glyph" aria-hidden="true"></span>
+      <span>archivio-video</span>
+    </button>
     <button type="button" id="startHotspot" class="start-hotspot" aria-label="Start">start</button>
     <button type="button" id="taskbarApp" class="taskbar-app" aria-label="Acciacca prof in esecuzione">
       <img src="resources/app-icon.png" alt="">
@@ -970,6 +1276,14 @@
       <span class="file-glyph" aria-hidden="true" style="width:16px;height:18px;transform:scale(0.75);transform-origin:center center;"></span>
       <span>classifica.xls</span>
     </button>
+    <button type="button" id="taskbarMedia" class="taskbar-app" aria-label="Archivio video aperto">
+      <span class="media-glyph" aria-hidden="true"></span>
+      <span>archivio-video</span>
+    </button>
+    <button type="button" id="taskbarComments" class="taskbar-app" aria-label="Commenti aperti">
+      <span class="scroll-glyph" aria-hidden="true" style="width:16px;height:16px;transform:scale(0.75);transform-origin:center center;"></span>
+      <span>commenti</span>
+    </button>
     <div id="startMenu" class="start-menu" aria-hidden="true">
       <div id="startMenuHeader" class="start-menu-header">Acciacca prof</div>
       <div class="start-menu-items">
@@ -979,6 +1293,10 @@
             <span>Acciacca Prof</span>
           </span>
           <span class="start-item-arrow">▶</span>
+        </button>
+        <button type="button" id="startMenuMedia" class="start-item media-item">
+          <span class="media-glyph" aria-hidden="true"></span>
+          <span>Archivio video</span>
         </button>
         <button type="button" id="startMenuLogout" class="start-item logout-item hidden">
           <span class="logout-glyph" aria-hidden="true"></span>
@@ -1013,7 +1331,6 @@
         <img class="bg arena-cursor" id="background" src="resources/original-bg.png" alt="Classe originale">
         <img class="icon" src="resources/app-icon.png" alt="">
 
-        <div class="win-label" style="left:520px;top:40px;width:38px;">Velocita</div>
         <div class="win-label" style="left:447px;top:16px;width:120px;color:#fff;font-weight:600;">Punti:</div>
         <div class="win-label" style="display:none;" id="labelSfuggiti">Prof sfuggiti:</div>
         <div class="win-label" style="display:none;" id="labelSbagliati">Colpi sbagliati</div>
@@ -1023,14 +1340,13 @@
         <div class="win-label" style="left:242px;top:56px;width:235px;font-size:13px;color:#fff;font-weight:600;white-space:nowrap;">IL TUO VOTO IN PAGELLA E':</div>
         <div class="vote" id="lblvoto">0</div>
 
-        <button type="button" id="label1" class="link-label">The Anonymous is here</button>
-        <button type="button" id="btnSettings" class="btn" style="left:512px;top:96px;width:89px;height:25px;">Personalizzazioni</button>
-        <button type="button" id="btnStart" class="btn" style="left:520px;top:280px;width:75px;height:25px;">Start</button>
-        <button type="button" id="btnPause" class="btn hidden" style="left:520px;top:312px;width:75px;height:25px;">Pausa</button>
-        <input id="debugPentathlonMode" class="speed-input" type="text" inputmode="numeric" value="1" maxlength="1" aria-label="Prova debug pentathlon" style="left:512px;top:344px;width:28px;">
-        <button type="button" id="btnDebugPentathlon" class="btn" style="left:544px;top:344px;width:72px;height:25px;">Pentathlon</button>
+        <button type="button" id="label1" class="link-label">moscio88.altervista.org</button>
+        <button type="button" id="btnSettings" class="btn" style="left:512px;top:64px;width:89px;height:25px;">Personalizzazioni</button>
+        <button type="button" id="btnStart" class="btn" style="left:520px;top:246px;width:75px;height:25px;">Start</button>
+        <button type="button" id="btnPause" class="btn hidden" style="left:520px;top:278px;width:75px;height:25px;">Pausa</button>
+        <button type="button" id="btnComments" class="btn" style="left:520px;top:310px;width:75px;height:25px;">Commenti</button>
 
-        <div id="groupbox1" class="groupbox" style="height:146px;">
+        <div id="groupbox1" class="groupbox" style="top:96px;height:146px;">
           <div class="groupbox-title">Lezioni</div>
           <label class="radio" style="left:8px;top:16px;"><input type="radio" name="livello" id="ckdlivello1" checked disabled><span>Lezione 1</span></label>
           <label class="radio" style="left:8px;top:48px;"><input type="radio" name="livello" id="ckdlivello2" disabled><span>Lezione 2</span></label>
@@ -1042,13 +1358,10 @@
           <button type="button" class="btn icon-btn" id="help4" style="left:80px;top:112px;width:17px;height:17px;">?</button>
         </div>
 
-        <label class="check" style="left:520px;top:378px;"><input type="checkbox" id="ckdsottofondo" checked><span>Sottofondo</span></label>
-        <label class="check" style="left:520px;top:394px;"><input type="checkbox" id="ckdsuoni" checked><span>Suoni</span></label>
-        <input id="editvelocita" class="speed-input" type="text" inputmode="numeric" value="10" maxlength="2" aria-label="Velocita">
-        <button type="button" id="btnupvelocita" class="btn icon-btn" style="left:541px;top:64px;width:18px;height:11px;">+</button>
-        <button type="button" id="btndownvelocita" class="btn icon-btn" style="left:541px;top:74px;width:18px;height:11px;">-</button>
+        <label class="check" style="left:520px;top:346px;"><input type="checkbox" id="ckdsottofondo" checked><span>Sottofondo</span></label>
+        <label class="check" style="left:520px;top:362px;"><input type="checkbox" id="ckdsuoni" checked><span>Suoni</span></label>
         <div id="status" class="status">Premi Start per iniziare il porting fedele della `Form1` originale.</div>
-        <button type="button" id="coachDock" class="coach-dock" aria-label="Coach Perla">
+        <button type="button" id="coachDock" class="coach-dock" aria-label="Coach Perla" style="top:376px;">
           <img id="coachDockImg" src="resources/author8.png" alt="Coach Perla">
           <span>Coach Perla</span>
         </button>
@@ -1164,6 +1477,54 @@
         </div>
       </div>
     </div>
+    <div class="window media-window" id="mediaWindow" style="display:none;">
+      <div class="window-titlebar" id="mediaTitlebar">
+        <div class="window-title">Archivio video - Windows Media Player</div>
+        <div class="window-controls">
+          <button type="button" id="mediaClose" class="win-btn" aria-label="Close">x</button>
+        </div>
+      </div>
+      <div class="window-body notepad-body">
+        <div class="notepad-menu"><span>File</span><span>Raccolta</span><span>Riproduci</span><span>Guida</span></div>
+        <div class="media-layout">
+          <div class="media-sidebar">
+            <h3>Archivio 100 giorni</h3>
+            <div id="mediaList" class="media-list"></div>
+          </div>
+          <div class="media-main">
+            <h3 id="mediaCurrentTitle">Archivio video</h3>
+            <div id="mediaCurrentMeta" class="media-meta"></div>
+            <div class="media-player-wrap">
+              <video id="mediaPlayer" controls preload="metadata" playsinline class="hidden"></video>
+              <div id="mediaPlaceholder" class="media-placeholder"></div>
+            </div>
+            <div id="mediaActions" class="media-actions"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="window comments-window" id="commentsWindow" style="display:none;">
+      <div class="window-titlebar" id="commentsTitlebar">
+        <div class="window-title">Commenti</div>
+        <div class="window-controls">
+          <button type="button" id="commentsClose" class="win-btn" aria-label="Close">x</button>
+        </div>
+      </div>
+      <div class="window-body notepad-body comments-body">
+        <div class="comments-header">
+          <strong id="commentsTargetTitle">Commenti</strong>
+          <span id="commentsTargetMeta">Lascia un messaggio per questo contenuto.</span>
+        </div>
+        <div id="commentsList" class="comments-list"></div>
+        <div class="comments-form">
+          <textarea id="commentsInput" class="comments-input" maxlength="1200" placeholder="Scrivi un commento..."></textarea>
+          <div class="comments-form-bar">
+            <span class="comments-help">Il commento verra salvato con il tuo nome utente.</span>
+            <button type="button" id="commentsSubmit" class="btn" style="position:static;width:78px;height:24px;">Invia</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div id="modalBackdrop" class="modal-backdrop">
       <div id="dialogCustomization" class="dialog hidden" role="dialog" aria-modal="true" aria-labelledby="custom-title">
         <h2 id="custom-title">Personalizzazioni</h2>
@@ -1239,6 +1600,7 @@
     const CUSTOM_UPLOADS_STORAGE_KEY = 'acciaccaProfCustomUploads';
     const USER_PROFILE_STORAGE_KEY = 'acciaccaProfUserProfile';
     const REPORT_FILES_STORAGE_KEY = 'acciaccaProfReportFiles';
+    const DESKTOP_ICONS_STORAGE_KEY = 'acciaccaProfDesktopIcons';
     const DEFAULT_CUSTOMIZATION_ASSETS = {
       cattivo: { 1: 'resources/author1.jpg', 2: 'resources/author2.jpg', 3: 'resources/author3.jpg' },
       buono: { 1: 'resources/author4.jpg', 2: 'resources/author5.JPG', 3: 'resources/author6.jpg' },
@@ -1277,6 +1639,7 @@
         body: `Nel 2026 l'Acciacca Prof torna su iPhone e Web: stesso spirito, stessa grafica, stessi suoni. Restano i personaggi classici, i prof da acciaccare al momento giusto e il Pentathlon finalmente completo guidato dalla coach Perla.`
       }
     ];
+    const DEFAULT_MEDIA_LIBRARY = [];
     const FIELD_LEFT = 13;
     const FIELD_TOP = 10;
     const SPAWN_Y_OFFSET = 85;
@@ -1290,16 +1653,16 @@
     ];
 
     const refs = {
-      loginScreen: document.getElementById('loginScreen'), loginNameInput: document.getElementById('loginNameInput'), loginSubmit: document.getElementById('loginSubmit'), loginError: document.getElementById('loginError'),
-      shell: document.querySelector('.shell'), taskbar: document.getElementById('taskbar'), taskbarClock: document.getElementById('taskbarClock'), window: document.getElementById('window'), windowTitlebar: document.getElementById('windowTitlebar'), windowClose: document.getElementById('windowClose'), notepadWindow: document.getElementById('notepadWindow'), notepadTitlebar: document.getElementById('notepadTitlebar'), notepadClose: document.getElementById('notepadClose'), notepadEditor: document.getElementById('notepadEditor'), leaderboardWindow: document.getElementById('leaderboardWindow'), leaderboardTitlebar: document.getElementById('leaderboardTitlebar'), leaderboardClose: document.getElementById('leaderboardClose'), leaderboardBody: document.getElementById('leaderboardBody'), desktopAppIcon: document.getElementById('desktopAppIcon'), desktopReportTemplate: document.getElementById('desktopReportIcon'), desktopLeaderboardIcon: document.getElementById('desktopLeaderboardIcon'), startHotspot: document.getElementById('startHotspot'), taskbarApp: document.getElementById('taskbarApp'), taskbarExcel: document.getElementById('taskbarExcel'), taskbarLeaderboard: document.getElementById('taskbarLeaderboard'), startMenu: document.getElementById('startMenu'), startMenuHeader: document.getElementById('startMenuHeader'), startMenuFolder: document.getElementById('startMenuFolder'), startSubmenu: document.getElementById('startSubmenu'), startMenuOpen: document.getElementById('startMenuOpen'), startMenuLeaderboard: document.getElementById('startMenuLeaderboard'), startMenuStory: document.getElementById('startMenuStory'), startMenuLogout: document.getElementById('startMenuLogout'),
+      loginScreen: document.getElementById('loginScreen'), loginPrompt: document.getElementById('loginPrompt'), loginSessionSelect: document.getElementById('loginSessionSelect'), loginNameLabel: document.getElementById('loginNameLabel'), loginNameInput: document.getElementById('loginNameInput'), loginPasswordLabel: document.getElementById('loginPasswordLabel'), loginPasswordInput: document.getElementById('loginPasswordInput'), loginSubmit: document.getElementById('loginSubmit'), loginError: document.getElementById('loginError'),
+      shell: document.querySelector('.shell'), taskbar: document.getElementById('taskbar'), taskbarClock: document.getElementById('taskbarClock'), window: document.getElementById('window'), windowTitlebar: document.getElementById('windowTitlebar'), windowClose: document.getElementById('windowClose'), notepadWindow: document.getElementById('notepadWindow'), notepadTitlebar: document.getElementById('notepadTitlebar'), notepadClose: document.getElementById('notepadClose'), notepadEditor: document.getElementById('notepadEditor'), leaderboardWindow: document.getElementById('leaderboardWindow'), leaderboardTitlebar: document.getElementById('leaderboardTitlebar'), leaderboardClose: document.getElementById('leaderboardClose'), leaderboardBody: document.getElementById('leaderboardBody'), mediaWindow: document.getElementById('mediaWindow'), mediaTitlebar: document.getElementById('mediaTitlebar'), mediaClose: document.getElementById('mediaClose'), mediaList: document.getElementById('mediaList'), mediaCurrentTitle: document.getElementById('mediaCurrentTitle'), mediaCurrentMeta: document.getElementById('mediaCurrentMeta'), mediaPlayer: document.getElementById('mediaPlayer'), mediaPlaceholder: document.getElementById('mediaPlaceholder'), mediaActions: document.getElementById('mediaActions'), commentsWindow: document.getElementById('commentsWindow'), commentsTitlebar: document.getElementById('commentsTitlebar'), commentsClose: document.getElementById('commentsClose'), commentsTargetTitle: document.getElementById('commentsTargetTitle'), commentsTargetMeta: document.getElementById('commentsTargetMeta'), commentsList: document.getElementById('commentsList'), commentsInput: document.getElementById('commentsInput'), commentsSubmit: document.getElementById('commentsSubmit'), desktopAppIcon: document.getElementById('desktopAppIcon'), desktopReportTemplate: document.getElementById('desktopReportIcon'), desktopLeaderboardIcon: document.getElementById('desktopLeaderboardIcon'), desktopMediaIcon: document.getElementById('desktopMediaIcon'), startHotspot: document.getElementById('startHotspot'), taskbarApp: document.getElementById('taskbarApp'), taskbarExcel: document.getElementById('taskbarExcel'), taskbarLeaderboard: document.getElementById('taskbarLeaderboard'), taskbarMedia: document.getElementById('taskbarMedia'), taskbarComments: document.getElementById('taskbarComments'), startMenu: document.getElementById('startMenu'), startMenuHeader: document.getElementById('startMenuHeader'), startMenuFolder: document.getElementById('startMenuFolder'), startSubmenu: document.getElementById('startSubmenu'), startMenuOpen: document.getElementById('startMenuOpen'), startMenuLeaderboard: document.getElementById('startMenuLeaderboard'), startMenuMedia: document.getElementById('startMenuMedia'), startMenuStory: document.getElementById('startMenuStory'), startMenuLogout: document.getElementById('startMenuLogout'),
       viewport: document.getElementById('viewport'), form: document.getElementById('form'), background: document.getElementById('background'),
       profcatt: document.getElementById('profcatt'), profbuon: document.getElementById('profbuon'), bidella: document.getElementById('bidella'),
       schizzi: document.getElementById('schizzi'), zampilli1: document.getElementById('zampilli1'), zampilli2: document.getElementById('zampilli2'), zampilli3: document.getElementById('zampilli3'), zampilli4: document.getElementById('zampilli4'), zampilli5: document.getElementById('zampilli5'),
       profcolpiti: document.getElementById('profcolpiti'), profsfuggiti: document.getElementById('profsfuggiti'), colpisbagliati: document.getElementById('colpisbagliati'), lblvoto: document.getElementById('lblvoto'),
-      label1: document.getElementById('label1'), btnSettings: document.getElementById('btnSettings'), btnStart: document.getElementById('btnStart'), btnPause: document.getElementById('btnPause'), btnDebugPentathlon: document.getElementById('btnDebugPentathlon'), debugPentathlonMode: document.getElementById('debugPentathlonMode'),
+      label1: document.getElementById('label1'), btnSettings: document.getElementById('btnSettings'), btnComments: document.getElementById('btnComments'), btnStart: document.getElementById('btnStart'), btnPause: document.getElementById('btnPause'),
       help1: document.getElementById('help1'), help2: document.getElementById('help2'), help3: document.getElementById('help3'), help4: document.getElementById('help4'),
       ckdlivello1: document.getElementById('ckdlivello1'), ckdlivello2: document.getElementById('ckdlivello2'), ckdlivello3: document.getElementById('ckdlivello3'), ckdpentathlon: document.getElementById('ckdpentathlon'),
-      ckdsottofondo: document.getElementById('ckdsottofondo'), ckdsuoni: document.getElementById('ckdsuoni'), editvelocita: document.getElementById('editvelocita'), btnupvelocita: document.getElementById('btnupvelocita'), btndownvelocita: document.getElementById('btndownvelocita'),
+      ckdsottofondo: document.getElementById('ckdsottofondo'), ckdsuoni: document.getElementById('ckdsuoni'),
       groupbox1: document.getElementById('groupbox1'), status: document.getElementById('status'), coachDock: document.getElementById('coachDock'), coachDockImg: document.getElementById('coachDockImg'), modalBackdrop: document.getElementById('modalBackdrop'),
       pentathlonLabel: document.getElementById('pentathlonLabel'), perlaHint: document.getElementById('perlaHint'),
       dialogCircolare: document.getElementById('dialogCircolare'), dialogCustomization: document.getElementById('dialogCustomization'), dialogResult: document.getElementById('dialogResult'), dialogShowCircolare: document.getElementById('dialogShowCircolare'),
@@ -1384,11 +1747,16 @@
         x: 0,
         y: 0
       },
+      desktopIcons: {
+        app: { x: undefined, y: undefined },
+        leaderboard: { x: undefined, y: undefined },
+        media: { x: undefined, y: undefined }
+      },
       desktopIconDrag: {
         active: false,
         moved: false,
-        initialized: false,
         suppressClick: false,
+        target: '',
         offsetX: 0,
         offsetY: 0,
         x: 18,
@@ -1414,9 +1782,15 @@
       reportFiles: [],
       nextReportNumber: 1,
       selectedReportId: '',
+      windowStack: ['game', 'excel', 'leaderboard', 'media', 'comments'],
       notepad: { open: false, moved: false, minimized: false, x: 0, y: 0, active: false, offsetX: 0, offsetY: 0, report: null },
       leaderboard: { open: false, moved: false, minimized: false, x: 0, y: 0, active: false, offsetX: 0, offsetY: 0, entries: [] },
+      media: { open: false, moved: false, minimized: false, x: 0, y: 0, active: false, offsetX: 0, offsetY: 0, selectedId: '' },
+      comments: { open: false, moved: false, minimized: false, x: 0, y: 0, active: false, offsetX: 0, offsetY: 0, target: 'game', entries: [], loading: false },
+      mediaLibrary: DEFAULT_MEDIA_LIBRARY.slice(),
       userName: '',
+      sessionType: 'generic',
+      canAccessVa: false,
       loggedIn: false,
       sessionId: '',
       sessionSubmitted: false
@@ -1437,6 +1811,7 @@
       positionStartUI();
       positionWindow();
       positionLeaderboardWindow();
+      positionCommentsWindow();
     }
     function desktopBounds() {
       const shellRect = refs.shell.getBoundingClientRect();
@@ -1458,15 +1833,34 @@
         if (!raw) return;
         const parsed = JSON.parse(raw);
         if (parsed && typeof parsed.name === 'string') refs.loginNameInput.value = parsed.name.slice(0, 24);
+        if (parsed && typeof parsed.sessionType === 'string') refs.loginSessionSelect.value = parsed.sessionType === 'va' ? 'va' : 'generic';
       } catch (_) {}
     }
-    function saveUserProfile(name) {
+    function saveUserProfile(name, sessionType) {
       try {
-        window.localStorage.setItem(USER_PROFILE_STORAGE_KEY, JSON.stringify({ name }));
+        window.localStorage.setItem(USER_PROFILE_STORAGE_KEY, JSON.stringify({ name, sessionType }));
       } catch (_) {}
     }
-    function reportFilesStorageKeyFor(name = state.userName) {
-      return `${REPORT_FILES_STORAGE_KEY}:${String(name || '').trim().toLowerCase()}`;
+    function loadDesktopIconPositions() {
+      try {
+        const raw = window.localStorage.getItem(DESKTOP_ICONS_STORAGE_KEY);
+        if (!raw) return;
+        const parsed = JSON.parse(raw);
+        ['app', 'leaderboard', 'media'].forEach((key) => {
+          const entry = parsed?.[key];
+          if (entry && typeof entry.x === 'number' && typeof entry.y === 'number') {
+            state.desktopIcons[key] = { x: entry.x, y: entry.y };
+          }
+        });
+      } catch (_) {}
+    }
+    function saveDesktopIconPositions() {
+      try {
+        window.localStorage.setItem(DESKTOP_ICONS_STORAGE_KEY, JSON.stringify(state.desktopIcons));
+      } catch (_) {}
+    }
+    function reportFilesStorageKeyFor(name = state.userName, sessionType = state.sessionType) {
+      return `${REPORT_FILES_STORAGE_KEY}:${String(sessionType || 'generic').trim().toLowerCase()}:${String(name || '').trim().toLowerCase()}`;
     }
     function clearReportFilesState() {
       state.reportFiles.forEach((report) => {
@@ -1497,11 +1891,11 @@
         window.localStorage.setItem(reportFilesStorageKeyFor(), JSON.stringify(payload));
       } catch (_) {}
     }
-    function loadReportFiles(name = state.userName) {
+    function loadReportFiles(name = state.userName, sessionType = state.sessionType) {
       clearReportFilesState();
       if (!name) return;
       try {
-        const raw = window.localStorage.getItem(reportFilesStorageKeyFor(name));
+        const raw = window.localStorage.getItem(reportFilesStorageKeyFor(name, sessionType));
         if (!raw) return;
         const parsed = JSON.parse(raw);
         const files = Array.isArray(parsed?.reportFiles) ? parsed.reportFiles : [];
@@ -1521,9 +1915,54 @@
         clearReportFilesState();
       }
     }
-    function applyUserProfile(name) {
+    function applyUserProfile(name, sessionType = 'generic', canAccessVa = false) {
       state.userName = name;
+      state.sessionType = sessionType;
+      state.canAccessVa = !!canAccessVa;
       document.title = `Acciacca Prof Web - ${name}`;
+    }
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+    function mediaUrlFor(id) {
+      return `api/media.php?id=${encodeURIComponent(id)}`;
+    }
+    function applyMediaCatalog(media) {
+      state.mediaLibrary = Array.isArray(media) ? media.map((entry) => ({
+        id: String(entry.id || ''),
+        title: String(entry.title || ''),
+        subtitle: String(entry.subtitle || ''),
+        kind: String(entry.kind || 'video'),
+        note: String(entry.note || ''),
+        url: mediaUrlFor(String(entry.id || ''))
+      })).filter((entry) => entry.id) : [];
+      if (!state.mediaLibrary.length) {
+        state.media.selectedId = '';
+        return;
+      }
+      if (!state.mediaLibrary.some((entry) => entry.id === state.media.selectedId)) {
+        state.media.selectedId = state.mediaLibrary[0].id;
+      }
+    }
+    function hasMediaAccess() {
+      return state.sessionType === 'va' && state.mediaLibrary.length > 0;
+    }
+    function syncLoginFields() {
+      const isVa = refs.loginSessionSelect.value === 'va';
+      refs.loginPrompt.textContent = isVa ? 'Immetti nome alunno e password VA.' : 'Immetti nome alunno per entrare in Okkupazione.';
+      refs.loginNameLabel.classList.remove('hidden');
+      refs.loginNameInput.classList.remove('hidden');
+      refs.loginPasswordLabel.classList.toggle('hidden', !isVa);
+      refs.loginPasswordInput.classList.toggle('hidden', !isVa);
+      if (!isVa) refs.loginPasswordInput.value = '';
+    }
+    function focusLoginPrimary() {
+      refs.loginNameInput.focus();
     }
     function generateSessionId() {
       return `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
@@ -1535,10 +1974,13 @@
         el.play().catch(() => {});
       } catch (_) {}
     }
-    function completeLogin(name) {
-      applyUserProfile(name);
-      saveUserProfile(name);
-      loadReportFiles(name);
+    function completeLogin(sessionData, media, options = {}) {
+      const sessionType = sessionData?.sessionType === 'va' ? 'va' : 'generic';
+      const userName = String(sessionData?.userName || '');
+      applyUserProfile(userName, sessionType, !!sessionData?.isVa);
+      applyMediaCatalog(media);
+      saveUserProfile(userName, sessionType);
+      loadReportFiles(userName, sessionType);
       state.loggedIn = true;
       refs.loginError.textContent = '';
       refs.loginScreen.classList.add('hidden');
@@ -1550,35 +1992,65 @@
       resizeForm();
       syncTaskbarApp();
       syncBackgroundAudio();
-      playSystemAudio(refs.audioLoginXp);
-      updateStatus(`Sessione avviata per ${name}.`);
-      showStartStory();
+      if (options.playSound !== false) playSystemAudio(refs.audioLoginXp);
+      updateStatus(`Sessione ${sessionType === 'va' ? 'VA' : 'generica'} avviata per ${userName}.`);
+      if (options.showStory !== false) showStartStory();
     }
-    function submitLogin() {
+    async function submitLogin() {
+      const sessionType = refs.loginSessionSelect.value === 'va' ? 'va' : 'generic';
+      const isVa = sessionType === 'va';
       const name = refs.loginNameInput.value.trim().replace(/\s+/g, ' ').slice(0, 24);
+      const password = refs.loginPasswordInput.value;
       if (!name) {
-        refs.loginError.textContent = 'Inserisci un nome utente prima di accedere.';
-        refs.loginNameInput.focus();
+        refs.loginError.textContent = isVa ? 'Inserisci il nome alunno per accedere alla sessione VA.' : 'Inserisci il nome alunno per entrare in Okkupazione.';
+        focusLoginPrimary();
         return;
       }
-      completeLogin(name);
+      refs.loginError.textContent = '';
+      refs.loginSubmit.disabled = true;
+      try {
+        const response = await fetch('api/login.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sessionType, name, password })
+        });
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok || !payload.session) {
+          throw new Error(payload.error || 'Accesso non riuscito');
+        }
+        completeLogin(payload.session, payload.media || [], { showStory: true });
+      } catch (error) {
+        refs.loginError.textContent = error.message || 'Accesso non riuscito';
+      } finally {
+        refs.loginSubmit.disabled = false;
+      }
     }
-    function logoutUser() {
+    async function logoutUser() {
       playSystemAudio(refs.audioLogoutXp);
       if (state.running) stopGame(false);
       closeNotepad();
       closeLeaderboard();
+      closeMediaWindow();
+      closeComments();
       closeStartMenu();
       closeStoryOverlay();
       closeModal(false);
+      try {
+        await fetch('api/logout.php', { method: 'POST' });
+      } catch (_) {}
       state.loggedIn = false;
       state.userName = '';
+      state.sessionType = 'generic';
+      state.canAccessVa = false;
       state.sessionId = '';
       state.sessionSubmitted = false;
+      applyMediaCatalog([]);
       clearReportFilesState();
       refs.shell.classList.add('hidden');
       refs.loginScreen.classList.remove('hidden');
-      refs.loginNameInput.focus();
+      refs.loginPasswordInput.value = '';
+      syncLoginFields();
+      focusLoginPrimary();
       syncTaskbarApp();
       syncBackgroundAudio();
     }
@@ -1586,19 +2058,38 @@
       const desktop = desktopBounds();
       const iconWidth = refs.desktopAppIcon.offsetWidth || 84;
       const iconHeight = refs.desktopAppIcon.offsetHeight || 64;
-      if (!state.desktopIconDrag.initialized) {
-        state.desktopIconDrag.x = desktop.left + 18;
-        state.desktopIconDrag.y = desktop.top + 18;
-        state.desktopIconDrag.initialized = true;
+      if (typeof state.desktopIcons.app.x !== 'number' || typeof state.desktopIcons.app.y !== 'number') {
+        state.desktopIcons.app.x = desktop.left + 18;
+        state.desktopIcons.app.y = desktop.top + 18;
       }
-      applyDesktopIconPosition(state.desktopIconDrag.x, state.desktopIconDrag.y, iconWidth, iconHeight);
+      applyDesktopIconPosition('app', state.desktopIcons.app.x, state.desktopIcons.app.y, iconWidth, iconHeight);
       positionDesktopLeaderboardIcon();
+      positionDesktopMediaIcon();
       renderReportIcons();
     }
     function positionDesktopLeaderboardIcon() {
       const desktop = desktopBounds();
-      refs.desktopLeaderboardIcon.style.left = `${desktop.left + 118}px`;
-      refs.desktopLeaderboardIcon.style.top = `${desktop.top + 18}px`;
+      if (typeof state.desktopIcons.leaderboard.x !== 'number' || typeof state.desktopIcons.leaderboard.y !== 'number') {
+        state.desktopIcons.leaderboard.x = desktop.left + 118;
+        state.desktopIcons.leaderboard.y = desktop.top + 18;
+      }
+      const pos = clampDesktopIconPosition(state.desktopIcons.leaderboard.x, state.desktopIcons.leaderboard.y, refs.desktopLeaderboardIcon.offsetWidth || 84, refs.desktopLeaderboardIcon.offsetHeight || 64);
+      state.desktopIcons.leaderboard = pos;
+      refs.desktopLeaderboardIcon.style.left = `${pos.x}px`;
+      refs.desktopLeaderboardIcon.style.top = `${pos.y}px`;
+    }
+    function positionDesktopMediaIcon() {
+      refs.desktopMediaIcon.classList.toggle('hidden', !hasMediaAccess());
+      if (!hasMediaAccess()) return;
+      const desktop = desktopBounds();
+      if (typeof state.desktopIcons.media.x !== 'number' || typeof state.desktopIcons.media.y !== 'number') {
+        state.desktopIcons.media.x = desktop.left + 218;
+        state.desktopIcons.media.y = desktop.top + 18;
+      }
+      const pos = clampDesktopIconPosition(state.desktopIcons.media.x, state.desktopIcons.media.y, refs.desktopMediaIcon.offsetWidth || 84, refs.desktopMediaIcon.offsetHeight || 64);
+      state.desktopIcons.media = pos;
+      refs.desktopMediaIcon.style.left = `${pos.x}px`;
+      refs.desktopMediaIcon.style.top = `${pos.y}px`;
     }
     function reportIconBase(index) {
       const desktop = desktopBounds();
@@ -1710,12 +2201,26 @@
         y: Math.min(Math.max(bounds.minY, y), bounds.maxY)
       };
     }
-    function applyDesktopIconPosition(x, y, iconWidth = refs.desktopAppIcon.offsetWidth || 84, iconHeight = refs.desktopAppIcon.offsetHeight || 64) {
+    function snapDesktopIconPosition(x, y, iconWidth = refs.desktopAppIcon.offsetWidth || 84, iconHeight = refs.desktopAppIcon.offsetHeight || 64) {
+      const desktop = desktopBounds();
+      const originX = desktop.left + 18;
+      const originY = desktop.top + 18;
+      const stepX = 100;
+      const stepY = 78;
+      const snappedX = originX + (Math.round((x - originX) / stepX) * stepX);
+      const snappedY = originY + (Math.round((y - originY) / stepY) * stepY);
+      return clampDesktopIconPosition(snappedX, snappedY, iconWidth, iconHeight);
+    }
+    function applyDesktopIconPosition(kind, x, y, iconWidth = refs.desktopAppIcon.offsetWidth || 84, iconHeight = refs.desktopAppIcon.offsetHeight || 64) {
       const pos = clampDesktopIconPosition(x, y, iconWidth, iconHeight);
       state.desktopIconDrag.x = pos.x;
       state.desktopIconDrag.y = pos.y;
-      refs.desktopAppIcon.style.left = `${pos.x}px`;
-      refs.desktopAppIcon.style.top = `${pos.y}px`;
+      state.desktopIcons[kind] = { x: pos.x, y: pos.y };
+      const el = kind === 'app' ? refs.desktopAppIcon : kind === 'leaderboard' ? refs.desktopLeaderboardIcon : refs.desktopMediaIcon;
+      if (el) {
+        el.style.left = `${pos.x}px`;
+        el.style.top = `${pos.y}px`;
+      }
     }
     function closeStartMenu() {
       state.startMenuOpen = false;
@@ -1774,6 +2279,12 @@
       refs.taskbarLeaderboard.style.left = `${startX + startWidth + 26 + Math.min(180, Math.max(142, desktop.width * 0.16)) + Math.min(180, Math.max(154, desktop.width * 0.18))}px`;
       refs.taskbarLeaderboard.style.top = `${startY + Math.max(0, (startHeight - 24) / 2)}px`;
       refs.taskbarLeaderboard.style.width = `${Math.min(170, Math.max(132, desktop.width * 0.16))}px`;
+      refs.taskbarComments.style.left = `${startX + startWidth + 34 + Math.min(180, Math.max(142, desktop.width * 0.16)) + Math.min(180, Math.max(154, desktop.width * 0.18)) + Math.min(170, Math.max(132, desktop.width * 0.16))}px`;
+      refs.taskbarComments.style.top = `${startY + Math.max(0, (startHeight - 24) / 2)}px`;
+      refs.taskbarComments.style.width = `${Math.min(168, Math.max(128, desktop.width * 0.16))}px`;
+      refs.taskbarMedia.style.left = `${startX + startWidth + 42 + Math.min(180, Math.max(142, desktop.width * 0.16)) + Math.min(180, Math.max(154, desktop.width * 0.18)) + Math.min(170, Math.max(132, desktop.width * 0.16)) + Math.min(168, Math.max(128, desktop.width * 0.16))}px`;
+      refs.taskbarMedia.style.top = `${startY + Math.max(0, (startHeight - 24) / 2)}px`;
+      refs.taskbarMedia.style.width = `${Math.min(180, Math.max(148, desktop.width * 0.18))}px`;
     }
     function windowBounds() {
       const shellRect = refs.shell.getBoundingClientRect();
@@ -1813,6 +2324,7 @@
       else centerWindow();
       positionNotepadWindow();
       positionLeaderboardWindow();
+      positionMediaWindow();
     }
     function notepadWindowBounds() {
       const desktop = desktopBounds();
@@ -1843,6 +2355,35 @@
       const rect = refs.notepadWindow.getBoundingClientRect();
       applyNotepadPosition(desktop.left + Math.max(110, (desktop.width - rect.width) / 2), desktop.top + Math.max(36, (desktop.height - rect.height) / 2));
     }
+    function mediaWindowBounds() {
+      const desktop = desktopBounds();
+      const rect = refs.mediaWindow.getBoundingClientRect();
+      return {
+        minX: desktop.left,
+        minY: desktop.top,
+        maxX: Math.max(desktop.left, desktop.left + desktop.width - rect.width),
+        maxY: Math.max(desktop.top, desktop.top + desktop.height - rect.height)
+      };
+    }
+    function applyMediaPosition(x, y) {
+      const bounds = mediaWindowBounds();
+      const px = Math.min(Math.max(bounds.minX, x), bounds.maxX);
+      const py = Math.min(Math.max(bounds.minY, y), bounds.maxY);
+      state.media.x = px;
+      state.media.y = py;
+      refs.mediaWindow.style.left = `${px}px`;
+      refs.mediaWindow.style.top = `${py}px`;
+    }
+    function positionMediaWindow() {
+      if (!state.media.open) return;
+      if (state.media.moved) {
+        applyMediaPosition(state.media.x, state.media.y);
+        return;
+      }
+      const desktop = desktopBounds();
+      const rect = refs.mediaWindow.getBoundingClientRect();
+      applyMediaPosition(desktop.left + Math.max(96, (desktop.width - rect.width) / 2), desktop.top + Math.max(28, (desktop.height - rect.height) / 2));
+    }
     function syncTaskbarApp() {
       const visible = !state.windowClosed;
       refs.taskbarApp.classList.toggle('visible', visible);
@@ -1857,11 +2398,154 @@
       refs.taskbarLeaderboard.classList.toggle('visible', state.leaderboard.open);
       refs.taskbarLeaderboard.classList.toggle('minimized', state.leaderboard.open && state.leaderboard.minimized);
       refs.taskbarLeaderboard.setAttribute('aria-hidden', state.leaderboard.open ? 'false' : 'true');
+      refs.taskbarComments.classList.toggle('visible', state.comments.open);
+      refs.taskbarComments.classList.toggle('minimized', state.comments.open && state.comments.minimized);
+      refs.taskbarComments.setAttribute('aria-hidden', state.comments.open ? 'false' : 'true');
+      refs.desktopMediaIcon.classList.toggle('hidden', !hasMediaAccess());
+      refs.startMenuMedia.classList.toggle('hidden', !hasMediaAccess());
+      refs.taskbarMedia.classList.toggle('visible', hasMediaAccess() && state.media.open);
+      refs.taskbarMedia.classList.toggle('minimized', hasMediaAccess() && state.media.open && state.media.minimized);
+      refs.taskbarMedia.setAttribute('aria-hidden', hasMediaAccess() && state.media.open ? 'false' : 'true');
       refs.startMenuLogout.classList.toggle('hidden', !state.loggedIn);
+    }
+    function applyWindowStack() {
+      const order = state.windowStack;
+      const mapping = {
+        game: refs.window,
+        excel: refs.notepadWindow,
+        leaderboard: refs.leaderboardWindow,
+        media: refs.mediaWindow,
+        comments: refs.commentsWindow
+      };
+      order.forEach((key, index) => {
+        const el = mapping[key];
+        if (!el) return;
+        el.style.zIndex = String(10 + index);
+      });
+    }
+    function bringWindowToFront(kind) {
+      state.windowStack = state.windowStack.filter((item) => item !== kind);
+      state.windowStack.push(kind);
+      applyWindowStack();
+    }
+    function selectedMediaEntry() {
+      return state.mediaLibrary.find((entry) => entry.id === state.media.selectedId) || state.mediaLibrary[0] || null;
+    }
+    function commentTargetInfo(target = state.comments.target) {
+      if (target === 'game') {
+        return {
+          title: 'Commenti sul gioco',
+          meta: 'Acciacca Prof Reloaded · Spazio commenti sul gameplay e sulle lezioni.'
+        };
+      }
+      const mediaEntry = state.mediaLibrary.find((entry) => entry.id === target);
+      if (mediaEntry) {
+        return {
+          title: `Commenti video · ${mediaEntry.title}`,
+          meta: `${mediaEntry.subtitle} · ${mediaEntry.note}`
+        };
+      }
+      return {
+        title: 'Commenti',
+        meta: 'Lascia un commento per questo contenuto.'
+      };
+    }
+    function renderCommentsWindow() {
+      const targetInfo = commentTargetInfo();
+      refs.commentsTargetTitle.textContent = targetInfo.title;
+      refs.commentsTargetMeta.textContent = targetInfo.meta;
+      const titleNode = refs.commentsWindow.querySelector('.window-title');
+      if (titleNode) titleNode.textContent = `${targetInfo.title} - Commenti`;
+      const taskbarLabel = refs.taskbarComments.querySelector('span:last-child');
+      if (taskbarLabel) taskbarLabel.textContent = state.comments.target === 'game' ? 'commenti gioco' : 'commenti video';
+      if (state.comments.loading) {
+        refs.commentsList.innerHTML = '<div class="comments-empty">Caricamento commenti...</div>';
+        return;
+      }
+      if (!state.comments.entries.length) {
+        refs.commentsList.innerHTML = '<div class="comments-empty">Nessun commento ancora. Scrivi il primo.</div>';
+        return;
+      }
+      refs.commentsList.innerHTML = state.comments.entries.map((entry) => {
+        const when = new Date(entry.createdAt || '');
+        const createdAt = Number.isNaN(when.getTime()) ? String(entry.createdAt || '') : when.toLocaleString('it-IT');
+        const sessionBadge = entry.sessionType === 'va' ? 'VA' : (entry.sessionType === 'legacy' ? '2008' : 'OKK');
+        return `
+          <div class="comment-entry">
+            <div class="comment-entry-head">
+              <strong>${escapeHtml(entry.userName || 'Anonimo')} · ${sessionBadge}</strong>
+              <span>${escapeHtml(createdAt)}</span>
+            </div>
+            <div class="comment-entry-body">${escapeHtml(entry.message || '')}</div>
+          </div>
+        `;
+      }).join('');
+    }
+    async function loadComments(target = state.comments.target) {
+      state.comments.target = target;
+      state.comments.loading = true;
+      renderCommentsWindow();
+      const response = await fetch(`api/comments.php?target=${encodeURIComponent(target)}`, { cache: 'no-store' });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(payload.error || 'Commenti non disponibili');
+      state.comments.entries = Array.isArray(payload.entries) ? payload.entries : [];
+      state.comments.loading = false;
+      renderCommentsWindow();
+    }
+    function renderMediaWindow() {
+      refs.mediaList.innerHTML = state.mediaLibrary.map((entry) => `
+        <button type="button" class="media-item-button${entry.id === state.media.selectedId ? ' active' : ''}" data-media-id="${entry.id}">
+          <strong>${entry.title}</strong>
+          <span>${entry.subtitle}</span>
+        </button>
+      `).join('');
+      const entry = selectedMediaEntry();
+      if (!entry) {
+        refs.mediaCurrentTitle.textContent = 'Archivio video';
+        refs.mediaCurrentMeta.textContent = 'Nessun video disponibile in questa sessione.';
+        refs.mediaActions.innerHTML = '';
+        refs.mediaPlayer.pause();
+        refs.mediaPlayer.removeAttribute('src');
+        refs.mediaPlayer.load();
+        refs.mediaPlayer.classList.add('hidden');
+        refs.mediaPlaceholder.textContent = 'Accedi alla sessione VA per sbloccare il video riservato.';
+        refs.mediaPlaceholder.classList.remove('hidden');
+        return;
+      }
+      refs.mediaCurrentTitle.textContent = entry.title;
+      refs.mediaCurrentMeta.textContent = `${entry.subtitle} · ${entry.note}`;
+      refs.mediaActions.innerHTML = '';
+      refs.mediaPlayer.pause();
+      refs.mediaPlayer.removeAttribute('src');
+      refs.mediaPlayer.load();
+      refs.mediaPlayer.classList.add('hidden');
+      refs.mediaPlaceholder.classList.remove('hidden');
+      if (entry.kind === 'video') {
+        refs.mediaPlayer.src = entry.url;
+        refs.mediaPlayer.load();
+        refs.mediaPlayer.classList.remove('hidden');
+        refs.mediaPlaceholder.classList.add('hidden');
+      } else {
+        refs.mediaPlaceholder.textContent = 'Questo contenuto non e disponibile in streaming in questa sessione.';
+      }
+      const openLink = document.createElement('a');
+      openLink.className = 'media-action-link';
+      openLink.href = entry.url;
+      openLink.target = '_blank';
+      openLink.rel = 'noopener noreferrer';
+      openLink.textContent = 'Apri in finestra nuova';
+      refs.mediaActions.appendChild(openLink);
+      const commentsButton = document.createElement('button');
+      commentsButton.type = 'button';
+      commentsButton.className = 'media-action-button';
+      commentsButton.dataset.action = 'comments';
+      commentsButton.textContent = 'Commenti';
+      refs.mediaActions.appendChild(commentsButton);
     }
     function startWindowDrag(event) {
       if (state.windowClosed || state.windowMinimized) return;
       if (event.target.closest('.win-btn')) return;
+      bringWindowToFront('game');
       const rect = refs.window.getBoundingClientRect();
       state.windowDrag.active = true;
       state.windowDrag.offsetX = event.clientX - rect.left;
@@ -1879,10 +2563,13 @@
     function stopWindowDrag() {
       state.windowDrag.active = false;
     }
-    function startDesktopIconDrag(event) {
-      const rect = refs.desktopAppIcon.getBoundingClientRect();
+    function startDesktopIconDrag(kind, event) {
+      const el = kind === 'app' ? refs.desktopAppIcon : kind === 'leaderboard' ? refs.desktopLeaderboardIcon : refs.desktopMediaIcon;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
       state.desktopIconDrag.active = true;
       state.desktopIconDrag.moved = false;
+      state.desktopIconDrag.target = kind;
       state.desktopIconDrag.offsetX = event.clientX - rect.left;
       state.desktopIconDrag.offsetY = event.clientY - rect.top;
       event.preventDefault();
@@ -1895,13 +2582,23 @@
       if (Math.abs(nextX - state.desktopIconDrag.x) > 2 || Math.abs(nextY - state.desktopIconDrag.y) > 2) {
         state.desktopIconDrag.moved = true;
       }
-      applyDesktopIconPosition(nextX, nextY);
+      const kind = state.desktopIconDrag.target || 'app';
+      const el = kind === 'app' ? refs.desktopAppIcon : kind === 'leaderboard' ? refs.desktopLeaderboardIcon : refs.desktopMediaIcon;
+      applyDesktopIconPosition(kind, nextX, nextY, el?.offsetWidth || 84, el?.offsetHeight || 64);
     }
     function stopDesktopIconDrag() {
       if (!state.desktopIconDrag.active) return;
       state.desktopIconDrag.active = false;
+      if (state.desktopIconDrag.moved) {
+        const snapped = snapDesktopIconPosition(state.desktopIconDrag.x, state.desktopIconDrag.y);
+        const kind = state.desktopIconDrag.target || 'app';
+        const el = kind === 'app' ? refs.desktopAppIcon : kind === 'leaderboard' ? refs.desktopLeaderboardIcon : refs.desktopMediaIcon;
+        applyDesktopIconPosition(kind, snapped.x, snapped.y, el?.offsetWidth || 84, el?.offsetHeight || 64);
+        saveDesktopIconPositions();
+      }
       state.desktopIconDrag.suppressClick = state.desktopIconDrag.moved;
       state.desktopIconDrag.moved = false;
+      state.desktopIconDrag.target = '';
     }
     function startReportIconDrag(reportId, event) {
       const report = state.reportFiles.find((entry) => entry.id === reportId);
@@ -1941,6 +2638,7 @@
       if (state.running) stopGame(false);
       closeNotepad();
       if (!state.storyMode) closeModal(false);
+      closeComments();
       closeStartMenu();
       state.windowClosed = true;
       state.windowMinimized = false;
@@ -1950,6 +2648,7 @@
       syncBackgroundAudio();
     }
     function openWindow(keepPosition = false) {
+      bringWindowToFront('game');
       state.windowClosed = false;
       state.windowMinimized = false;
       refs.window.style.display = 'inline-block';
@@ -1966,6 +2665,7 @@
       if (reportId) state.selectedReportId = reportId;
       const report = reportOverride || selectedReportFile();
       if (!report) return;
+      bringWindowToFront('excel');
       state.notepad.open = true;
       state.notepad.minimized = false;
       refs.notepadWindow.style.display = 'inline-block';
@@ -1980,6 +2680,114 @@
       state.notepad.report = null;
       refs.notepadWindow.style.display = 'none';
       syncTaskbarApp();
+    }
+    function commentsWindowBounds() {
+      const desktop = desktopBounds();
+      const rect = refs.commentsWindow.getBoundingClientRect();
+      return {
+        minX: desktop.left,
+        minY: desktop.top,
+        maxX: Math.max(desktop.left, desktop.left + desktop.width - rect.width),
+        maxY: Math.max(desktop.top, desktop.top + desktop.height - rect.height)
+      };
+    }
+    function applyCommentsPosition(x, y) {
+      const bounds = commentsWindowBounds();
+      const px = Math.min(Math.max(bounds.minX, x), bounds.maxX);
+      const py = Math.min(Math.max(bounds.minY, y), bounds.maxY);
+      state.comments.x = px;
+      state.comments.y = py;
+      refs.commentsWindow.style.left = `${px}px`;
+      refs.commentsWindow.style.top = `${py}px`;
+    }
+    function positionCommentsWindow() {
+      if (!state.comments.open) return;
+      const desktop = desktopBounds();
+      const rect = refs.commentsWindow.getBoundingClientRect();
+      if (state.comments.moved) {
+        applyCommentsPosition(state.comments.x, state.comments.y);
+        return;
+      }
+      applyCommentsPosition(desktop.left + Math.max(120, (desktop.width - rect.width) / 2), desktop.top + Math.max(52, (desktop.height - rect.height) / 2));
+    }
+    function startCommentsDrag(event) {
+      if (!state.comments.open) return;
+      if (event.target.closest('.win-btn')) return;
+      bringWindowToFront('comments');
+      const rect = refs.commentsWindow.getBoundingClientRect();
+      state.comments.active = true;
+      state.comments.offsetX = event.clientX - rect.left;
+      state.comments.offsetY = event.clientY - rect.top;
+      event.preventDefault();
+    }
+    function moveCommentsDrag(event) {
+      if (!state.comments.active) return;
+      const shellRect = refs.shell.getBoundingClientRect();
+      state.comments.moved = true;
+      applyCommentsPosition(event.clientX - shellRect.left - state.comments.offsetX, event.clientY - shellRect.top - state.comments.offsetY);
+    }
+    function stopCommentsDrag() {
+      state.comments.active = false;
+    }
+    async function openCommentsWindow(target = 'game') {
+      if (target !== 'game' && !state.mediaLibrary.some((entry) => entry.id === target)) return;
+      bringWindowToFront('comments');
+      state.comments.open = true;
+      state.comments.minimized = false;
+      state.comments.target = target;
+      refs.commentsWindow.style.display = 'inline-block';
+      renderCommentsWindow();
+      positionCommentsWindow();
+      syncTaskbarApp();
+      try {
+        await loadComments(target);
+      } catch (error) {
+        state.comments.loading = false;
+        state.comments.entries = [];
+        renderCommentsWindow();
+        refs.commentsList.innerHTML = `<div class="comments-empty">${escapeHtml(error.message || 'Commenti non disponibili')}</div>`;
+      }
+    }
+    function closeComments() {
+      state.comments.open = false;
+      state.comments.active = false;
+      state.comments.minimized = false;
+      refs.commentsWindow.style.display = 'none';
+      syncTaskbarApp();
+    }
+    function toggleTaskbarComments() {
+      if (!state.comments.open) {
+        openCommentsWindow(state.comments.target || 'game');
+        return;
+      }
+      state.comments.minimized = !state.comments.minimized;
+      refs.commentsWindow.style.display = state.comments.minimized ? 'none' : 'inline-block';
+      if (!state.comments.minimized) positionCommentsWindow();
+      syncTaskbarApp();
+    }
+    async function submitComment() {
+      const message = refs.commentsInput.value.trim();
+      if (!message) {
+        refs.commentsInput.focus();
+        return;
+      }
+      refs.commentsSubmit.disabled = true;
+      try {
+        const response = await fetch('api/comments.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ target: state.comments.target, message })
+        });
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(payload.error || 'Invio commento fallito');
+        state.comments.entries = Array.isArray(payload.entries) ? payload.entries : state.comments.entries;
+        refs.commentsInput.value = '';
+        renderCommentsWindow();
+      } catch (error) {
+        window.alert(error.message || 'Invio commento fallito');
+      } finally {
+        refs.commentsSubmit.disabled = false;
+      }
     }
     function renderLeaderboardSheet() {
       const entries = state.leaderboard.entries || [];
@@ -2016,7 +2824,7 @@
       openNotepad('', leaderboardEntryReport(entry));
     }
     async function fetchLeaderboard() {
-      const response = await fetch('api/leaderboard.php', { cache: 'no-store' });
+      const response = await fetch(`api/leaderboard.php?sessionType=${encodeURIComponent(state.sessionType || 'generic')}`, { cache: 'no-store' });
       if (!response.ok) throw new Error('Leaderboard non disponibile');
       const payload = await response.json();
       state.leaderboard.entries = Array.isArray(payload.entries) ? payload.entries : [];
@@ -2054,6 +2862,7 @@
     function startLeaderboardDrag(event) {
       if (!state.leaderboard.open) return;
       if (event.target.closest('.win-btn')) return;
+      bringWindowToFront('leaderboard');
       const rect = refs.leaderboardWindow.getBoundingClientRect();
       state.leaderboard.active = true;
       state.leaderboard.offsetX = event.clientX - rect.left;
@@ -2069,7 +2878,27 @@
     function stopLeaderboardDrag() {
       state.leaderboard.active = false;
     }
+    function startMediaDrag(event) {
+      if (!state.media.open) return;
+      if (event.target.closest('.win-btn')) return;
+      bringWindowToFront('media');
+      const rect = refs.mediaWindow.getBoundingClientRect();
+      state.media.active = true;
+      state.media.offsetX = event.clientX - rect.left;
+      state.media.offsetY = event.clientY - rect.top;
+      event.preventDefault();
+    }
+    function moveMediaDrag(event) {
+      if (!state.media.active) return;
+      const shellRect = refs.shell.getBoundingClientRect();
+      state.media.moved = true;
+      applyMediaPosition(event.clientX - shellRect.left - state.media.offsetX, event.clientY - shellRect.top - state.media.offsetY);
+    }
+    function stopMediaDrag() {
+      state.media.active = false;
+    }
     async function openLeaderboard(refresh = true) {
+      bringWindowToFront('leaderboard');
       state.leaderboard.open = true;
       state.leaderboard.minimized = false;
       refs.leaderboardWindow.style.display = 'inline-block';
@@ -2102,12 +2931,41 @@
       if (!state.leaderboard.minimized) positionLeaderboardWindow();
       syncTaskbarApp();
     }
+    function openMediaWindow() {
+      if (!hasMediaAccess()) return;
+      bringWindowToFront('media');
+      state.media.open = true;
+      state.media.minimized = false;
+      refs.mediaWindow.style.display = 'inline-block';
+      renderMediaWindow();
+      positionMediaWindow();
+      syncTaskbarApp();
+    }
+    function closeMediaWindow() {
+      state.media.open = false;
+      state.media.active = false;
+      state.media.minimized = false;
+      refs.mediaWindow.style.display = 'none';
+      refs.mediaPlayer.pause();
+      syncTaskbarApp();
+    }
+    function toggleTaskbarMedia() {
+      if (!state.media.open) {
+        openMediaWindow();
+        return;
+      }
+      state.media.minimized = !state.media.minimized;
+      refs.mediaWindow.style.display = state.media.minimized ? 'none' : 'inline-block';
+      if (!state.media.minimized) positionMediaWindow();
+      syncTaskbarApp();
+    }
     async function submitLeaderboardEntry(reportTitle) {
       if (!state.loggedIn || !state.userName || state.sessionSubmitted) return;
       const report = selectedReportFile();
       const payload = {
         sessionId: state.sessionId,
         userName: state.userName,
+        sessionType: state.sessionType,
         reportTitle,
         status: currentSessionStatus(reportTitle),
         endedAt: new Date().toISOString(),
@@ -3048,7 +3906,7 @@
       return clamped;
     }
     function setGameControlsPlaying(isPlaying) {
-      refs.btnStart.textContent = isPlaying ? 'Stop' : 'Start'; refs.btnPause.classList.toggle('hidden', !isPlaying); refs.btnPause.textContent = 'Pausa'; refs.groupbox1.style.pointerEvents = 'auto'; refs.groupbox1.style.opacity = '1'; refs.btnupvelocita.disabled = isPlaying; refs.btndownvelocita.disabled = isPlaying; refs.editvelocita.disabled = isPlaying;
+      refs.btnStart.textContent = isPlaying ? 'Stop' : 'Start'; refs.btnPause.classList.toggle('hidden', !isPlaying); refs.btnPause.textContent = 'Pausa'; refs.groupbox1.style.pointerEvents = 'auto'; refs.groupbox1.style.opacity = '1';
     }
     function startGame() {
       stopTimer(); clearPentathlonState(); resetSessionReport(); state.running = true; state.paused = false; state.modal = null; state.attivaBidella = false; state.points = 0; state.level = selectedLevel(); state.stageCount = 0; state.inPentathlon = false; state.pentathlonMode = 0; state.retryCurrentPentathlon = false; state.pendingLevelIntro = null; state.counts.hit = 0; state.counts.escaped = 0; state.counts.wrong = 0; state.sessionId = generateSessionId(); state.sessionSubmitted = false; refs.lblvoto.textContent = '0'; syncLevelRadios(); syncScoreboard(); moveSpritesOffstage(); setGameControlsPlaying(true); syncBackgroundAudio(); showLevelRule(state.level); updateStatus('Leggi le regole del livello per iniziare.');
@@ -3290,10 +4148,8 @@
 
     refs.btnStart.addEventListener('click', toggleStart);
     refs.btnPause.addEventListener('click', togglePause);
-    refs.btnDebugPentathlon.addEventListener('click', debugStartPentathlon);
-    refs.debugPentathlonMode.addEventListener('input', () => { refs.debugPentathlonMode.value = refs.debugPentathlonMode.value.replace(/[^1-5]/g, '').slice(0, 1) || '1'; });
-    refs.debugPentathlonMode.addEventListener('change', selectedDebugPentathlonMode);
     refs.btnSettings.addEventListener('click', () => { openModal('customization'); updateStatus('Personalizzazioni aperte.'); });
+    refs.btnComments.addEventListener('click', () => { openCommentsWindow('game'); });
     refs.perlaHint.addEventListener('mousedown', (event) => { event.stopPropagation(); showPentathlonRule(); });
     refs.coachDock.addEventListener('mousedown', (event) => {
       event.stopPropagation();
@@ -3307,20 +4163,44 @@
       showPentathlonRule();
     });
     refs.windowTitlebar.addEventListener('mousedown', startWindowDrag);
+    refs.window.addEventListener('mousedown', () => { if (!state.windowClosed && !state.windowMinimized) bringWindowToFront('game'); });
     refs.windowClose.addEventListener('mousedown', (event) => { event.stopPropagation(); });
     refs.windowClose.addEventListener('click', (event) => { event.stopPropagation(); closeWindow(); });
     refs.notepadTitlebar.addEventListener('mousedown', startNotepadDrag);
+    refs.notepadWindow.addEventListener('mousedown', () => { if (state.notepad.open && !state.notepad.minimized) bringWindowToFront('excel'); });
     refs.notepadClose.addEventListener('mousedown', (event) => { event.stopPropagation(); });
     refs.notepadClose.addEventListener('click', (event) => { event.stopPropagation(); closeNotepad(); });
     refs.leaderboardTitlebar.addEventListener('mousedown', startLeaderboardDrag);
+    refs.leaderboardWindow.addEventListener('mousedown', () => { if (state.leaderboard.open && !state.leaderboard.minimized) bringWindowToFront('leaderboard'); });
     refs.leaderboardClose.addEventListener('mousedown', (event) => { event.stopPropagation(); });
     refs.leaderboardClose.addEventListener('click', (event) => { event.stopPropagation(); closeLeaderboard(); });
+    refs.mediaTitlebar.addEventListener('mousedown', startMediaDrag);
+    refs.mediaWindow.addEventListener('mousedown', () => { if (state.media.open && !state.media.minimized) bringWindowToFront('media'); });
+    refs.mediaClose.addEventListener('mousedown', (event) => { event.stopPropagation(); });
+    refs.mediaClose.addEventListener('click', (event) => { event.stopPropagation(); closeMediaWindow(); });
+    refs.commentsTitlebar.addEventListener('mousedown', startCommentsDrag);
+    refs.commentsWindow.addEventListener('mousedown', () => { if (state.comments.open && !state.comments.minimized) bringWindowToFront('comments'); });
+    refs.commentsClose.addEventListener('mousedown', (event) => { event.stopPropagation(); });
+    refs.commentsClose.addEventListener('click', (event) => { event.stopPropagation(); closeComments(); });
     refs.leaderboardBody.addEventListener('click', (event) => {
       const row = event.target.closest('tr[data-entry-id]');
       if (!row) return;
       openLeaderboardEntryDetail(row.dataset.entryId);
     });
-    refs.desktopAppIcon.addEventListener('mousedown', startDesktopIconDrag);
+    refs.mediaList.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-media-id]');
+      if (!button) return;
+      state.media.selectedId = button.dataset.mediaId;
+      renderMediaWindow();
+    });
+    refs.mediaActions.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-action="comments"]');
+      if (!button) return;
+      const entry = selectedMediaEntry();
+      if (!entry) return;
+      openCommentsWindow(entry.id);
+    });
+    refs.desktopAppIcon.addEventListener('mousedown', (event) => startDesktopIconDrag('app', event));
     refs.desktopAppIcon.addEventListener('click', (event) => {
       if (state.desktopIconDrag.suppressClick) {
         state.desktopIconDrag.suppressClick = false;
@@ -3329,28 +4209,44 @@
       }
       openWindow();
     });
+    refs.desktopLeaderboardIcon.addEventListener('mousedown', (event) => startDesktopIconDrag('leaderboard', event));
     refs.desktopLeaderboardIcon.addEventListener('click', (event) => {
+      if (state.desktopIconDrag.suppressClick) {
+        state.desktopIconDrag.suppressClick = false;
+        event.preventDefault();
+        return;
+      }
       event.stopPropagation();
       openLeaderboard(true);
+    });
+    refs.desktopMediaIcon.addEventListener('mousedown', (event) => startDesktopIconDrag('media', event));
+    refs.desktopMediaIcon.addEventListener('click', (event) => {
+      if (state.desktopIconDrag.suppressClick) {
+        state.desktopIconDrag.suppressClick = false;
+        event.preventDefault();
+        return;
+      }
+      event.stopPropagation();
+      openMediaWindow();
     });
     refs.taskbarApp.addEventListener('click', (event) => { event.stopPropagation(); toggleTaskbarWindow(); });
     refs.taskbarExcel.addEventListener('click', (event) => { event.stopPropagation(); toggleTaskbarExcel(); });
     refs.taskbarLeaderboard.addEventListener('click', (event) => { event.stopPropagation(); toggleTaskbarLeaderboard(); });
+    refs.taskbarMedia.addEventListener('click', (event) => { event.stopPropagation(); toggleTaskbarMedia(); });
+    refs.taskbarComments.addEventListener('click', (event) => { event.stopPropagation(); toggleTaskbarComments(); });
     refs.startHotspot.addEventListener('click', (event) => { event.stopPropagation(); toggleStartMenu(); });
     refs.startMenuFolder.addEventListener('click', (event) => { event.stopPropagation(); toggleStartSubmenu(); });
     refs.startMenuOpen.addEventListener('click', (event) => { event.stopPropagation(); closeStartMenu(); openWindow(); });
     refs.startMenuLeaderboard.addEventListener('click', (event) => { event.stopPropagation(); closeStartMenu(); openLeaderboard(true); });
+    refs.startMenuMedia.addEventListener('click', (event) => { event.stopPropagation(); closeStartMenu(); openMediaWindow(); });
     refs.startMenuStory.addEventListener('click', (event) => { event.stopPropagation(); showStartStory(); });
     refs.startMenuLogout.addEventListener('click', (event) => { event.stopPropagation(); closeStartMenu(); logoutUser(); });
     refs.help1.addEventListener('click', () => { window.alert("Apparira un solo prof cattivo alla volta: se lo schiacci guadagni punti, se lo lasci andare o se sbagli perdi punti."); });
     refs.help2.addEventListener('click', () => { window.alert("Appariranno 1 prof buono e 1 prof cattivo. Devi schiacciare solo il cattivo."); });
     refs.help3.addEventListener('click', () => { window.alert("Come la lezione 2, ma i prof buoni e cattivi vengono scelti a caso tra quelli salvati. Inoltre puo entrare la bidella con una circolare e interrompere la partita."); });
     refs.help4.addEventListener('click', () => { window.alert("Dopo le tre lezioni classiche parte il Pentathlon: 5 prove speciali consecutive sulla griglia di gioco, guidate dalla Coach Perla."); });
-    refs.label1.addEventListener('click', () => { window.open('http://www.moscio88.altervista.org/SAP.php', '_blank', 'noopener'); });
+    refs.label1.addEventListener('click', () => { window.open('https://www.moscio88.altervista.org/gioco/', '_blank', 'noopener'); });
 
-    refs.btnupvelocita.addEventListener('click', () => { state.speed = Math.min(20, state.speed + 1); refs.editvelocita.value = String(state.speed); });
-    refs.btndownvelocita.addEventListener('click', () => { state.speed = Math.max(1, state.speed - 1); refs.editvelocita.value = String(state.speed); });
-    refs.editvelocita.addEventListener('input', () => { refs.editvelocita.value = refs.editvelocita.value.replace(/[^0-9]/g, ''); state.speed = clampSpeed(refs.editvelocita.value || '10'); refs.editvelocita.value = String(state.speed); });
     refs.ckdsottofondo.addEventListener('change', syncBackgroundAudio);
     refs.choiceButtons.forEach((button) => button.addEventListener('click', () => {
       const kind = button.dataset.kind;
@@ -3364,8 +4260,24 @@
       refs.customUploadInput.click();
     }));
     refs.customUploadInput.addEventListener('change', handleCustomUploadSelection);
+    refs.commentsSubmit.addEventListener('click', submitComment);
+    refs.commentsInput.addEventListener('keydown', (event) => {
+      if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
+        event.preventDefault();
+        submitComment();
+      }
+    });
+    refs.loginSessionSelect.addEventListener('change', () => {
+      refs.loginError.textContent = '';
+      syncLoginFields();
+    });
     refs.loginSubmit.addEventListener('click', submitLogin);
     refs.loginNameInput.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter') return;
+      event.preventDefault();
+      submitLogin();
+    });
+    refs.loginPasswordInput.addEventListener('keydown', (event) => {
       if (event.key !== 'Enter') return;
       event.preventDefault();
       submitLogin();
@@ -3424,20 +4336,37 @@
     document.addEventListener('mousemove', moveReportIconDrag);
     document.addEventListener('mousemove', moveNotepadDrag);
     document.addEventListener('mousemove', moveLeaderboardDrag);
+    document.addEventListener('mousemove', moveMediaDrag);
+    document.addEventListener('mousemove', moveCommentsDrag);
     document.addEventListener('mouseup', setHammerUp);
     document.addEventListener('mouseup', stopWindowDrag);
     document.addEventListener('mouseup', stopDesktopIconDrag);
     document.addEventListener('mouseup', stopReportIconDrag);
     document.addEventListener('mouseup', stopNotepadDrag);
     document.addEventListener('mouseup', stopLeaderboardDrag);
+    document.addEventListener('mouseup', stopMediaDrag);
+    document.addEventListener('mouseup', stopCommentsDrag);
     window.addEventListener('blur', setHammerUp);
     window.addEventListener('blur', stopWindowDrag);
     window.addEventListener('blur', stopDesktopIconDrag);
     window.addEventListener('blur', stopReportIconDrag);
     window.addEventListener('blur', stopNotepadDrag);
     window.addEventListener('blur', stopLeaderboardDrag);
+    window.addEventListener('blur', stopMediaDrag);
+    window.addEventListener('blur', stopCommentsDrag);
 
-    loadUserProfile(); loadCustomUploads(); applyCustomization(); moveSpritesOffstage(); clearPentathlonState(); syncLevelRadios(); syncScoreboard(); syncTaskbarApp(); startTaskbarClock(); syncBackgroundAudio(); resizeForm(); refs.loginNameInput.focus(); fetchLeaderboard().catch(() => {}); window.addEventListener('resize', resizeForm); new ResizeObserver(resizeForm).observe(refs.viewport);
+    async function restoreServerSession() {
+      try {
+        const response = await fetch('api/session.php', { cache: 'no-store' });
+        if (!response.ok) return;
+        const payload = await response.json();
+        if (payload?.session?.authenticated) {
+          completeLogin(payload.session, payload.media || [], { showStory: false, playSound: false });
+        }
+      } catch (_) {}
+    }
+
+    loadUserProfile(); loadDesktopIconPositions(); syncLoginFields(); loadCustomUploads(); applyCustomization(); moveSpritesOffstage(); clearPentathlonState(); syncLevelRadios(); syncScoreboard(); applyWindowStack(); syncTaskbarApp(); startTaskbarClock(); syncBackgroundAudio(); resizeForm(); focusLoginPrimary(); fetchLeaderboard().catch(() => {}); restoreServerSession(); window.addEventListener('resize', resizeForm); new ResizeObserver(resizeForm).observe(refs.viewport);
   </script>
 </body>
 </html>

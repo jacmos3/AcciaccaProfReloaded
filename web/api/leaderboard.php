@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+require __DIR__ . '/bootstrap.php';
+
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
 
@@ -96,10 +98,15 @@ function sanitizeEntry(array $body): ?array
     $points = round((float)($body['points'] ?? 0), 2);
     $vote = max(1, min(10, (float)($body['vote'] ?? 1)));
     $sessionId = truncateString($body['sessionId'] ?? '', 80);
+    $sessionType = truncateString($body['sessionType'] ?? '', 16);
+    if ($sessionType !== 'generic' && $sessionType !== 'va') {
+        return null;
+    }
 
     return [
         'id' => $sessionId !== '' ? $sessionId : sprintf('%d-%s', time(), bin2hex(random_bytes(3))),
         'userName' => $userName,
+        'sessionType' => $sessionType,
         'reportTitle' => truncateString($body['reportTitle'] ?? '', 80),
         'endedAt' => truncateString($body['endedAt'] ?? gmdate('c'), 80),
         'status' => truncateString($body['status'] ?? '', 40),
@@ -129,9 +136,18 @@ function sortLeaderboard(array $entries): array
 ensureDataStore($dataDir, $leaderboardFile);
 
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+$authState = current_auth_state();
 
 if ($method === 'GET') {
-    sendJson(200, ['entries' => sortLeaderboard(readLeaderboard($leaderboardFile))]);
+    $requestedSessionType = truncateString($_GET['sessionType'] ?? '', 16);
+    if ($requestedSessionType !== 'generic' && $requestedSessionType !== 'va') {
+        $requestedSessionType = (string)($authState['sessionType'] ?? 'none');
+    }
+    $entries = array_values(array_filter(
+        readLeaderboard($leaderboardFile),
+        static fn(array $entry): bool => ($entry['sessionType'] ?? '') === $requestedSessionType
+    ));
+    sendJson(200, ['entries' => sortLeaderboard($entries)]);
 }
 
 if ($method !== 'POST') {
@@ -147,6 +163,9 @@ if (!is_array($decoded)) {
 $entry = sanitizeEntry($decoded);
 if ($entry === null) {
     sendJson(400, ['error' => 'Invalid payload']);
+}
+if (($authState['sessionType'] ?? 'none') !== $entry['sessionType']) {
+    sendJson(403, ['error' => 'Sessione classifica non coerente']);
 }
 
 try {
