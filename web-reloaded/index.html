@@ -3,260 +3,340 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Acciacca Prof – Reloaded</title>
-  <meta name="description" content="Acciacca Prof Reloaded: il cult del 2007 torna sul Web con grafiche originali, suoni vintage, prof cattivi e un Pentathlon inedito.">
-  <meta name="keywords" content="Acciacca Prof, gioco retro, prof, web, pentathlon, nostalgia, arcade">
+  <title>GalileoGalileiVA2008Memorial</title>
+  <meta name="description" content="Memoriale digitale della VA 2007/2008 del Liceo Scientifico Galileo Galilei: raccolta dei video storici della classe, commenti, materiali d'epoca e Acciacca Prof.">
+  <meta name="keywords" content="Galileo Galilei, VA 2008, memoriale, archivio video, commenti, Acciacca Prof, Windows XP">
   <meta name="author" content="Semprox Lab">
   <meta name="robots" content="index,follow">
   <link rel="icon" type="image/png" href="resources/favicon.png">
-  <meta property="og:title" content="Acciacca Prof – Reloaded">
-  <meta property="og:description" content="Il cult del 2007 torna sul Web con grafica originale, suoni vintage e un Pentathlon inedito.">
+  <meta property="og:title" content="GalileoGalileiVA2008Memorial">
+  <meta property="og:description" content="Un memoriale digitale della classe VA 2007/2008: video storici, commenti, materiali di classe e anche Acciacca Prof.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="resources/desktop.png">
   <meta property="og:locale" content="it_IT">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Acciacca Prof – Reloaded">
-  <meta name="twitter:description" content="Il cult del 2007 torna sul Web con grafica originale, suoni vintage e un Pentathlon inedito.">
+  <meta name="twitter:title" content="GalileoGalileiVA2008Memorial">
+  <meta name="twitter:description" content="Video storici, commenti e memoria condivisa della VA 2007/2008 del Galileo Galilei, con anche Acciacca Prof.">
   <meta name="twitter:image" content="resources/desktop.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --ink:#121212;
-      --muted:#4b4b4b;
-      --paper:#e1e1dd;
-      --chalk:#f9f7f2;
-      --accent:#e24848;
-      --accent2:#1c5cff;
-      --good:#6bd0ff;
-      --evil:#e24848;
-      --neutral:#9ea3a7;
-      --radius:18px;
-      --shadow:0 18px 50px rgba(0,0,0,.15);
+      --bg:#d8d2c4;
+      --paper:#f6f0e4;
+      --panel:#fffaf2;
+      --ink:#1c1a17;
+      --muted:#5f5a52;
+      --line:#d4cab8;
+      --accent:#8f3b2e;
+      --accent-dark:#6d291f;
+      --gold:#b99247;
+      --shadow:0 20px 50px rgba(44,31,15,.16);
+      --radius:22px;
     }
     *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
     body{
-      margin:0; color:var(--ink); background:var(--paper);
-      font-family:"Space Grotesk",sans-serif;
+      margin:0;
+      color:var(--ink);
+      font-family:"Manrope",sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,.55), transparent 28%),
+        linear-gradient(180deg, #d7d0c0 0%, #c8bea9 100%);
     }
     a{color:inherit;text-decoration:none}
-    .wrap{max-width:1140px;margin:0 auto;padding:28px 20px 90px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:14px}
-    .brand{display:flex;align-items:center;gap:12px}
-    .brand img{width:44px;height:44px;border-radius:12px;box-shadow:var(--shadow)}
-    .brand span{font-family:"Fraunces",serif;font-size:20px;font-weight:700}
-    .nav{display:flex;gap:16px;font-size:14px;color:var(--muted)}
-
+    img{max-width:100%;display:block}
+    .wrap{max-width:1180px;margin:0 auto;padding:24px 20px 80px}
+    .topbar{
+      display:flex;align-items:center;justify-content:space-between;gap:18px;
+      padding:14px 18px;border:1px solid rgba(255,255,255,.4);border-radius:20px;
+      background:rgba(250,246,238,.72);backdrop-filter:blur(10px);box-shadow:var(--shadow);
+      position:sticky;top:16px;z-index:20;
+    }
+    .brand{display:flex;align-items:center;gap:14px}
+    .brand img{width:48px;height:48px;border-radius:14px;box-shadow:0 10px 24px rgba(0,0,0,.18)}
+    .brand-copy strong{
+      display:block;
+      font-family:"Cormorant Garamond",serif;
+      font-size:28px;line-height:1;
+      letter-spacing:.02em;
+    }
+    .brand-copy span{font-size:13px;color:var(--muted)}
+    .nav{display:flex;align-items:center;gap:18px;font-size:14px;color:var(--muted)}
+    .nav a:hover{color:var(--ink)}
     .hero{
-      margin-top:32px;
-      display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center;
+      margin-top:28px;
+      display:grid;
+      grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);
+      gap:22px;
+      align-items:stretch;
     }
-    .tagline{
-      display:inline-flex;gap:8px;align-items:center;
-      padding:8px 12px;border-radius:999px;background:#fff;border:1px solid #ddd;
-      font-size:12px;
-    }
-    .title{
-      margin:14px 0 10px;font-family:"Fraunces",serif;
-      font-size:54px;line-height:1.05;
-    }
-    .desc{font-size:18px;color:var(--muted);max-width:560px}
-    .cta{margin-top:18px;display:flex;gap:12px;flex-wrap:wrap}
-    .btn{
-      display:inline-flex;align-items:center;gap:10px;
-      padding:14px 20px;border-radius:12px;font-weight:600;font-size:15px;
-      background:var(--ink);color:#fff;box-shadow:var(--shadow)
-    }
-    .btn.secondary{background:#fff;color:var(--ink);border:1px solid #ddd;box-shadow:none}
-    .store-badge{display:inline-flex}
-    .store-badge img{height:52px;width:auto;display:block}
-
-    .poster{
-      background:#fff;border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);
-      position:relative;overflow:hidden;
-    }
-    .poster::after{
-      content:"";position:absolute;right:-60px;top:-60px;width:200px;height:200px;border-radius:50%;
-      background:radial-gradient(circle at 40% 40%, var(--good), transparent 60%);
-      opacity:.55;
-    }
-    .board{
-      background:#fff;
-      border-radius:14px;border:1px solid #ddd;aspect-ratio:4/3;
-      display:block;position:relative;overflow:hidden;
-    }
-    .board img{
-      width:100%;height:100%;object-fit:cover;display:block;
-    }
-    .board .stamp{
-      position:absolute;left:14px;top:14px;padding:6px 10px;border-radius:999px;
-      font-size:12px;background:#fff;border:1px solid #ddd;
-    }
-    .board .name{font-family:"Fraunces",serif;font-size:28px}
-
-    .ribbon{
-      margin-top:34px;background:#111;color:#fff;border-radius:var(--radius);
-      padding:16px 18px;display:flex;gap:18px;align-items:center;justify-content:space-between;
-    }
-    .ribbon strong{font-family:"Fraunces",serif;font-size:20px}
-
-    .sections{
-      margin-top:48px;
-      display:grid;grid-template-columns:1.05fr .95fr;gap:18px;
-    }
-    .card{
-      background:#fff;border-radius:var(--radius);padding:18px;border:1px solid #ddd;
-    }
-    .card h3{margin:0 0 8px;font-size:18px}
-    .card p{margin:0;color:var(--muted)}
-    .grid{
-      display:grid;grid-template-columns:repeat(2,1fr);gap:12px;
-    }
-    .story{
-      background:var(--chalk);border-radius:var(--radius);padding:18px;border:1px solid #ddd;
-      margin-top:22px;
-    }
-    .shot{
-      margin-top:18px;
-      background:#fff;border:1px solid #ddd;border-radius:var(--radius);
-      padding:16px;display:grid;place-items:center;
+    .hero-copy,.hero-visual,.panel,.timeline,.cta-band,.footer{
+      border-radius:var(--radius);
+      background:linear-gradient(180deg, rgba(255,250,242,.98), rgba(246,240,228,.94));
+      border:1px solid rgba(123,98,57,.16);
       box-shadow:var(--shadow);
     }
-    .frame{
-      background:#111;
-      border-radius:16px;
-      padding:6px;
-      box-shadow:0 16px 40px rgba(0,0,0,.2);
-      border:2px solid #222;
-      display:inline-block;
+    .hero-copy{padding:30px 28px 28px}
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;border-radius:999px;
+      font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+      color:var(--accent-dark);background:rgba(143,59,46,.09);border:1px solid rgba(143,59,46,.16);
     }
-    .frame img{
-      display:block;
-      max-width:100%;
-      height:auto;
-      border-radius:12px;
+    h1,h2,h3{margin:0;font-family:"Cormorant Garamond",serif;font-weight:700}
+    h1{
+      margin-top:16px;
+      font-size:68px;line-height:.95;letter-spacing:-.02em;
+      max-width:700px;
     }
-
+    .lead{
+      margin:18px 0 0;
+      max-width:640px;
+      font-size:18px;line-height:1.7;color:var(--muted);
+    }
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:14px 20px;border-radius:14px;font-weight:700;font-size:15px;
+      transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn-primary{
+      background:linear-gradient(180deg, var(--accent), var(--accent-dark));
+      color:#fff;box-shadow:0 16px 30px rgba(109,41,31,.28);
+    }
+    .btn-secondary{
+      background:rgba(255,255,255,.6);border:1px solid var(--line);color:var(--ink);
+    }
+    .hero-note{
+      margin-top:26px;padding-top:18px;border-top:1px solid var(--line);
+      display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+    }
+    .hero-note strong{display:block;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--accent-dark)}
+    .hero-note span{display:block;margin-top:6px;font-size:14px;color:var(--muted);line-height:1.5}
+    .hero-visual{padding:18px;position:relative;overflow:hidden}
+    .hero-visual::before{
+      content:"";position:absolute;inset:auto -120px -120px auto;width:260px;height:260px;border-radius:50%;
+      background:radial-gradient(circle, rgba(185,146,71,.28), transparent 68%);
+      pointer-events:none;
+    }
+    .desktop-shot{
+      position:relative;border-radius:18px;overflow:hidden;border:1px solid rgba(0,0,0,.08);
+      background:#d9dddf;
+    }
+    .desktop-shot img{aspect-ratio:4/3;object-fit:cover}
+    .desktop-label{
+      position:absolute;left:14px;top:14px;
+      padding:7px 10px;border-radius:999px;font-size:12px;font-weight:700;
+      color:#3d2a0d;background:rgba(255,248,231,.92);border:1px solid rgba(185,146,71,.36);
+    }
+    .visual-caption{
+      margin-top:14px;color:var(--muted);font-size:15px;line-height:1.6;
+    }
+    .section-grid{
+      margin-top:22px;
+      display:grid;grid-template-columns:repeat(12,1fr);gap:18px;
+    }
+    .panel{padding:22px}
+    .panel h2{font-size:34px;margin-bottom:12px}
+    .panel p{margin:0;color:var(--muted);line-height:1.7}
+    .span-7{grid-column:span 7}
+    .span-5{grid-column:span 5}
+    .span-4{grid-column:span 4}
+    .span-8{grid-column:span 8}
+    .feature-list{
+      margin:18px 0 0;padding:0;list-style:none;display:grid;gap:12px;
+    }
+    .feature-list li{
+      padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.56);
+      border:1px solid rgba(123,98,57,.14);
+    }
+    .feature-list strong{display:block;margin-bottom:4px}
+    .mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}
+    .mini-card{
+      padding:16px;border-radius:16px;background:rgba(255,255,255,.58);border:1px solid rgba(123,98,57,.14);
+    }
+    .mini-card strong{display:block;font-size:14px;letter-spacing:.04em;text-transform:uppercase;color:var(--accent-dark)}
+    .mini-card span{display:block;margin-top:8px;color:var(--muted);font-size:14px;line-height:1.6}
+    .timeline{padding:24px}
+    .timeline-row{
+      display:grid;grid-template-columns:120px 1fr;gap:14px;padding:14px 0;border-top:1px solid var(--line);
+    }
+    .timeline-row:first-of-type{border-top:0;padding-top:6px}
+    .timeline-year{
+      font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-dark);
+    }
+    .timeline-copy strong{display:block;font-size:18px;margin-bottom:6px}
+    .timeline-copy p{margin:0;color:var(--muted);line-height:1.65}
     .cta-band{
-      margin-top:52px;background:linear-gradient(135deg,#111,#2a2a2a);
-      color:#fff;border-radius:var(--radius);padding:24px;display:flex;gap:14px;align-items:center;justify-content:space-between;
+      margin-top:22px;padding:24px 26px;display:flex;align-items:center;justify-content:space-between;gap:18px;
+      background:
+        radial-gradient(circle at top right, rgba(185,146,71,.22), transparent 30%),
+        linear-gradient(135deg, #2f2118 0%, #5b3428 100%);
+      color:#fff;
     }
-    footer{
-      margin-top:40px;font-size:14px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;
-      border-top:1px solid #ddd;padding-top:14px;
+    .cta-band h2{font-size:42px}
+    .cta-band p{margin:8px 0 0;color:rgba(255,255,255,.78);max-width:620px;line-height:1.7}
+    .footer{
+      margin-top:22px;padding:18px 20px;display:flex;justify-content:space-between;gap:16px;align-items:center;
+      color:var(--muted);font-size:14px;
     }
-    @media (max-width:980px){
-      .hero,.sections{grid-template-columns:1fr}
-      .grid{grid-template-columns:1fr}
-      .cta-band{flex-direction:column;align-items:flex-start}
+    .footer-links{display:flex;gap:14px;flex-wrap:wrap}
+    @media (max-width:1080px){
+      .hero,.section-grid{grid-template-columns:1fr}
+      .span-7,.span-5,.span-4,.span-8{grid-column:span 1}
+      h1{font-size:52px}
     }
-    @media (max-width:640px){
-      .wrap{padding:18px 14px 64px}
-      header{align-items:flex-start}
+    @media (max-width:760px){
+      .wrap{padding:16px 14px 56px}
+      .topbar{position:static;padding:14px}
       .nav{display:none}
-      .title{font-size:36px;line-height:1.08}
-      .desc{font-size:16px}
-      .cta{flex-direction:column;align-items:stretch}
-      .btn,.btn.secondary{justify-content:center;width:100%}
-      .poster,.card,.shot,.cta-band,.ribbon{padding:14px}
-      .ribbon{flex-direction:column;align-items:flex-start}
-      .ribbon strong{font-size:18px}
-      .cta-band{padding:18px}
-      footer{flex-direction:column}
+      h1{font-size:40px}
+      .hero-copy,.hero-visual,.panel,.timeline,.cta-band,.footer{padding:18px}
+      .hero-note,.mini-grid{grid-template-columns:1fr}
+      .timeline-row{grid-template-columns:1fr}
+      .cta-band,.footer{flex-direction:column;align-items:flex-start}
+      .hero-actions{flex-direction:column}
+      .btn{width:100%}
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <header>
+    <header class="topbar">
       <div class="brand">
-        <img src="resources/app-icon.png" alt="Acciacca Prof">
-        <span>Acciacca Prof</span>
+        <img src="resources/app-icon.png" alt="GalileoGalileiVA2008Memorial">
+        <div class="brand-copy">
+          <strong>GalileoGalileiVA2008Memorial</strong>
+          <span>Memoria digitale della VA 2007/2008</span>
+        </div>
       </div>
       <nav class="nav">
-        <a href="#novita">Novità</a>
+        <a href="#progetto">Progetto</a>
         <a href="#storia">Storia</a>
-        <a href="#download">Download</a>
+        <a href="#contenuti">Contenuti</a>
+        <a href="#entra">Entra</a>
       </nav>
     </header>
 
     <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Memoriale di classe · Galileo Galilei · 2007/2008</div>
+        <h1>Un archivio di classe rimesso insieme, pezzo dopo pezzo.</h1>
+        <p class="lead">Questo progetto raccoglie quello che e' rimasto vivo della VA 2007/2008 del Liceo Scientifico Galileo Galilei: soprattutto i <strong>video storici della classe</strong>, poi commenti, suoni, facce, schermate, riferimenti interni e anche <strong>Acciacca Prof</strong>, nato come gioco da scherzo e rimasto dentro la memoria comune.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="play.html">Apri il memoriale</a>
+          <a class="btn btn-secondary" href="#storia">Leggi la storia</a>
+        </div>
+        <div class="hero-note">
+          <div>
+            <strong>Archivio prima di tutto</strong>
+            <span>La shell web tiene insieme archivio video, commenti storici, materiali recuperati e riferimenti della classe.</span>
+          </div>
+          <div>
+            <strong>Feeling originale</strong>
+            <span>Desktop stile Windows XP, asset recuperati e ritmo vicino alla versione storica in Delphi.</span>
+          </div>
+          <div>
+            <strong>Memoria attiva</strong>
+            <span>I commenti nuovi convivono con quelli legacy, senza confondere le due fonti.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="desktop-shot">
+          <span class="desktop-label">Desktop memoriale</span>
+          <img src="resources/desktop.png" alt="Desktop memoriale ispirato a Windows XP">
+        </div>
+        <p class="visual-caption">L'ingresso non e' una semplice homepage promozionale: e' la porta di accesso a un piccolo archivio di classe rimesso in piedi con logica moderna ma tono storico.</p>
+      </div>
+    </section>
+
+    <section id="progetto" class="section-grid">
+      <div class="panel span-7">
+        <h2>Cos'e' oggi</h2>
+        <p>GalileoGalileiVA2008Memorial e' una ricostruzione web che mette al centro i video storici, i commenti e i materiali sopravvissuti della classe. Non prova a rifare il passato da zero: prova a renderlo navigabile, leggibile e ancora riconoscibile per chi c'era.</p>
+        <ul class="feature-list">
+          <li>
+            <strong>Archivio video della classe</strong>
+            I contenuti pubblici e quelli riservati alla sessione `VA` convivono nello stesso ambiente e diventano la spina dorsale del memoriale.
+          </li>
+          <li>
+            <strong>Commenti e memoria testuale</strong>
+            I commenti storici del sito e del gioco restano distinti dai nuovi, cosi' la memoria non si appiattisce.
+          </li>
+          <li>
+            <strong>Anche Acciacca Prof</strong>
+            Il gioco e' ancora presente come contenuto storico giocabile, con classifica e shell desktop dedicata.
+          </li>
+        </ul>
+      </div>
+
+      <div id="contenuti" class="panel span-5">
+        <h2>Cosa trovi dentro</h2>
+        <div class="mini-grid">
+          <div class="mini-card">
+            <strong>Video</strong>
+            <span>Raccolta dei video storici della classe, tra archivio pubblico e contenuti riservati.</span>
+          </div>
+          <div class="mini-card">
+            <strong>Commenti</strong>
+            <span>Messaggi legacy e nuovi contenuti, tenuti separati per fonte.</span>
+          </div>
+          <div class="mini-card">
+            <strong>Acciacca Prof</strong>
+            <span>Il gioco storico c'e' ancora, giocabile dentro la shell web con leaderboard.</span>
+          </div>
+          <div class="mini-card">
+            <strong>Classifiche</strong>
+            <span>Leaderboard persistenti del gioco, consultabili dentro l'esperienza web.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="storia" class="timeline" style="margin-top:22px">
+      <h2 style="font-size:38px;margin-bottom:8px">La storia del progetto</h2>
+      <div class="timeline-row">
+        <div class="timeline-year">2007</div>
+        <div class="timeline-copy">
+          <strong>Nasce Acciacca Prof</strong>
+          <p>Il gioco prende forma in Delphi, gira su Windows XP e comincia a passare da un computer all'altro come fanno i file che non nascono per diventare un prodotto, ma per far ridere una classe vera.</p>
+        </div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-year">Anni dopo</div>
+        <div class="timeline-copy">
+          <strong>Restano tracce sparse</strong>
+          <p>Commenti sui siti storici, video della classe, suoni, immagini, personaggi e riferimenti interni continuano a esistere in modo frammentato. Il progetto attuale nasce proprio per rimettere ordine senza cancellare quel disordine originario.</p>
+        </div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-year">2026</div>
+        <div class="timeline-copy">
+          <strong>Ricompare sul web come memoriale</strong>
+          <p>La nuova versione non e' solo un porting. E' una shell memoriale che raccoglie soprattutto archivio video, commenti legacy e materiali storici, lasciando `Acciacca Prof` come uno dei reperti piu riconoscibili di una memoria di classe piu ampia.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="entra" class="cta-band">
       <div>
-        <div class="tagline">Reloaded 2007 → 2026 · Web edition</div>
-        <h1 class="title">Il gioco nato per scherzo torna da protagonista.</h1>
-        <p class="desc">Acciacca Prof torna in vita sul Web nella versione Reloaded: lo stesso spirito goliardico del 2007, le stesse grafiche e suoni di allora, con prof cattivi, colpi sbagliati e Pentathlon inedito. La versione iOS non e mai stata approvata da Apple, quindi il progetto vive qui, in versione web.</p>
-        <div class="cta">
-          <a class="btn" href="play.html">Gioca sul Web</a>
-          <a class="btn secondary" href="#novita">Guarda cosa cambia</a>
-        </div>
+        <h2>Entra nell'archivio di classe</h2>
+        <p>Apri la shell web, scorri i video storici, rileggi i commenti e, se vuoi, ritrova anche Acciacca Prof dentro lo stesso ambiente. Il progetto vive li', non in una vetrina statica.</p>
       </div>
-      <div class="poster">
-        <div class="board">
-          <div class="stamp">Grafica originale</div>
-          <img src="resources/desktop.png" alt="Acciacca Prof 2007">
-        </div>
+      <div class="hero-actions" style="margin-top:0">
+        <a class="btn btn-secondary" href="play.html" style="background:#fff;color:#24170f;border-color:rgba(255,255,255,.45)">Apri play.html</a>
       </div>
     </section>
 
-    <div class="ribbon">
-      <strong>Pentathlon, 5 prove, 1 sola regola: non mollare.</strong>
-      <span>La versione iOS non e mai uscita su App Store.</span>
-    </div>
-
-    <section id="novita" class="sections">
-      <div class="card">
-        <h3>Gameplay classico</h3>
-        <p>La scuola è nel caos: prof cattivi in agguato, prof buoni e bidella da non colpire. Tocca a te tenere la classe in ordine e fare più punti possibile.</p>
-        <p>Il ritmo è quello della ricreazione: veloce, diretto, con punteggi ricalibrati e tre lezioni automatiche prima del Pentathlon.</p>
-      </div>
-      <div class="grid">
-        <div class="card">
-          <h3>Pentathlon</h3>
-          <p>Memory, riflessi, scambio di posto, rischio controllato, sequenze. Cinque prove, un unico obiettivo: non mollare.</p>
-        </div>
-        <div class="card">
-          <h3>Personalizzazioni</h3>
-          <p>Personalizza i personaggi, esporta il set e condividilo con gli amici.</p>
-        </div>
-        <div class="card">
-          <h3>Coach Perla</h3>
-          <p>Ti guida nelle prove, fa da “boss morale” dell’arena.</p>
-        </div>
-        <div class="card">
-          <h3>Suoni &amp; vibes</h3>
-          <p>Campanella inclusa. Nostalgia garantita.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="storia" class="story">
-      <h3>Una storia vera</h3>
-      <p>Nel 2007, a Perugia, Jacopo lascia i compiti sul quaderno e si diverte a programmare. Dopo il grande successo del precedente gioco di enigmi a livelli (vedi <a href="https://moscio88.altervista.org/gioco/" rel="nofollow noopener" target="_blank">il progetto originale</a>), finito persino su Wikipedia (<a href="https://it.wikipedia.org/wiki/Enigma_online#:~:text=moscio88" rel="nofollow noopener" target="_blank">citazione su Wikipedia</a>), nasce un gioco fatto per puro divertimento. È scritto in Delphi, un linguaggio di programmazione molto usato in quegli anni, e gira su Windows XP. Nessuno parla ancora di app, gli smartphone moderni sono dietro l’angolo, eppure il gioco comincia già a passare di mano in mano, da un PC all’altro. Finisce sul forum del liceo scientifico Galileo Galilei, dove le classi lo prendono come un rituale e lo personalizzano con facce e personaggi immaginari.</p>
-      <p>È lì che arriva il commento che resta nella memoria: “Io volevo il pentathlon e la Perla”. Una richiesta semplice, quasi uno scherzo, ma destinata a rimanere sospesa nel tempo.</p>
-      <p>Nel 2026, l’Acciacca Prof torna sul Web: stesso spirito, stessa grafica, stessi suoni. La versione iOS non e mai stata approvata da Apple, quindi il progetto continua qui con i personaggi classici, i prof da acciaccare al momento giusto e il Pentathlon completo guidato dalla coach Perla.</p>
-    </section>
-
-    <section class="shot">
-      <div class="frame">
-        <img src="resources/now.png" alt="Acciacca Prof Reloaded">
-      </div>
-    </section>
-
-    <section id="download" class="cta-band">
-      <div>
-        <h2 style="margin:0;font-family:'Fraunces',serif;">Apri Acciacca Prof Reloaded</h2>
-        <p style="margin:6px 0 0;color:#ccc;">Versione Reloaded · Web edition</p>
-      </div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <a class="btn secondary" href="play.html" style="background:#fff;color:#111;border:1px solid #ddd">Apri Web MVP</a>
-      </div>
-    </section>
-
-    <footer>
-      <div>© 2026 Semprox Lab di Moscioni Jacopo · P.IVA 03184620544</div>
-      <div>
-        <a href="app/privacy-policy.html">Privacy Policy</a> ·
+    <footer class="footer">
+      <div>© 2026 Semprox Lab di Moscioni Jacopo · Memoriale digitale della VA 2007/2008</div>
+      <div class="footer-links">
+        <a href="app/privacy-policy.html">Privacy Policy</a>
         <a href="app/support.php">Supporto</a>
       </div>
     </footer>

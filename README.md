@@ -45,20 +45,6 @@ La parte iOS e' stata separata in un repository dedicato:
 
 - [AcciaccaProfIOS](https://github.com/jacmos3/AcciaccaProfIOS)
 
-## Screenshot
-
-### Desktop shell
-![Desktop XP con finestra di gioco](web/resources/winxp.jpg)
-
-### Grafica originale
-![Classe originale Delphi](web/resources/original.PNG)
-
-### Landing memoriale
-![Landing page memoriale](web/resources/desktop.png)
-
-### Vista progetto
-![Archivio memoriale](web/resources/now.png)
-
 ## Come funziona
 
 Il progetto e' composto da una parte frontend statica e da una piccola parte backend PHP.
